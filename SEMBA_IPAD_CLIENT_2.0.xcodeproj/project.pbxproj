@@ -52,6 +52,10 @@
 		9C0F8AE41827636200FEFABA /* Reader-Thumbs.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C0F8AD61827636200FEFABA /* Reader-Thumbs.png */; };
 		9C0F8AE51827636200FEFABA /* Reader-Thumbs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C0F8AD71827636200FEFABA /* Reader-Thumbs@2x.png */; };
 		9C0F8AE61827636200FEFABA /* Reader-Button-H.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C0F8AD81827636200FEFABA /* Reader-Button-H.png */; };
+		9C111B721841D017001E536A /* button_see_all.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C111B6E1841D017001E536A /* button_see_all.png */; };
+		9C111B731841D017001E536A /* button_see_all@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C111B6F1841D017001E536A /* button_see_all@2x.png */; };
+		9C111B741841D017001E536A /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C111B701841D017001E536A /* search.png */; };
+		9C111B751841D017001E536A /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C111B711841D017001E536A /* search@2x.png */; };
 		9C51BF88182B40D60071A1D1 /* CourseMarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C51BF87182B40D60071A1D1 /* CourseMarkViewController.m */; };
 		9C51BF8B182B80BF0071A1D1 /* MarkToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C51BF8A182B80BF0071A1D1 /* MarkToolBar.m */; };
 		9C51BF8E182C97DB0071A1D1 /* NoteToolDrawerBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C51BF8D182C97DB0071A1D1 /* NoteToolDrawerBar.m */; };
@@ -358,6 +362,10 @@
 		9C0F8AD61827636200FEFABA /* Reader-Thumbs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Reader-Thumbs.png"; sourceTree = "<group>"; };
 		9C0F8AD71827636200FEFABA /* Reader-Thumbs@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Reader-Thumbs@2x.png"; sourceTree = "<group>"; };
 		9C0F8AD81827636200FEFABA /* Reader-Button-H.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Reader-Button-H.png"; sourceTree = "<group>"; };
+		9C111B6E1841D017001E536A /* button_see_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_see_all.png; sourceTree = "<group>"; };
+		9C111B6F1841D017001E536A /* button_see_all@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_see_all@2x.png"; sourceTree = "<group>"; };
+		9C111B701841D017001E536A /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		9C111B711841D017001E536A /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
 		9C51BF86182B40D60071A1D1 /* CourseMarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseMarkViewController.h; sourceTree = "<group>"; };
 		9C51BF87182B40D60071A1D1 /* CourseMarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseMarkViewController.m; sourceTree = "<group>"; };
 		9C51BF89182B80BF0071A1D1 /* MarkToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkToolBar.h; sourceTree = "<group>"; };
@@ -964,6 +972,17 @@
 			name = Reader;
 			sourceTree = "<group>";
 		};
+		9C111B6D1841D008001E536A /* Course */ = {
+			isa = PBXGroup;
+			children = (
+				9C111B6E1841D017001E536A /* button_see_all.png */,
+				9C111B6F1841D017001E536A /* button_see_all@2x.png */,
+				9C111B701841D017001E536A /* search.png */,
+				9C111B711841D017001E536A /* search@2x.png */,
+			);
+			name = Course;
+			sourceTree = "<group>";
+		};
 		9C1E14001834734D00D2F52E /* Courseware */ = {
 			isa = PBXGroup;
 			children = (
@@ -1114,6 +1133,7 @@
 			children = (
 				9C52AE29183F37BA0017EB07 /* nav_bar_bg.png */,
 				9C52AE2A183F37BA0017EB07 /* nav_bar_bg@2x.png */,
+				9C111B6D1841D008001E536A /* Course */,
 				9C52AE2D183F39950017EB07 /* Search */,
 				9CB99057183DDAFF0082BAF5 /* SetUp */,
 				59082C09183B3A810005BF6C /* notice&menu */,
@@ -1425,6 +1445,7 @@
 			files = (
 				9C52AD75183F327D0017EB07 /* ppt_toolbox_red.png in Resources */,
 				9C52AE32183F39A70017EB07 /* pptsearch_cancle@2x.png in Resources */,
+				9C111B751841D017001E536A /* search@2x.png in Resources */,
 				9C52AD54183F327D0017EB07 /* ppt_toolbox_bg@2x.png in Resources */,
 				9C52ADD5183F33290017EB07 /* news center-search.png in Resources */,
 				9C52AD94183F32AC0017EB07 /* bookmark_edit_back@2x.png in Resources */,
@@ -1497,6 +1518,7 @@
 				9CBD15C1181E500E00075BDF /* welcome@2x.jpg in Resources */,
 				9C52AD81183F32A30017EB07 /* bookmark_back.png in Resources */,
 				9C52AD98183F32AC0017EB07 /* bookmark_edit_delete@2x.png in Resources */,
+				9C111B731841D017001E536A /* button_see_all@2x.png in Resources */,
 				9C52AE01183F33BA0017EB07 /* setting_nav_bar.png in Resources */,
 				9C52ADBF183F33290017EB07 /* news center-blank.png in Resources */,
 				9C52AE0B183F33BA0017EB07 /* setting_text_field_big.png in Resources */,
@@ -1510,6 +1532,7 @@
 				9C52AE24183F353D0017EB07 /* ppt_toolbox_eraser_adjust_bar_inactive@2x.png in Resources */,
 				9C52AD88183F32A30017EB07 /* bookmark_tag@2x.png in Resources */,
 				9C52AD50183F327D0017EB07 /* ppt_nav_bookmarklist@2x.png in Resources */,
+				9C111B721841D017001E536A /* button_see_all.png in Resources */,
 				9C52AD96183F32AC0017EB07 /* bookmark_edit_changename@2x.png in Resources */,
 				9C52AE07183F33BA0017EB07 /* setting_switch_off.png in Resources */,
 				9C52AD71183F327D0017EB07 /* ppt_toolbox_recorder_active.png in Resources */,
@@ -1536,6 +1559,7 @@
 				9C52AD3F183F327D0017EB07 /* ppt_indicator_grey.png in Resources */,
 				9C0F8ADE1827636200FEFABA /* Reader-Mark-N.png in Resources */,
 				9C52AD6F183F327D0017EB07 /* ppt_toolbox_pencil.png in Resources */,
+				9C111B741841D017001E536A /* search.png in Resources */,
 				9C52ADD4183F33290017EB07 /* news center-previous mail@2x.png in Resources */,
 				9C0F8ADE1827636200FEFABA /* Reader-Mark-N.png in Resources */,
 				9C0F8ADE1827636200FEFABA /* Reader-Mark-N.png in Resources */,

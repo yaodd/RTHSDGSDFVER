@@ -14,5 +14,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *loginButton;
 - (IBAction)loginAction:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *loginView;
+@property (strong, nonatomic) IBOutlet UIButton *autoLoginCheck;
 
 @end
