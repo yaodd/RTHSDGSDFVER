@@ -209,6 +209,7 @@
 		9C52AE33183F39A70017EB07 /* pptsearch_ppt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C52AE2F183F39A70017EB07 /* pptsearch_ppt@2x.png */; };
 		9C52AE34183F39A70017EB07 /* pptsearch_cancle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C52AE30183F39A70017EB07 /* pptsearch_cancle.png */; };
 		9C52AE35183F39A70017EB07 /* pptsearch_ppt.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C52AE31183F39A70017EB07 /* pptsearch_ppt.png */; };
+		9C77E18C183F5729006737E5 /* DownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C77E18B183F5729006737E5 /* DownloadModel.m */; };
 		9C9240B11830AF8E00415735 /* MRCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9240B01830AF8E00415735 /* MRCircularProgressView.m */; };
 		9C9240B51830B87600415735 /* MRWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9240B41830B87600415735 /* MRWeakProxy.m */; };
 		9CB9908A183E00390082BAF5 /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB99089183E00390082BAF5 /* SetupViewController.m */; };
@@ -518,6 +519,8 @@
 		9C52AE2F183F39A70017EB07 /* pptsearch_ppt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pptsearch_ppt@2x.png"; sourceTree = "<group>"; };
 		9C52AE30183F39A70017EB07 /* pptsearch_cancle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pptsearch_cancle.png; sourceTree = "<group>"; };
 		9C52AE31183F39A70017EB07 /* pptsearch_ppt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pptsearch_ppt.png; sourceTree = "<group>"; };
+		9C77E18A183F5729006737E5 /* DownloadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadModel.h; sourceTree = "<group>"; };
+		9C77E18B183F5729006737E5 /* DownloadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadModel.m; sourceTree = "<group>"; };
 		9C9240AF1830AF8E00415735 /* MRCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCircularProgressView.h; sourceTree = "<group>"; };
 		9C9240B01830AF8E00415735 /* MRCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRCircularProgressView.m; sourceTree = "<group>"; };
 		9C9240B21830B87600415735 /* MRProgressHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRProgressHelper.h; sourceTree = "<group>"; };
@@ -703,6 +706,8 @@
 				2BB815441830AE0200736512 /* SysbsModel.m */,
 				2BB815451830AE0200736512 /* User.h */,
 				2BB815461830AE0200736512 /* User.m */,
+				9C77E18A183F5729006737E5 /* DownloadModel.h */,
+				9C77E18B183F5729006737E5 /* DownloadModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1690,6 +1695,7 @@
 				59D096ED183600B00097C6AC /* RegisterHistoryController.m in Sources */,
 				59D096DE183600740097C6AC /* RightCell.m in Sources */,
 				9CBD1597181E4DFB00075BDF /* AppDelegate.m in Sources */,
+				9C77E18C183F5729006737E5 /* DownloadModel.m in Sources */,
 				9CBD15E1181E690200075BDF /* ACEDrawingView.m in Sources */,
 				9CBD163D181E699D00075BDF /* ASIInputStream.m in Sources */,
 				59D096EB183600B00097C6AC /* RegisterContentController.m in Sources */,

@@ -152,14 +152,11 @@
     [blurView setHidden:YES];
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapSelector:)];
     [blurView addGestureRecognizer:tapGesture];
-    [hostController.view addSubview:blurView];
+//    [hostController.view addSubview:blurView];
 
     setupView = [[SetUpView alloc]initWithDefault:hostController];
     setupView.delegate = self;
     setupView.alpha = 0.0f;
-    [hostController.view addSubview:setupView];
-    
-    
 }
 
 - (void)dealloc{
@@ -167,6 +164,8 @@
 }
 
 - (void)showSetupWindow{
+//    [self.view bringSubviewToFront:setupView];
+//    [hostController.view addSubview:setupView];
     [hostController.tap setEnabled:NO];
     [self showBlur];
     [setupView showSetupView];
@@ -176,9 +175,11 @@
     [setupView hideSetupView];
     [self hideBlur];
     [hostController.tap setEnabled:YES];
+//    [setupView removeFromSuperview];
 }
 
 - (void)showBlur{
+    [hostController.view addSubview:blurView];
     [blurView setHidden:NO];
     [UIView animateWithDuration:0.5f animations:^{
         [blurView setAlpha:0.5f];
@@ -191,6 +192,7 @@
         [blurView setAlpha:0.0f];
     } completion:^(BOOL finished){
         [blurView setHidden:YES];
+        [blurView removeFromSuperview];
     }];
 }
 #pragma SetUpViewDelegate mark

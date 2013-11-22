@@ -16,7 +16,7 @@
 #import "Course.h"
 #import "SysbsModel.h"
 #import "User.h"
-
+#import "DownloadModel.h"
 
 
 #define START_Y 0
@@ -137,6 +137,17 @@
     } else if (myCourseRequest == -1){
         NSLog(@"服务器出错！");
     }
+    [self performSelectorOnMainThread:@selector(downloadAll) withObject:nil waitUntilDone:YES];
+    
+}
+- (void)downloadAll{
+    NSLog(@"donwloadAll");
+    
+    DownloadModel *downloadModel = [DownloadModel getDownloadModel];
+    SysbsModel *sysbsModel = [SysbsModel getSysbsModel];
+    MyCourse *myCourse = sysbsModel.myCourse;
+    [downloadModel setMyCourse:myCourse];
+    [downloadModel downloadAll];
 }
 
 - (void)initCourse{

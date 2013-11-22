@@ -34,16 +34,21 @@
 #import "Course.h"
 #import "MyCourse.h"
 #import "SysbsModel.h"
+#import "DownloadModel.h"
+#import "ASINetworkQueue.h"
 #define ITEM_NUM_IN_ROW     4
 #define MAX_DOWNLOAD_NUM    3
 #define PROGRESS_TAG 111111
 
-NSString *PDFFolderName = @"PDF";
-NSString *NOTEFolderName = @"NOTE";
+NSString *PDFFolderName3 = @"PDF";
+NSString *NOTEFolderName3 = @"NOTE";
 
 
 @interface CoursewareViewController () <ReaderViewControllerDelegate>
-
+{
+    DownloadModel *downloadModel;
+    ASINetworkQueue *queue;
+}
 @end
 
 @implementation CoursewareViewController
@@ -69,6 +74,9 @@ NSString *NOTEFolderName = @"NOTE";
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    
+    downloadModel = [DownloadModel getDownloadModel];
+    queue = downloadModel.queue;
     
     if (![self downloadQueue]) {
         [self setDownloadQueue:[[ASINetworkQueue alloc]init]];
@@ -143,7 +151,7 @@ NSString *NOTEFolderName = @"NOTE";
     self.originalArray = [[NSMutableArray alloc]init];
     self.displayArray = [[NSMutableArray alloc]init];
     NSString *contents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *PDFPath = [contents stringByAppendingPathComponent:PDFFolderName];
+    NSString *PDFPath = [contents stringByAppendingPathComponent:PDFFolderName3];
     NSString *PDFCoursePath = [PDFPath stringByAppendingPathComponent:courseFolderName];
     
     int cid = [courseFolderName intValue];
@@ -170,8 +178,9 @@ NSString *NOTEFolderName = @"NOTE";
             UIImage *fImage = [self getFirstPageFromPDF:item.PDFPath];
             [item setPDFFirstImage:fImage];
         }
-        else
+        else{
             [item setPDFFirstImage:nil];
+        }
         [originalArray addObject:item];
         [displayArray addObject:item];
         [self performSelectorOnMainThread:@selector(displayTableView) withObject:nil waitUntilDone:NO];
@@ -341,7 +350,7 @@ NSString *NOTEFolderName = @"NOTE";
 {
     
     int num;
-    NSLog(@"display count %d",self.displayArray.count);
+//    NSLog(@"display count %d",self.displayArray.count);
     if (self.displayArray.count % ITEM_NUM_IN_ROW == 0) {
         num = self.displayArray.count / ITEM_NUM_IN_ROW;
     }
@@ -430,13 +439,19 @@ NSString *NOTEFolderName = @"NOTE";
         NSString *PDFName = item.PDFName;
         UIImage *PDFFirstImage = item.PDFFirstImage;
 //        NSString *PDFPath = item.PDFPath;
-        NSString *PDFURL = item.PDFURL;
-        for (ASIHTTPRequest *request in self.downloadQueue.operations) {
-            if ([request.url isEqual:[NSURL URLWithString:PDFURL]]) {
+        NSURL *PDFURL = [NSURL URLWithString:item.PDFURL];
+        
+        for (ASIHTTPRequest *request in queue.operations/*self.downloadQueue.operations*/) {
+            if ([request.url isEqual:PDFURL]) {
                 request.tag = index;
-                
                 [request setDownloadProgressDelegate:progressView];
+                NSDictionary *requestDict = request.myDict;
+                NSString *filePath = [requestDict objectForKey:@"filePath"];
+                NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:index],@"index",filePath,@"filePath",item,@"item", nil];
+                [progressView setMyDict:dict];
+                progressView.delegate = self;
                 [progressView setHidden:NO];
+//                [progressView addTarget:self action:@selector(progressValueChange:) forControlEvents:UIControlEventValueChanged];
             }
         }
         if (PDFFirstImage != nil) {
@@ -472,15 +487,25 @@ NSString *NOTEFolderName = @"NOTE";
 //点击单个课件下载
 - (void) courseItemAction:(id)sender
 {
-    
     UIButton *button = (UIButton *)sender;
     NSDictionary *dict = button.myDict;
     int index = [(NSNumber *)[dict objectForKey:@"index"] integerValue];
-    NSLog(@"index %d",index);
+    CoursewareItem *item = [displayArray objectAtIndex:index];
+    NSURL *url = [NSURL URLWithString:item.PDFURL];
+    NSString *filePath = item.PDFPath;
+    NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:url,@"url",filePath,@"filePath", nil];
+    [downloadModel downloadByDict:myDict];
+    
+
+    /*
+    UIButton *button = (UIButton *)sender;
+    NSDictionary *dict = button.myDict;
+    int index = [(NSNumber *)[dict objectForKey:@"index"] integerValue];
+//    NSLog(@"index %d",index);
     [self downloadPDF:index];
     
     [self.downloadQueue go];
-    
+    */
 }
 //下载单个课件
 - (void) downloadPDF:(int)index
@@ -489,14 +514,14 @@ NSString *NOTEFolderName = @"NOTE";
     
     CoursewareItem *item = [displayArray objectAtIndex:index];
     NSURL *url = [NSURL URLWithString:item.PDFURL];
-    NSLog(@"url %@",url);
+//    NSLog(@"url %@",url);
     
     NSString *filePath = item.PDFPath;
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSLog(@"filePath %@",filePath);
+//    NSLog(@"filePath %@",filePath);
     //判断是否已存在文件
     if ([fileManager fileExistsAtPath:filePath]) {
-        NSLog(@"return");
+//        NSLog(@"return");
         return;
     }
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -624,7 +649,7 @@ NSString *NOTEFolderName = @"NOTE";
 	{
         
         NSString *contents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *NOTEPath = [contents stringByAppendingPathComponent:NOTEFolderName];
+        NSString *NOTEPath = [contents stringByAppendingPathComponent:NOTEFolderName3];
         NSString *NOTECoursePath = [NOTEPath stringByAppendingPathComponent:courseFolderName];
         NSString *NOTEPDFPath = [NOTECoursePath stringByAppendingPathComponent:[filePath lastPathComponent]];
         [self createDir:NOTEPDFPath];
@@ -769,6 +794,33 @@ NSString *NOTEFolderName = @"NOTE";
     }
     
     return result;
+}
+#pragma MRProgressDelegate mark
+- (void)progressFinished:(MRCircularProgressView *)progress{
+    NSLog(@"progress %f",progress.progress);
+    NSDictionary *myDict = progress.myDict;
+    int index = [(NSNumber *)[myDict objectForKey:@"index"] intValue];
+    NSString *filePath = [myDict objectForKey:@"filePath"];
+//    if (progress.progress == 100) {
+    
+    CoursewareItem *item = [myDict objectForKey:@"item"];
+    
+        UIButton *button = [self.buttonArray objectAtIndex:index % buttonNumber];
+        NSDictionary *dict = button.myDict;
+        index = [(NSNumber *)[dict objectForKey:@"index"] intValue];
+        UIImage *image = [self getFirstPageFromPDF:filePath];
+    item.PDFFirstImage = image;
+        [button setImage:image forState:UIControlStateNormal];
+        [button setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+        [button removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(openCourseware:) forControlEvents:UIControlEventTouchUpInside];
+        MRCircularProgressView *progressView = (MRCircularProgressView *)[button viewWithTag:PROGRESS_TAG];
+        [progressView setHidden:YES];
+//    }
+
+}
+- (void)progressValueChange:(MRCircularProgressView *)progress{
+
 }
 - (void)dealloc{
     for (ASIHTTPRequest *request in self.downloadQueue.operations) {
