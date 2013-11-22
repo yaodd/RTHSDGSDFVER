@@ -12,7 +12,7 @@
 
 @property (nonatomic, retain) UIImageView *topLine;
 
-@property (nonatomic, retain) UILabel *title;
+@property (nonatomic, retain) UILabel *name;
 
 @property (nonatomic, retain) UILabel *content;
 
@@ -21,6 +21,12 @@
 @property (nonatomic, retain) NSIndexPath *indexPath;
 
 @property (nonatomic, retain) UIButton *rotateBtn;
+
+@property (nonatomic, retain) UILabel *expand;
+
+@property (nonatomic, retain) UIImageView *bottomLine;
+
+@property (nonatomic, retain) UIImageView *rightLine;
 
 - (void)rotateExpandBtnToExpanded;
 

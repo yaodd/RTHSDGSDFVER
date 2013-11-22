@@ -7,14 +7,6 @@
 //
 
 #import "RightCell.h"
-#define kMonthBgRect CGRectMake(0, 75, 50, 50)
-#define kMonthRect CGRectMake(0, 80, 50, 30)
-#define kContentBgRect CGRectMake(100, 20, 300, 160)
-#define kNameRect CGRectMake(130, 30, 60, 30)
-#define kTeacherRect CGRectMake(200, 30, 80, 30)
-#define kDateRect CGRectMake(130, 70, 200, 30)
-#define kPlaceRect CGRectMake(130, 110, 200, 30)
-#define kTimeRect CGRectMake(130, 150, 200, 70)
 
 @implementation RightCell
 @synthesize month;
@@ -32,42 +24,62 @@
     if (self) {
         // Initialization code
         
-        monthBg = [[UIImageView alloc] initWithFrame:kMonthBgRect];
-        monthBg.backgroundColor = [UIColor blackColor];
+        UIColor *titleColor = [UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0];
+        UIColor *textColor = [UIColor colorWithRed:192/255.0 green:178/255.0 blue:181/255.0 alpha:1.0];
+        
+        self.backgroundColor = [UIColor clearColor];
+        
+        monthBg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 25, 103, 103)];
+        monthBg.image = [UIImage imageNamed:@"course_month"];
+        monthBg.backgroundColor = [UIColor clearColor];
         [self addSubview:monthBg];
         
-        contentBg = [[UIImageView alloc] initWithFrame:kContentBgRect];
-        contentBg.backgroundColor = [UIColor blackColor];
+        contentBg = [[UIImageView alloc] initWithFrame:CGRectMake(103, 0, 426, 171)];
+        contentBg.image = [UIImage imageNamed:@"course_couyrse"];
+        contentBg.backgroundColor = [UIColor clearColor];
         [self addSubview:contentBg];
         
-        month = [[UILabel alloc] initWithFrame:kMonthRect];
-        month.backgroundColor = [UIColor grayColor];
+        month = [[UILabel alloc] initWithFrame:CGRectMake(0, 45, 103, 50)];
+        month.backgroundColor = [UIColor clearColor];
+        month.font = [UIFont fontWithName:@"Heiti SC" size:30.0];
+        month.textColor = [UIColor whiteColor];
         month.text = @"aaa";
+        month.textAlignment = NSTextAlignmentCenter;
         [self addSubview:month];
         
-        name = [[UILabel alloc] initWithFrame:kNameRect];
+        name = [[UILabel alloc] initWithFrame:CGRectMake(40+103, 20, 200, 40)];
         name.text = @"aaaa";
-        name.backgroundColor = [UIColor grayColor];
+        name.backgroundColor = [UIColor clearColor];
+        name.font = [UIFont fontWithName:@"Heiti SC" size:30];
+        name.textColor = titleColor;
         [self addSubview:name];
         
-        teacher = [[UILabel alloc] initWithFrame:kTeacherRect];
+        teacher = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x + name.frame.size.width, 35, 150, 20)];
         teacher.text = @"bbbbbb";
-        teacher.backgroundColor = [UIColor grayColor];
+        teacher.backgroundColor = [UIColor clearColor];
+        teacher.font = [UIFont fontWithName:@"Heiti SC" size:18];
+        teacher.textColor = textColor;
         [self addSubview:teacher];
         
-        date = [[UILabel alloc] initWithFrame:kDateRect];
+        date = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x, name.frame.origin.y + name.frame.size.height + 15, 300, 20)];
         date.text = @"cccccccccc";
-        date.backgroundColor = [UIColor grayColor];
+        date.backgroundColor = [UIColor clearColor];
+        date.font = [UIFont fontWithName:@"Heiti SC" size:18];
+        date.textColor = textColor;
         [self addSubview:date];
         
-        place = [[UILabel alloc] initWithFrame:kPlaceRect];
+        place = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x, date.frame.origin.y + date.frame.size.height + 15, 300, 20)];
         place.text = @"dddddddd";
-        place.backgroundColor = [UIColor grayColor];
+        place.backgroundColor = [UIColor clearColor];
+        place.font = [UIFont fontWithName:@"Heiti SC" size:18];
+        place.textColor = textColor;
         [self addSubview:place];
         
-        time = [[UILabel alloc] initWithFrame:kTimeRect];
-        time.backgroundColor = [UIColor grayColor];
+        time = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x, place.frame.origin.y + place.frame.size.height + 15, 300, 20)];
+        time.backgroundColor = [UIColor clearColor];
+        time.font = [UIFont fontWithName:@"Heiti SC" size:18];
         time.text = @"eeeeeeeeeee";
+        time.textColor = textColor;
         [self addSubview:time];
     
     }

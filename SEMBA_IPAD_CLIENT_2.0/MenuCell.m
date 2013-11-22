@@ -22,12 +22,15 @@
         // Initialization code
         self.backgroundColor = [UIColor clearColor];
         
+        title = [[UILabel alloc] init];
         belowLine = [[UIImageView alloc] init];
         topLine = [[UIImageView alloc] init];
         icon = [[UIImageView alloc] init];
         backgroundImg = [[UIImageView alloc] init];
         
+        
         [self addSubview:backgroundImg];
+        [self addSubview:title];
         [self addSubview:belowLine];
         [self addSubview:topLine];
         [self addSubview:icon];

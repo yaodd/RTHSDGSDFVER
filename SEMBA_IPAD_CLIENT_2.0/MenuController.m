@@ -22,7 +22,7 @@
 @interface MenuController ()
 {
     NSMutableArray *titleArray;
-    NSInteger *currentRow;
+    int currentRow;
 }
 
 @end
@@ -57,13 +57,13 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 //    hostController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).hostController;
-    
+    NSLog(@"MenuView did load");
     currentRow = 0;
     
-    float originY = 19.5;
+    float originY = 20;
     
     //Background Image
-    CGRect backgroundFrame = CGRectMake(0, originY, menuWidth, self.view.frame.size.width - originY);
+    CGRect backgroundFrame = CGRectMake(0, originY, menuWidth+5, 748);
     backgroundImg = [[UIImageView alloc] init];
     backgroundImg.frame = backgroundFrame;
     [self.view addSubview:backgroundImg];
@@ -76,18 +76,18 @@
     [self.view addSubview:headImg];
     
     //UserNameLabel
-    CGRect nameFrame = CGRectMake(0, 200, menuWidth, 35);
+    CGRect nameFrame = CGRectMake(0, 210, menuWidth, 35);
     nameLabel = [[UILabel alloc] init];
     nameLabel.frame = nameFrame;
     nameLabel.text = @"李开花";
     nameLabel.textColor = [UIColor whiteColor];
     nameLabel.backgroundColor = [UIColor clearColor];
-    nameLabel.font = [UIFont fontWithName:@"Helti SC" size:24.0f];
+    nameLabel.font = [UIFont fontWithName:@"Heiti SC" size:24.0f];
     nameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:nameLabel];
     
     //Menu TableView
-    CGRect listFrame = CGRectMake(0, 233.5, menuWidth, 210);
+    CGRect listFrame = CGRectMake(0, 255, menuWidth, 210);
     list = [[UITableView alloc] init];
     list.frame = listFrame;
     [list setSectionIndexColor:[UIColor clearColor]];
@@ -108,13 +108,13 @@
     [self.view addSubview:registerBtn];
     
     //RegisterLabel
-    CGRect registerLabelFrame = CGRectMake(0, registerFrame.origin.y + registerFrame.size.height + 10, menuWidth, 40);
+    CGRect registerLabelFrame = CGRectMake(0, registerFrame.origin.y + registerFrame.size.height + 10, menuWidth-20, 40);
     registerLabel = [[UILabel alloc] init];
     registerLabel.frame = registerLabelFrame;
     registerLabel.text = @"签到";
     registerLabel.textColor = [UIColor whiteColor];
     registerLabel.backgroundColor = [UIColor clearColor];
-    registerLabel.font = [UIFont fontWithName:@"Helti SC" size:18.0f];
+    registerLabel.font = [UIFont fontWithName:@"Heiti SC" size:18.0f];
     registerLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:registerLabel];
     
@@ -246,9 +246,8 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSLog(@"A cell for row %d", indexPath.row);
-    static NSString *contentIdentifier = @"Cell";
+    NSLog(@"Cell for section:%d row:%d",[indexPath section],[indexPath row]);
+    NSString *contentIdentifier = [NSString stringWithFormat:@"Cell%d%d",[indexPath section],[indexPath row]]; //以indexPath来唯一确定cell,不使用完全重用机制
     
     MenuCell *cell =[list dequeueReusableCellWithIdentifier:contentIdentifier];
     
@@ -256,88 +255,144 @@
         cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:contentIdentifier];
     }
     
-    cell.textLabel.text = [titleArray objectAtIndex:indexPath.row];
-    cell.textLabel.textAlignment = NSTextAlignmentCenter;
-    cell.textLabel.textColor = [UIColor whiteColor];
     
+    cell.title.text = [titleArray objectAtIndex:indexPath.row];
     
+    NSLog(@"currentRow:%d", currentRow);
     if(indexPath.row == 0){
-        cell.topLine.frame = CGRectMake(0, 0, menuWidth, 2);
-        cell.belowLine.frame = CGRectMake(0, 40.5, menuWidth, 2);
+        
+        cell.topLine.frame = CGRectMake(0, 0, menuWidth, 1);
+        cell.belowLine.frame = CGRectMake(0, 43, menuWidth, 1);
         cell.topLine.backgroundColor = [UIColor whiteColor];
         cell.belowLine.backgroundColor = [UIColor whiteColor];
         
         cell.icon.frame = CGRectMake(23, 5, 35, 31);
-        cell.icon.image = [UIImage imageNamed:@"news center-study"];
+        cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 44);
+        cell.title.font = [UIFont fontWithName:@"Heiti SC" size:18];
+        cell.title.frame = CGRectMake(0, 0, menuWidth, 41);
+        cell.title.textAlignment = NSTextAlignmentCenter;
         
-        cell.textLabel.font = [UIFont fontWithName:@"Helti SC" size:18.0];
-        
+        if(currentRow == 0){
+            
+            cell.icon.image = [UIImage imageNamed:@"course_pressed"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+            cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
+            
+        }else{
+
+            cell.icon.image = [UIImage imageNamed:@"news center-study"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
+            cell.title.textColor = [UIColor whiteColor];
+        }
     }else if(indexPath.row == 1){
         
         cell.icon.frame = CGRectMake(65, 5, 35, 31);
-        cell.icon.image = [UIImage imageNamed:@"news center-note.png"];
+        cell.title.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
+        cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 41.5);
+        cell.title.frame = CGRectMake(110, 0, menuWidth - 120, 41);
         
-        cell.textLabel.font = [UIFont fontWithName:@"Helti SC" size:15.0];
+        if(currentRow == 1){
+            
+            cell.icon.image = [UIImage imageNamed:@"ppt_pressed"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+            cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
+        }else {
+            
+            cell.icon.image = [UIImage imageNamed:@"news center-note"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
+            cell.title.textColor = [UIColor whiteColor];
+        }
         
-        cell.backgroundImg.frame = cell.frame;
-        cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
         
     }else if(indexPath.row == 2){
         
         cell.icon.frame = CGRectMake(65, 5, 35, 31);
-        cell.icon.image = [UIImage imageNamed:@"news center-pen.png"];
+        cell.title.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
+        cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 41.5);
+        cell.title.frame = CGRectMake(110, 0, menuWidth - 120, 41);
         
-        cell.textLabel.font = [UIFont fontWithName:@"Helti SC" size:15.0];
-        
-        cell.backgroundImg.frame = cell.frame;
-        cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
+        if(currentRow == 2){
+            
+            cell.icon.image = [UIImage imageNamed:@"pingjiao_pressed"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+            cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
+        }else {
+            
+            cell.icon.image = [UIImage imageNamed:@"news center-pen"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
+            cell.title.textColor = [UIColor whiteColor];
+        }
         
     }else if(indexPath.row == 3){
         
         cell.icon.frame = CGRectMake(62, 5, 28, 27);
-        cell.icon.image = [UIImage imageNamed:@"news center-calender.png"];
+        cell.title.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
+        cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 41.5);
+        cell.title.frame = CGRectMake(110, 0, menuWidth - 120, 41);
         
-        cell.textLabel.font = [UIFont fontWithName:@"Helti SC" size:15.0];
-        
-        cell.backgroundImg.frame = cell.frame;
-        cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
+        if(currentRow == 3){
+            
+            cell.icon.image = [UIImage imageNamed:@"schedule_pressed"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+            NSLog(@"row3's bgImg frame:%f--%f", cell.backgroundImg.frame.origin.x, cell.backgroundImg.frame.origin.y);
+            cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
+        }else {
+            
+            cell.icon.image = [UIImage imageNamed:@"news center-calender"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
+            cell.title.textColor = [UIColor whiteColor];
+        }
         
     }else if(indexPath.row == 4){
-        cell.topLine.frame = CGRectMake(0, 0, menuWidth, 2);
-        cell.belowLine.frame = CGRectMake(0, 40.5, menuWidth, 2);
+    
+        cell.topLine.frame = CGRectMake(0, 0, menuWidth, 1);
+        cell.belowLine.frame = CGRectMake(0, 42, menuWidth, 1);
         cell.topLine.backgroundColor = [UIColor whiteColor];
         cell.belowLine.backgroundColor = [UIColor whiteColor];
         
         cell.icon.frame = CGRectMake(23, 5, 35, 31);
-        cell.icon.image = [UIImage imageNamed:@"news center-calender.png"];
+        cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 44);
+        cell.title.font = [UIFont fontWithName:@"Heiti SC" size:18.0];
+        cell.title.frame = CGRectMake(0, 0, menuWidth, 41);
+        cell.title.textAlignment = NSTextAlignmentCenter;
         
-        cell.textLabel.font = [UIFont fontWithName:@"Helti SC" size:15.0];
+        if(currentRow == 4){
+            
+            cell.icon.image = [UIImage imageNamed:@"news center-mail"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+            cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
+            
+        }else{
+            
+            cell.icon.image = [UIImage imageNamed:@"news center-calender"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
+            cell.title.textColor = [UIColor whiteColor];
+        }
         
     }
+    
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.row == 0){
-        return 42.5;
+    if(indexPath.row == 0 || indexPath.row == 4){
+        return 44;
     }
-    if(indexPath.row == 4){
-        return 42.5;
-    }
+
     return 41;
     
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //hostController.rootViewController.view.userInteractionEnabled = YES;
     
-    if(currentRow == (NSInteger *)indexPath.row){
-        [list deselectRowAtIndexPath:indexPath animated:YES];
+    if(currentRow == indexPath.row){
+        //[list deselectRowAtIndexPath:indexPath animated:YES];
         return;
     }
     
     if(indexPath.row == 1 || indexPath.row == 0){
+        //implement the views' translate
         MainPageViewController *controller = [[MainPageViewController alloc] init];
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
         controller.title = [titleArray objectAtIndex:indexPath.row];
@@ -349,7 +404,7 @@
         }
 
     }else if(indexPath.row == 2){
-
+        //implement the views' translate
         EvaluateController *controller = [[EvaluateController alloc] init];
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
         controller.title = [titleArray objectAtIndex:indexPath.row];
@@ -361,9 +416,9 @@
         }
         
     }else if(indexPath.row == 3){
+        //implement the views' translate
         ScheduleController *controller = [[ScheduleController alloc] init];
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
-        controller.title = [titleArray objectAtIndex:indexPath.row];
         [hostController setRootController:navController animated:YES];
         
 
@@ -371,28 +426,30 @@
             noticeController.view.alpha = 0.0;
             [noticeController.view setHidden:YES];
         }
+
+        
     }else if(indexPath.row == 4){
+        //implement the views' translate
         [hostController.rootViewController.view setHidden:YES];
+        
+        [hostController.tap setEnabled:NO];
+        [noticeController.view setHidden:NO];
+        
+        [noticeController.view setFrame:CGRectMake(1024, 0, noticeController.view.frame.size.width,noticeController.view.frame.size.height)];
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            noticeController.view.alpha = 1.0;
+            noticeController.view.frame = CGRectMake(menuWidth, 0, noticeController.view.frame.size.width,noticeController.view.frame.size.height);
+        } completion:^(BOOL finished) {
+            [noticeController.view setUserInteractionEnabled:YES];
+            [self.view bringSubviewToFront:noticeController.view];
+        }];
 
         
-            [hostController.tap setEnabled:NO];
-            [noticeController.view setHidden:NO];
-        
-            [noticeController.view setFrame:CGRectMake(1024, 0, noticeController.view.frame.size.width, noticeController.view.frame.size.height)];
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-                noticeController.view.alpha = 1.0;
-                noticeController.view.frame = CGRectMake(250, 0, noticeController.view.frame.size.width, noticeController.view.frame.size.height);
-            } completion:^(BOOL finished) {
-                [noticeController.view setUserInteractionEnabled:YES];
-                [self.view bringSubviewToFront:noticeController.view];
-            }];
-        
-
-
     }
     
-    currentRow = (NSInteger*)indexPath.row;
-    [list deselectRowAtIndexPath:indexPath animated:YES];
+    currentRow = indexPath.row;
+    [self.list reloadData];
+    //[list deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

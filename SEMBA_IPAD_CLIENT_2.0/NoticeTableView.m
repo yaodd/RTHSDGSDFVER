@@ -9,7 +9,7 @@
 #import "NoticeTableView.h"
 #import "NoticeTableCell.h"
 
-#define originalHeight 123.0f
+#define originalHeight 133.0f
 //#define newHeight 75.0f
 #define isOpen @"didOpen"
 #define kTitleKey @"title"
@@ -23,7 +23,7 @@
     NSMutableDictionary *titleNames;
     CGRect expandRect;
     int cellCount;
-
+    
     int flag;
 }
 
@@ -44,6 +44,9 @@
         self.dataSource = self;
         
         flag = 0;
+        
+        [self setShowsVerticalScrollIndicator:NO];
+        [self setSeparatorColor:[UIColor clearColor]];
         
     }
     return self;
@@ -76,7 +79,7 @@
 {
     
     NSLog(@"cell For row %d at section %d", indexPath.row, indexPath.section);
-    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d",[indexPath section],[indexPath row]]; //以indexPath来唯一确定cell,不使用完全重用机制
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell"]; //以indexPath来唯一确定cell,不使用完全重用机制
     
     NoticeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -90,42 +93,105 @@
     
     cell.indexPath = indexPath;
     
-    cell.title.text = item.title;
+    cell.name.text = item.title;
     
     cell.date.text = item.date;
     
     cell.content.text  = item.content;
     
-    
     if ([[dicClicked objectForKey:[NSString stringWithFormat:@"%d", indexPath.section]] isEqualToString: isOpen])
     {
-        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0], NSFontAttributeName,[UIColor blackColor], NSForegroundColorAttributeName, nil];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:cell.content.font, NSFontAttributeName,cell.content.textColor, NSForegroundColorAttributeName, nil];
         
         CGSize size = CGSizeMake(700, 2000);
         
         expandRect = [cell.content.text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
         
-        cell.content.frame = CGRectMake(10, 20, 700, expandRect.size.height);
+        cell.content.frame = CGRectMake(cell.content.frame.origin.x,
+                                        cell.content.frame.origin.y,
+                                        cell.content.frame.size.width,
+                                        expandRect.size.height);
         
-        cell.rotateBtn.frame = CGRectMake(700, 40, 20, 20);
+        cell.expand.frame = CGRectMake(cell.expand.frame.origin.x,
+                                       100,
+                                       cell.expand.frame.size.width,
+                                       cell.expand.frame.size.height);
+        cell.expand.text = @"展开";
+        cell.rotateBtn.frame = CGRectMake(cell.expand.frame.origin.x + cell.expand.frame.size.width,
+                                          cell.expand.frame.origin.y,
+                                          cell.rotateBtn.frame.size.width,
+                                          cell.rotateBtn.frame.size.height);
+        
         [UIView animateWithDuration:0.5 animations:^(void){
-            cell.rotateBtn.frame = CGRectMake(700, 40 + expandRect.size.height - 16, 20, 20);
+            
+            cell.expand.frame = CGRectMake(cell.expand.frame.origin.x,
+                                           expandRect.size.height + 90,
+                                           cell.expand.frame.size.width,
+                                           cell.expand.frame.size.height);
+            cell.expand.text = @"收起";
+            cell.rotateBtn.frame = CGRectMake(cell.expand.frame.origin.x + cell.expand.frame.size.width,
+                                              cell.expand.frame.origin.y,
+                                              cell.rotateBtn.frame.size.width,
+                                              cell.rotateBtn.frame.size.height);
+            
         }];
         
         [cell rotateExpandBtnToExpanded];
         
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 723, cell.content.frame.size.height + 120) byRoundingCorners:(UIRectCornerBottomRight | UIRectCornerBottomLeft) cornerRadii:CGSizeMake(20.0, 20.0)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        //maskLayer.path=maskPath.CGPath;
+        maskLayer.frame = CGRectMake(0, 0, 723, 123);
+        maskLayer.path = maskPath.CGPath;
+        cell.layer.mask = maskLayer;
+        
         
     }else{
         
-        cell.content.frame = CGRectMake(10, 20, 700, 16);
-        if(dataArray.count < flag)
-        cell.rotateBtn.frame = CGRectMake(700, 40 + expandRect.size.height - 16, 20, 20);
+        cell.content.frame = CGRectMake(cell.content.frame.origin.x,
+                                        cell.content.frame.origin.y,
+                                        cell.content.frame.size.width,
+                                        16);
+        
+        if(dataArray.count < flag){
+            
+            cell.expand.frame = CGRectMake(cell.expand.frame.origin.x,
+                                           expandRect.size.height + 90,
+                                           cell.expand.frame.size.width,
+                                           cell.expand.frame.size.height);
+            cell.expand.text = @"收起";
+            cell.rotateBtn.frame = CGRectMake(cell.expand.frame.origin.x + cell.expand.frame.size.width,
+                                              cell.expand.frame.origin.y,
+                                              cell.rotateBtn.frame.size.width,
+                                              cell.rotateBtn.frame.size.height);
+        }
         [UIView animateWithDuration:0.5 animations:^(void){
-            cell.rotateBtn.frame = CGRectMake(700, 40, 20, 20);
+            
+            cell.expand.frame = CGRectMake(cell.expand.frame.origin.x,
+                                           100,
+                                           cell.expand.frame.size.width,
+                                           cell.expand.frame.size.height);
+            cell.expand.text = @"展开";
+            cell.rotateBtn.frame = CGRectMake(cell.expand.frame.origin.x + cell.expand.frame.size.width,
+                                              cell.expand.frame.origin.y,
+                                              cell.rotateBtn.frame.size.width,
+                                              cell.rotateBtn.frame.size.height);
         }];
         
         [cell rotateExpandBtnToCollapsed];
+        
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 723, 130) byRoundingCorners:(UIRectCornerBottomRight | UIRectCornerBottomLeft) cornerRadii:CGSizeMake(20.0, 20.0)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        //maskLayer.path=maskPath.CGPath;
+        maskLayer.frame = CGRectMake(0, 0, 723, 123);
+        maskLayer.path = maskPath.CGPath;
+        cell.layer.mask = maskLayer;
     }
+    
+    cell.bottomLine.frame = CGRectMake(cell.bottomLine.frame.origin.x,
+                                       cell.expand.frame.origin.y + 25,
+                                       cell.bottomLine.frame.size.width,
+                                       cell.bottomLine.frame.size.height);
     
     return cell;
 }
@@ -160,13 +226,11 @@
         
         [dicClicked setObject:isOpen forKey:[NSString stringWithFormat:@"%d", indexPath.section]];
         
-
-        
     }
     else{
+        
         [dicClicked removeObjectForKey:[NSString stringWithFormat:@"%d", indexPath.section]];
         
-
     }
     
     [self reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -181,7 +245,7 @@
     
     NSString *content = item.content;
     
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0], NSFontAttributeName,[UIColor blackColor], NSForegroundColorAttributeName, nil];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Heiti SC" size:15.0], NSFontAttributeName,[UIColor colorWithRed:135/255.0 green:132/255.0 blue:134/255.0 alpha:1.0], NSForegroundColorAttributeName, nil];
     
     CGSize size = CGSizeMake(700, 2000);
     
@@ -189,11 +253,18 @@
     
     if ([[dicClicked objectForKey:[NSString stringWithFormat:@"%d", indexPath.section]] isEqualToString: isOpen]){
         
-        return expandRect.size.height + 40;
+        return expandRect.size.height + 120;
     }
     else{
         return originalHeight;
     }
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
+    sectionView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
+    return sectionView;
 }
 
 @end

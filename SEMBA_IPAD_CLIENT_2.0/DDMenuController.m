@@ -28,9 +28,9 @@
 #import "NoticeController.h"
 
 #define kMenuFullWidth 238.0f
-#define kMenuDisplayedWidth 280.0f
+#define kMenuDisplayedWidth 238.0f
 #define kMenuOverlayWidth (self.view.bounds.size.width - kMenuDisplayedWidth)
-#define kMenuBounceOffset 10.0f
+#define kMenuBounceOffset 0.0f
 #define kMenuBounceDuration .3f
 #define kMenuSlideDuration .3f
 
@@ -165,7 +165,7 @@
 
     if (gesture.state == UIGestureRecognizerStateBegan) {
         
-        [self showShadow:YES];
+        [self showShadow:NO];
         _panOriginX = self.view.frame.origin.x;        
         _panVelocity = CGPointMake(0.0f, 0.0f);
         
@@ -408,8 +408,12 @@
     }
     
     if (_menuFlags.canShowLeft) {
-        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"menu" style:UIBarButtonItemStyleBordered target:self action:@selector(showLeft:)];
-        topController.navigationItem.leftBarButtonItem = button;
+        //UIImageView *menuImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 22, 18)];
+        //menuImg.image = [UIImage imageNamed:@"course_back"];
+        //UIBarButtonItem *menu = [[UIBarButtonItem alloc] initWithCustomView:menuImg];
+        UIBarButtonItem *menu = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed:@"course_back"] style:UIBarButtonItemStyleBordered target:self action:@selector(showLeft:)];
+        //UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"menu" style:UIBarButtonItemStyleBordered target:self action:@selector(showLeft:)];
+        topController.navigationItem.leftBarButtonItem = menu;
     } else {
         topController.navigationItem.leftBarButtonItem = nil;
     }
@@ -488,7 +492,7 @@
         [self.delegate menuController:self willShowViewController:self.leftViewController];
     }
     _menuFlags.showingLeftView = YES;
-    [self showShadow:YES];
+    [self showShadow:NO];
 
     UIView *leftView = self.leftViewController.view;
 	CGRect frame = self.view.bounds;
@@ -532,7 +536,7 @@
     }
     
     _menuFlags.showingRightView = YES;
-    [self showShadow:YES];
+    [self showShadow:NO];
 
     UIView *view = self.rightViewController.view;
     CGRect frame = self.view.bounds;
