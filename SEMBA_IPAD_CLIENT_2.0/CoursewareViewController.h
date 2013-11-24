@@ -25,8 +25,10 @@
 
 #import <UIKit/UIKit.h>
 #import "ASINetworkQueue.h"
+#import "MRCircularProgressView.h"
+#import "DownloadModel.h"
 
-@interface CoursewareViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,UISearchBarDelegate>
+@interface CoursewareViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,ASIProgressDelegate,UISearchBarDelegate,MRProgressDelegate,DownloadModelDelegate>
 
 @property (nonatomic, retain) UITableView *courseTableView;
 @property (nonatomic, retain) NSMutableArray *PDFUrlArray;
