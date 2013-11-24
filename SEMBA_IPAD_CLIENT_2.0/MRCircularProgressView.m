@@ -194,8 +194,8 @@
 
 - (void)setProgress:(float)progress {
     
-    NSLog(@"in progress %f" ,_progress);
-    NSLog(@"int %d",(int)_progress);
+//    NSLog(@"in progress %f" ,_progress);
+//    NSLog(@"int %d",(int)_progress);
     int result = (int)_progress;
     if (result == 1) {
         [self.delegate progressFinished:self];

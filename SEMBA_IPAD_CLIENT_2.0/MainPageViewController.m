@@ -185,7 +185,6 @@
 }
 - (void)downloadAll{
     NSLog(@"donwloadAll");
-    
     DownloadModel *downloadModel = [DownloadModel getDownloadModel];
     SysbsModel *sysbsModel = [SysbsModel getSysbsModel];
     MyCourse *myCourse = sysbsModel.myCourse;

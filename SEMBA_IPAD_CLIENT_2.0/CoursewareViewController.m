@@ -444,8 +444,9 @@ NSString *NOTEFolderName3 = @"NOTE";
         
         for (ASIHTTPRequest *request in queue.operations/*self.downloadQueue.operations*/) {
             if ([request.url isEqual:PDFURL]) {
-                request.tag = index;
+//                request.tag = index;
                 [request setDownloadProgressDelegate:progressView];
+                
                 NSDictionary *requestDict = request.myDict;
                 NSString *filePath = [requestDict objectForKey:@"filePath"];
                 NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:index],@"index",filePath,@"filePath",item,@"item", nil];
@@ -491,27 +492,62 @@ NSString *NOTEFolderName3 = @"NOTE";
 {
     UIButton *button = (UIButton *)sender;
     NSDictionary *dict = button.myDict;
+    
     int index = [(NSNumber *)[dict objectForKey:@"index"] integerValue];
-    CoursewareItem *item = [displayArray objectAtIndex:index];
+    [self downloadPDF:index];
+    /*CoursewareItem *item = [displayArray objectAtIndex:index];
     NSURL *url = [NSURL URLWithString:item.PDFURL];
     NSString *filePath = item.PDFPath;
-    NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:url,@"url",filePath,@"filePath", nil];
+    NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:url,@"url",filePath,@"filePath",item,@"item",[NSNumber numberWithInt:index],@"index", nil];
     [downloadModel downloadByDict:myDict];
     
-
-    /*
-    UIButton *button = (UIButton *)sender;
-    NSDictionary *dict = button.myDict;
-    int index = [(NSNumber *)[dict objectForKey:@"index"] integerValue];
-//    NSLog(@"index %d",index);
-    [self downloadPDF:index];
     
-    [self.downloadQueue go];
-    */
+    MRCircularProgressView *progress = (MRCircularProgressView *)[button viewWithTag:PROGRESS_TAG];
+    for (ASIHTTPRequest *request in queue.operations) {
+        if ([request isExecuting]) {
+            [request setQueuePriority:NSOperationQueuePriorityVeryLow];
+            break;
+        }
+    }
+    for (ASIHTTPRequest *request in queue.operations) {
+        if ([request.url isEqual:url]) {
+            //                request.tag = index;
+            [progress setMyDict:myDict];
+            [progress setHidden:NO];
+            progress.delegate = self;
+            [request setDownloadProgressDelegate:progress];
+        }
+    }*/
 }
 //下载单个课件
 - (void) downloadPDF:(int)index
 {
+    CoursewareItem *item = [displayArray objectAtIndex:index];
+    NSURL *url = [NSURL URLWithString:item.PDFURL];
+    NSString *filePath = item.PDFPath;
+    NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:url,@"url",filePath,@"filePath",item,@"item",[NSNumber numberWithInt:index],@"index", nil];
+    
+    
+    UIButton *button = (UIButton *)[buttonArray objectAtIndex:index % buttonNumber];
+    MRCircularProgressView *progress = (MRCircularProgressView *)[button viewWithTag:PROGRESS_TAG];
+    for (ASIHTTPRequest *request in queue.operations) {
+        if ([request isExecuting]) {
+            [request setQueuePriority:NSOperationQueuePriorityVeryLow];
+            break;
+        }
+    }
+    [downloadModel downloadByDict:myDict];
+    for (ASIHTTPRequest *request in queue.operations/*self.downloadQueue.operations*/) {
+        if ([request.url isEqual:url]) {
+            //                request.tag = index;
+            [progress setMyDict:myDict];
+            [progress setHidden:NO];
+            progress.delegate = self;
+            [request setDownloadProgressDelegate:progress];
+        }
+    }
+
+    /*
     UIButton *button = (UIButton *)[buttonArray objectAtIndex:index % buttonNumber];
     
     CoursewareItem *item = [displayArray objectAtIndex:index];
@@ -548,18 +584,18 @@ NSString *NOTEFolderName3 = @"NOTE";
     NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:item,@"item", nil];
     [request setMyDict:myDict];
     [self.downloadQueue addOperation:request];
-    
+    */
 }
 //下载所有课件
 - (void)downloadAllAction:(id)sender
 {
-    for (int i = 0; i < [displayArray count]; i ++) {
+    for (int i = [displayArray count] - 1; i >= 0; i --) {
 //        if ([self.downloadQueue operationCount] < buttonNumber) {
         [self downloadPDF:i];
 //        }
         
     }
-    [self.downloadQueue go];
+//    [self.downloadQueue go];
 }
 
 //下载完成
@@ -799,13 +835,13 @@ NSString *NOTEFolderName3 = @"NOTE";
 }
 #pragma DownloadModelDelegate mark
 - (void)downloadFinished:(ASIHTTPRequest *)request{
-    NSLog(@"finished");
+//    NSLog(@"finished");
 //    [courseTableView reloadData];
 }
 #pragma MRProgressDelegate mark
 - (void)progressFinished:(MRCircularProgressView *)progress{
     
-    NSLog(@"out progress %f",progress.progress);
+//    NSLog(@"out progress %f",progress.progress);
     NSDictionary *myDict = progress.myDict;
     int index = [(NSNumber *)[myDict objectForKey:@"index"] intValue];
     NSString *filePath = [myDict objectForKey:@"filePath"];
@@ -831,12 +867,14 @@ NSString *NOTEFolderName3 = @"NOTE";
 
 }
 - (void)dealloc{
-    for (ASIHTTPRequest *request in self.downloadQueue.operations) {
-        [request clearDelegatesAndCancel];
+    for (ASIHTTPRequest *request in queue.operations) {
+//        [request clearDelegatesAndCancel];
+        request.downloadProgressDelegate = nil;
     }
     for (MRCircularProgressView *progress in progressArray) {
         [progress removeLink];
     }
+    downloadModel.delegate = nil;
 }
 
 
