@@ -26,6 +26,7 @@ BOOL shouldLogin;
 @synthesize loginButton;
 @synthesize accountTF;
 @synthesize loginView;
+@synthesize autoLoginCheck;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,6 +46,7 @@ BOOL shouldLogin;
     [accountTF setText:@"common"];
     [passwordTF setText:@"72"];
     passwordTF.secureTextEntry = YES;
+    [autoLoginCheck setSelected:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -170,6 +172,15 @@ BOOL shouldLogin;
     //    if (shouldLogin) {
     
     //    }
+}
+- (IBAction)autoLoginCheckAction:(id)sender {
+    if (autoLoginCheck.selected == NO) {
+        [autoLoginCheck setBackgroundColor:[UIColor blueColor]];
+        autoLoginCheck.selected = YES;
+    } else{
+        [autoLoginCheck setBackgroundColor:[UIColor blackColor]];
+        autoLoginCheck.selected = NO;
+    }
 }
 
 @end

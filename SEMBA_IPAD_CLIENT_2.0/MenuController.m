@@ -66,6 +66,7 @@
     CGRect backgroundFrame = CGRectMake(0, originY, menuWidth+5, 748);
     backgroundImg = [[UIImageView alloc] init];
     backgroundImg.frame = backgroundFrame;
+    [backgroundImg setImage:[UIImage imageNamed:@"background_drawer"]];
     [self.view addSubview:backgroundImg];
     
     //headImg
@@ -73,6 +74,7 @@
     headImg = [[UIImageView alloc] init];
     headImg.frame = headFrame;
     headImg.backgroundColor = [UIColor blackColor];
+    [headImg setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"news center-circle on the menu"]]];
     [self.view addSubview:headImg];
     
     //UserNameLabel
@@ -105,6 +107,7 @@
     registerBtn.frame = registerFrame;
     registerBtn.backgroundColor = [UIColor clearColor];
     [registerBtn addTarget:self action:@selector(registerBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [registerBtn setImage:[UIImage imageNamed:@"news center-sign"] forState:UIControlStateNormal];
     [self.view addSubview:registerBtn];
     
     //RegisterLabel
@@ -126,15 +129,17 @@
     //[self.view addSubview:helpBtn];
     
     //setting Button
-    CGRect settingFrame = CGRectMake(200, listFrame.origin.y + listFrame.size.height + 270, 26, 26);
+    UIImageView *settingImg = [[UIImageView alloc] initWithFrame:CGRectMake(200, listFrame.origin.y + listFrame.size.height + 270, 26, 26)];
+    settingImg.image = [UIImage imageNamed:@"news center-setting"];
+    settingImg.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:settingImg];
+    CGRect settingFrame = CGRectMake(188, listFrame.origin.y + listFrame.size.height + 268, 50, 50);
     settingBtn = [[UIButton alloc] init];
     settingBtn.frame = settingFrame;
     settingBtn.backgroundColor = [UIColor clearColor];
     [settingBtn addTarget:self action:@selector(showSetupWindow) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:settingBtn];
     
-    [self setImageAndBackground];
-
     noticeController = [[NoticeController alloc] init];
     noticeController.view.frame = CGRectMake(menuWidth, 0, 1024-menuWidth, 768);
 
@@ -152,14 +157,11 @@
     [blurView setHidden:YES];
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapSelector:)];
     [blurView addGestureRecognizer:tapGesture];
-    [hostController.view addSubview:blurView];
+//    [hostController.view addSubview:blurView];
 
     setupView = [[SetUpView alloc]initWithDefault:hostController];
     setupView.delegate = self;
     setupView.alpha = 0.0f;
-    [hostController.view addSubview:setupView];
-    
-    
 }
 
 - (void)dealloc{
@@ -167,6 +169,8 @@
 }
 
 - (void)showSetupWindow{
+//    [self.view bringSubviewToFront:setupView];
+//    [hostController.view addSubview:setupView];
     [hostController.tap setEnabled:NO];
     [self showBlur];
     [setupView showSetupView];
@@ -176,9 +180,11 @@
     [setupView hideSetupView];
     [self hideBlur];
     [hostController.tap setEnabled:YES];
+//    [setupView removeFromSuperview];
 }
 
 - (void)showBlur{
+    [hostController.view addSubview:blurView];
     [blurView setHidden:NO];
     [UIView animateWithDuration:0.5f animations:^{
         [blurView setAlpha:0.5f];
@@ -191,6 +197,7 @@
         [blurView setAlpha:0.0f];
     } completion:^(BOOL finished){
         [blurView setHidden:YES];
+        [blurView removeFromSuperview];
     }];
 }
 #pragma SetUpViewDelegate mark
@@ -204,16 +211,6 @@
     [self hideBlur];
     [hostController.tap setEnabled:YES];
     [hostController dismissViewControllerAnimated:YES completion:nil];
-}
-- (void)setImageAndBackground
-{
-    [backgroundImg setImage:[UIImage imageNamed:@"news center-menu.png"]];
-    
-    [headImg setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"news center-circle on the menu.png"]]];
-    
-    [registerBtn setImage:[UIImage imageNamed:@"news center-sign.png"] forState:UIControlStateNormal];
-    
-    [settingBtn setImage:[UIImage imageNamed:@"news center-setting.png"] forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning

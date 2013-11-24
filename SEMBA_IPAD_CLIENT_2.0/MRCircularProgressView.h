@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class MRCircularProgressView;
+@protocol MRProgressDelegate <NSObject>
+
+@optional
+
+- (void)progressFinished:(MRCircularProgressView *)progress;
+
+@end
 
 /**
  You use the MRCircularProgressView class to depict the progress of a task over time.
@@ -45,6 +53,8 @@
  
  @param animated Specify YES to animate the change or NO if you do not want the change to be animated.
  */
+@property (nonatomic, retain) NSDictionary *myDict;
+@property (nonatomic, assign) id<MRProgressDelegate> delegate;
 - (void)setProgress:(float)progress animated:(BOOL)animated;
 
 - (void)removeLink;
