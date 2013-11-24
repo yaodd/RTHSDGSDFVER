@@ -50,10 +50,11 @@ float durationOfAnimation = 2.0f;
         self.frame = rect;
         self.alpha = 0.0f;
     } completion:^(BOOL finished){
-        
+        [self removeFromSuperview];
     }];
 }
 - (void)showSetupView{
+    [outViewController.view addSubview:self];
     CGRect rect = self.frame;
     rect.origin.y -= 200;
     [UIView animateWithDuration:0.5f animations:^{
@@ -93,9 +94,12 @@ float durationOfAnimation = 2.0f;
 //        [self addSubview:rootViewController.view];
 //        [rootViewController viewWillAppear:NO];
         
-        UIColor *bgColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"setting_bg"]];
+//        UIColor *bgColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"setting_bg"]];
+        UIColor *bgColor = [UIColor whiteColor];
 //        [self setBackgroundColor:[UIColor blueColor]];
         [self setBackgroundColor:bgColor];
+        self.layer.cornerRadius = 20;
+        
     /*    [self initWithBar];
         [self initWithDownLoad];
         [self initWithPush];

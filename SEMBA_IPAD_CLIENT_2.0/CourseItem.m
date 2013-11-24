@@ -8,6 +8,12 @@
 
 #import "CourseItem.h"
 
+#define START_X     12.0f
+#define START_Y     15.0f
+#define TEACH_LABEL_WIDTH   100
+#define INFO_VIEW_Y     169
+#define INFO_VIEW_HEIGHT    69
+
 @implementation CourseItem
 @synthesize courseImg;
 @synthesize nameLabel;
@@ -28,6 +34,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        [self.layer setCornerRadius:20.0f];
         NSString *courseName = [courseDict objectForKey:@"courseName"];
         NSString *date = [courseDict objectForKey:@"date"];
         NSString *teachName = [courseDict objectForKey:@"teachName"];
@@ -35,33 +42,47 @@
         
         self.backgroundColor = [UIColor grayColor];
         
-        courseImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 100, 100)];
+        
+        courseImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [courseImg setImage:courseImage];
+        [courseImg.layer setCornerRadius:20.0f];
         [self addSubview:courseImg];
         
-        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 200, 30)];
+        UIView *infoView = [[UIView alloc]initWithFrame:CGRectMake(0, INFO_VIEW_Y, self.frame.size.width, INFO_VIEW_HEIGHT)];
+        [infoView setBackgroundColor:[UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]];
+        [infoView setAlpha:0.6];
+        [self addSubview:infoView];
+
+        CGFloat topY = START_Y;
+        
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(START_X, topY, 200, 30)];
         nameLabel.text = courseName;
-        nameLabel.textColor = [UIColor blackColor];
-        nameLabel.font = [UIFont fontWithName:@"Heiti SC" size:20.0];
+        nameLabel.textColor = [UIColor colorWithRed:198.0/255 green:56.0/255 blue:91.0/255 alpha:1.0];
+        nameLabel.font = [UIFont fontWithName:@"Heiti SC" size:27.0];
         nameLabel.lineBreakMode = NSLineBreakByCharWrapping;
         nameLabel.numberOfLines = 0;
-        [self addSubview:nameLabel];
-        
-        dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y + nameLabel.frame.size.height + 5, nameLabel.frame.size.width, 10)];
-        dateLabel.text = date;
-        dateLabel.textColor = [UIColor blackColor];
-        dateLabel.font = [UIFont fontWithName:@"Heiti SC" size:10.0];
-        dateLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        dateLabel.numberOfLines = 0;
-        [self addSubview:dateLabel];
-        
-        resumeLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, dateLabel.frame.origin.y + dateLabel.frame.size.height + 15, nameLabel.frame.size.width, 60)];
+        [nameLabel setTextAlignment:NSTextAlignmentLeft];
+        [infoView addSubview:nameLabel];
+        topY += (30 + 10);
+        resumeLabel = [[UILabel alloc] initWithFrame:CGRectMake(START_X, topY, 70, 15)];
         resumeLabel.text = teachName;
-        resumeLabel.textColor = [UIColor blackColor];
-        resumeLabel.font = [UIFont fontWithName:@"Heiti SC" size:10.0];
+        resumeLabel.textColor = [UIColor colorWithRed:56.0/255 green:16.0/255 blue:33.0/255 alpha:1.0];
+        resumeLabel.font = [UIFont fontWithName:@"Heiti SC" size:12.0];
         resumeLabel.lineBreakMode = NSLineBreakByCharWrapping;
         resumeLabel.numberOfLines = 0;
-        [self addSubview:resumeLabel];
+        [resumeLabel setTextAlignment:NSTextAlignmentLeft];
+        [infoView addSubview:resumeLabel];
+        
+        dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - (START_X * 2) - 200, topY, 200, 15)];
+        dateLabel.text = date;
+        dateLabel.textColor = [UIColor colorWithRed:56.0/255 green:16.0/255 blue:33.0/255 alpha:1.0];
+        dateLabel.font = [UIFont fontWithName:@"Heiti SC" size:12.0];
+        dateLabel.lineBreakMode = NSLineBreakByCharWrapping;
+        dateLabel.numberOfLines = 0;
+        [dateLabel setTextAlignment:NSTextAlignmentRight];
+        [infoView addSubview:dateLabel];
+        
+        
         
     }
     return self;

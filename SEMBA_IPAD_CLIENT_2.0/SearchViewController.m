@@ -87,25 +87,30 @@ NSString *NOTEFolderName2 = @"NOTE";
 //    [self.downloadQueue setRequestDidStartSelector:@selector(queueStarted)];
 //    [self initSrollViewDatas];
     
-    CGFloat viewY = 40;
-    coursewareNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, viewY, 300, 50)];
-    [coursewareNumLabel setTextColor:[UIColor redColor]];
+    CGFloat viewY = 32.0f;
+    CGFloat leftX = 35.0f;
+    UIFont *font = [UIFont systemFontOfSize:20.0f];
+    UIColor *redColor = [UIColor colorWithRed:116.0/255 green:31.0/ 255 blue:91.0/255 alpha:1.0];
+    coursewareNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(leftX, viewY, 300, 50)];
+    [courseNumLabel setTextAlignment:NSTextAlignmentLeft];
+    [courseNumLabel setFont:font];
+    [coursewareNumLabel setTextColor:redColor];
     [coursewareNumLabel setText:@"共找到0个课件"];
     [self.view addSubview:coursewareNumLabel];
     
     viewY += (50 + 0);
-    coursewareSV = [[UIScrollView alloc]initWithFrame:CGRectMake(50, viewY, 1024 - 50, 280)];
+    coursewareSV = [[UIScrollView alloc]initWithFrame:CGRectMake(leftX, viewY, 1024 - leftX, 280)];
     [self.view addSubview:coursewareSV];
     
     viewY += (280);
     courseNumLabel = [[UILabel alloc]
-                      initWithFrame:CGRectMake(50, viewY, 300, 50)];
+                      initWithFrame:CGRectMake(leftX, viewY, 300, 50)];
     [courseNumLabel setText:@"共找到0个课程"];
-    [courseNumLabel setTextColor:[UIColor redColor]];
+    [courseNumLabel setTextColor:redColor];
     [self.view addSubview:courseNumLabel];
     
     viewY += (50 + 0);
-    courseSV = [[UIScrollView alloc]initWithFrame:CGRectMake(50, viewY, 1024 - 50, 280)];
+    courseSV = [[UIScrollView alloc]initWithFrame:CGRectMake(leftX, viewY, 1024 - leftX, 280)];
     [self.view addSubview:courseSV];
 //    [self setScrollViewDatas];
     

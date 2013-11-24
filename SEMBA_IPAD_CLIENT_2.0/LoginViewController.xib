@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
             <connections>
                 <outlet property="accountTF" destination="PH7-FB-2Iz" id="ysz-fE-yB3"/>
+                <outlet property="autoLoginCheck" destination="kJy-lf-pA3" id="uHr-Oj-hmP"/>
                 <outlet property="loginButton" destination="VjJ-WB-eaa" id="Awo-Oi-iNO"/>
                 <outlet property="loginView" destination="wfd-XV-xWd" id="qmC-ZT-hTB"/>
                 <outlet property="passwordTF" destination="b3S-Yq-tXT" id="XWe-Jy-nDD"/>
@@ -19,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wfd-XV-xWd">
-                    <rect key="frame" x="315" y="142" width="394" height="483"/>
+                    <rect key="frame" x="341" y="199" width="394" height="483"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="download_ppt.png" translatesAutoresizingMaskIntoConstraints="NO" id="YC3-3q-r6b">
@@ -67,6 +68,17 @@
                             </state>
                             <connections>
                                 <action selector="loginAction:" destination="-1" eventType="touchUpInside" id="NDO-mo-K5A"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kJy-lf-pA3">
+                            <rect key="frame" x="41" y="299" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="autoLoginCheckAction:" destination="-1" eventType="touchUpInside" id="oWA-c5-k6a"/>
                             </connections>
                         </button>
                     </subviews>

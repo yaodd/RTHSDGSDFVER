@@ -15,20 +15,25 @@
 #define ITEM_WIDHT  387.0f
 #define ITEM_HEIGHT 55.0f
 #define ITEM_SPACE  16.0f
-#define LABEL_X     10.0f
+#define LABEL_X     15.0f
 #define LABEL_Y     18.0f
 #define TEXT_SIZE  18.0f
 #define LABEL_WIDTH 100.0f
 #define LABEL_HRIGHT 20.0f
-#define SWITCH_X    326.0f
+#define SWITCH_X    321.0f
 #define SWITCH_Y    12.0f
 #define SWITCH_WIDTH    51.0f
 #define SWITCH_HEIGHT   31.0f
+#define ARROW_X         360.0f
+#define ARROW_Y         18.0f
+#define ARROW_WIDTH     12.0f
+#define ARROW_HEIGHT    21.0f
 
 
 
 
 NSString *itemImageName = @"setting_item_bg";
+NSString *arrowImageName = @"setting_right_arrow";
 
 @interface SetupViewController ()
 
@@ -124,6 +129,9 @@ NSString *itemImageName = @"setting_item_bg";
     [changePswLabel setTextAlignment:NSTextAlignmentLeft];
     [changePswLabel setFont:textFont];
     [changePswItem addSubview:changePswLabel];
+    UIImageView *changePswArrow = [[UIImageView alloc]initWithFrame:CGRectMake(ARROW_X, ARROW_Y, ARROW_WIDTH, ARROW_HEIGHT)];
+    [changePswArrow setImage:[UIImage imageNamed:arrowImageName]];
+    [changePswItem addSubview:changePswArrow];
     [self.view addSubview:changePswItem];
     
     top_y += (ITEM_HEIGHT);
@@ -151,6 +159,9 @@ NSString *itemImageName = @"setting_item_bg";
     [feedbackLabel setTextAlignment:NSTextAlignmentLeft];
     [feedbackLabel setFont:textFont];
     [feedbackItem addSubview:feedbackLabel];
+    UIImageView *feedbackArrow = [[UIImageView alloc]initWithFrame:CGRectMake(ARROW_X, ARROW_Y, ARROW_WIDTH, ARROW_HEIGHT)];
+    [feedbackArrow setImage:[UIImage imageNamed:arrowImageName]];
+    [feedbackItem addSubview:feedbackArrow];
     [self.view addSubview:feedbackItem];
     
     top_y += (ITEM_HEIGHT);
@@ -164,6 +175,9 @@ NSString *itemImageName = @"setting_item_bg";
     [aboutUsLabel setTextAlignment:NSTextAlignmentLeft];
     [aboutUsLabel setFont:textFont];
     [aboutUsItem addSubview:aboutUsLabel];
+    UIImageView *aboutUsArrow = [[UIImageView alloc]initWithFrame:CGRectMake(ARROW_X, ARROW_Y, ARROW_WIDTH, ARROW_HEIGHT)];
+    [aboutUsArrow setImage:[UIImage imageNamed:arrowImageName]];
+    [aboutUsItem addSubview:aboutUsArrow];
     [self.view addSubview:aboutUsItem];
     
 

@@ -25,10 +25,13 @@
 @property (nonatomic, assign, readwrite) CFTimeInterval startTime;
 @property (nonatomic, strong, readwrite) CADisplayLink *displayLink;
 
+
+
 @end
 
 
 @implementation MRCircularProgressView
+@synthesize myDict;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -191,6 +194,12 @@
 
 - (void)setProgress:(float)progress {
     
+//    NSLog(@"progress %f" ,progress);
+//    NSLog(@"int %d",(int)progress);
+    int result = (int)progress;
+    if (result == 1) {
+        [self.delegate progressFinished:self];
+    }
     
     /*
     NSParameterAssert(progress >= 0 && progress <= 1);
