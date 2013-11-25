@@ -655,9 +655,22 @@
     if (button.selected) {
         [button setImage:[UIImage imageNamed:@"edit_off"] forState:UIControlStateNormal];
         button.selected = NO;
+        if (noteToolDrawerBar.isOpen == YES) {
+            [noteToolDrawerBar openOrCloseToolBar];
+        }
+        [self stopDraw];
+        [self saveDraw];
+        int page = [document.pageNumber intValue];
+        NSNumber *key = [NSNumber numberWithInteger:page]; // # key
+        ReaderContentView *newContentView = [contentViews objectForKey:key];
+        [self addDrawView:newContentView];
+        
     } else{
         [button setImage:[UIImage imageNamed:@"edit_on"] forState:UIControlStateNormal];
         button.selected = YES;
+        currentToolType = ACEDrawingToolTypePen;
+        [self startDraw];
+
     }
 }
 - (void)dragButtonGesture:(UIPanGestureRecognizer *)recognizer{
@@ -1722,6 +1735,26 @@
     [self viewDisappear:penWidthView];
     [self viewDisappear:eraserWidthView];
     [self viewDisappear:markerWidthView];
+    
+    
+    if (button.selected) {
+        currentToolType = ACEDrawingToolTypePen;
+        [self startDraw];
+        if (noteButton.selected == NO) {
+            [self noteButtonAction:noteButton];
+        }
+        
+    } else{
+        [self stopDraw];
+        [self saveDraw];
+        int page = [document.pageNumber intValue];
+        NSNumber *key = [NSNumber numberWithInteger:page]; // # key
+        ReaderContentView *newContentView = [contentViews objectForKey:key];
+        [self addDrawView:newContentView];
+        if (noteButton.selected == YES) {
+            [self noteButtonAction:noteButton];
+        }
+    }
     switch (button.tag) {
         case 1:         //选择颜色
 //            if (button.selected) {
@@ -1821,9 +1854,11 @@
 }
 #pragma ACEDrawView delegate
 - (void)intoDrawState:(ACEDrawingView *)view{
-    [noteToolDrawerBar hideNoteToolDrawerBar];
+//    [noteToolDrawerBar hideNoteToolDrawerBar];
     [mainPagebar hidePagebar];
     [mainToolbar hideToolbar];
+    
+    /*
     if (!swatchView.hidden) {
         appearViewTag = SWATCH_VIEW_TAG;
     }
@@ -1836,6 +1871,7 @@
     if (!eraserWidthView.hidden) {
         appearViewTag = ERASER_VIEW_TAG;
     }
+                               */
     [self viewDisappear:markerWidthView];
     [self viewDisappear:penWidthView];
     [self viewDisappear:swatchView];

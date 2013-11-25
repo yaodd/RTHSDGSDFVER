@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "MenuCell.h"
 #import "SetUpView.h"
+#import "DDMenuController.h"
 
 @class NoticeController;
-@class DDMenuController;
 
 @protocol menuControllerDelegate;
 
-@interface MenuController : UIViewController<UITableViewDataSource, UITableViewDelegate,SetUpViewDelegate>
+@interface MenuController : UIViewController<UITableViewDataSource, UITableViewDelegate,SetUpViewDelegate, DDMenuControllerDelegate>
 
 @property (nonatomic, retain) UIImageView *backgroundImg;
 @property (nonatomic, retain) UIImageView *headImg;

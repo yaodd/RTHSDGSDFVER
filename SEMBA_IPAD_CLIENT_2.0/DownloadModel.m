@@ -20,6 +20,7 @@ NSString *NOTEFolderName = @"NOTE";
 @implementation DownloadModel
 @synthesize queue;
 @synthesize myCourse;
+@synthesize firstImageDict;
 
 +(DownloadModel *)getDownloadModel{
     if (sharedModel == nil) {
@@ -36,6 +37,8 @@ NSString *NOTEFolderName = @"NOTE";
         [queue setShouldCancelAllRequestsOnFailure:NO];
         [queue setMaxConcurrentOperationCount:MAX_DOWNLOAD_NUM];
         [queue setDelegate:self];
+        
+        firstImageDict = [[NSMutableDictionary alloc]init];
     }
     return self;
 }
@@ -131,15 +134,98 @@ NSString *NOTEFolderName = @"NOTE";
     
 }
 
+
+
 //下载完成
 - (void) requestDone:(ASIHTTPRequest *)request{
 //    NSLog(@"finish");
     NSDictionary *dict = request.myDict;
     NSString *filePath = [dict objectForKey:@"filePath"];
     [request.responseData writeToFile:filePath atomically:YES];
-    [self.delegate downloadFinished:request];
-//    UIImage *image = [self getFirstPageFromPDF:filePath];
+    NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:request,@"request",filePath,@"filePath", nil];
+    NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(loadImageSelector:) object:myDict];
+    [thread start];
+    
+    
 }
+
+- (void)loadImageSelector:(NSDictionary *)dict{
+    NSString *filePath = [dict objectForKey:@"filePath"];
+    ASIHTTPRequest *request = [dict objectForKey:@"request"];
+    UIImage *image = [self getFirstPageFromPDF:filePath];
+    NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:filePath,@"filePath",image,@"image",request,@"request", nil];
+    [self performSelectorOnMainThread:@selector(sendToDelegate:) withObject:myDict waitUntilDone:YES];
+}
+- (void)sendToDelegate:(NSDictionary *)dict{
+    NSString *filePath = [dict objectForKey:@"filePath"];
+    UIImage *image = [dict objectForKey:@"image"];
+    ASIHTTPRequest *request = [dict objectForKey:@"request"];
+    [firstImageDict setObject:image forKey:filePath];
+    if (request.downloadProgressDelegate != nil) {
+        [self.delegate downloadFinished:(MRCircularProgressView *)request.downloadProgressDelegate];
+    }
+}
+
+- (UIImage *)getFirstPageFromPDF:(NSString *)aFilePath{
+    //	CFStringRef path;
+    //	CFURLRef url;
+	CGPDFDocumentRef document;
+    
+    NSURL *nsurl = [[NSURL alloc]initFileURLWithPath:aFilePath isDirectory:NO];
+    
+    CFURLRef url = (__bridge CFURLRef)nsurl;
+    //    CFURLRef url = CFRetain((__bridge CFTypeRef)(nsurl));
+    
+    
+	document = CGPDFDocumentCreateWithURL(url);
+    //	CFRelease(url);
+    
+	int count = CGPDFDocumentGetNumberOfPages (document);
+    if (count == 0) {
+		return NULL;
+    }
+    
+    //	return document;
+    
+    CGPDFPageRef page = CGPDFDocumentGetPage(document, 1);
+    
+    CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
+    pageRect.origin = CGPointZero;
+    
+    //开启图片绘制 上下文
+    UIGraphicsBeginImageContext(pageRect.size);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // 设置白色背景
+    CGContextSetRGBFillColor(context, 1.0,1.0,1.0,1.0);
+    CGContextFillRect(context,pageRect);
+    
+    CGContextSaveGState(context);
+    
+    //进行翻转
+    CGContextTranslateCTM(context, 0.0, pageRect.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    CGContextConcatCTM(context, CGPDFPageGetDrawingTransform(page, kCGPDFMediaBox, pageRect, 0, true));
+    
+    CGContextDrawPDFPage(context, page);
+    CGContextRestoreGState(context);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    CGPDFDocumentRelease(document);
+    
+    //CGPDFDocumentRelease(document);
+    //UIImage *image = [self getUIImageFromPDFPage:0 pdfPage:page];
+    //    CGPDFPageRelease(page);
+    //CGPDFDocumentRelease(document);
+    return image;
+    //return image;
+    //    CGPDFDocumentRelease(document), document = NULL;
+}
+
 //下载出错处理
 - (void) requestWentWrong:(ASIHTTPRequest *)request{
     NSLog(@"download error : %@",request.error );
@@ -147,10 +233,6 @@ NSString *NOTEFolderName = @"NOTE";
         [request.downloadProgressDelegate setHidden:YES];
         request.downloadProgressDelegate = nil;
     }
-//    request setDownloadProgressDelegate:;
-    
-//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"出错啦！" message:@"网络连接出错，请检查网络！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//    [alertView show];
 }
 
 @end

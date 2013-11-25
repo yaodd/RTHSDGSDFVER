@@ -318,12 +318,12 @@
     if ([self.delegate respondsToSelector:@selector(drawingView:didEndDrawUsingTool:)]) {
         [self.delegate drawingView:self didEndDrawUsingTool:self.currentTool];
     }
-    if ([thread isExecuting]) {
-        [thread cancel];
-        [NSThread exit];
-    }
-    thread = [[NSThread alloc]initWithTarget:self selector:@selector(waiting:) object:nil];
-    [thread start];
+//    if ([thread isExecuting]) {
+//        [thread cancel];
+//        [NSThread exit];
+//    }
+//    thread = [[NSThread alloc]initWithTarget:self selector:@selector(waiting:) object:nil];
+//    [thread start];
     NSLog(@"start");
 }
 

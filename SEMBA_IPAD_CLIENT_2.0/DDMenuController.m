@@ -214,7 +214,7 @@
                 _menuFlags.showingLeftView = NO;
                 [self.leftViewController.view removeFromSuperview];
             }
-            
+            /*
             if (_menuFlags.canShowRight) {
                 
                 _menuFlags.showingRightView = YES;
@@ -226,7 +226,7 @@
      
             } else {
                 frame.origin.x = 0.0f; // ignore left view if it's not set
-            }
+            }*/
             
         }
         
@@ -408,11 +408,9 @@
     }
     
     if (_menuFlags.canShowLeft) {
-        //UIImageView *menuImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 22, 18)];
-        //menuImg.image = [UIImage imageNamed:@"course_back"];
-        //UIBarButtonItem *menu = [[UIBarButtonItem alloc] initWithCustomView:menuImg];
+
         UIBarButtonItem *menu = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed:@"course_back"] style:UIBarButtonItemStyleBordered target:self action:@selector(showLeft:)];
-        //UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"menu" style:UIBarButtonItemStyleBordered target:self action:@selector(showLeft:)];
+
         topController.navigationItem.leftBarButtonItem = menu;
     } else {
         topController.navigationItem.leftBarButtonItem = nil;
@@ -481,6 +479,7 @@
 }
 
 - (void)showLeftController:(BOOL)animated {
+    
     if (!_menuFlags.canShowLeft) return;
     
     if (_right && _right.view.superview) {
@@ -521,6 +520,16 @@
         [UIView setAnimationsEnabled:_enabled];
     }
     
+    UISwipeGestureRecognizer *gesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    [gesture setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.view addGestureRecognizer:gesture];
+}
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gesture{
+    if([self.delegate isPresentNoticeView]){
+        return;
+    }
+    [self showRootController:YES];
 }
 
 - (void)showRightController:(BOOL)animated {

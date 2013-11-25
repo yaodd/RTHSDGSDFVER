@@ -15,7 +15,6 @@
 @implementation EvaluateController
 @synthesize line;
 @synthesize lineTop;
-@synthesize MM;
 @synthesize scrollView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -31,9 +30,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    MM = [[UIImageView alloc] initWithFrame:self.view.frame];
-    MM.image = [UIImage imageNamed:@"3.jpg"];
-    [self.view addSubview:MM];
+    [self.view setBackgroundColor:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
+    
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bar_bg"] forBarMetrics:UIBarMetricsDefault];
     
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.height, self.view.frame.size.width)];
     scrollView.delegate = self;
