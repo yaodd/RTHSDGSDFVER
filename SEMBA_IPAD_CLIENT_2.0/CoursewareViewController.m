@@ -495,29 +495,6 @@ NSString *NOTEFolderName3 = @"NOTE";
     
     int index = [(NSNumber *)[dict objectForKey:@"index"] integerValue];
     [self downloadPDF:index];
-    /*CoursewareItem *item = [displayArray objectAtIndex:index];
-    NSURL *url = [NSURL URLWithString:item.PDFURL];
-    NSString *filePath = item.PDFPath;
-    NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:url,@"url",filePath,@"filePath",item,@"item",[NSNumber numberWithInt:index],@"index", nil];
-    [downloadModel downloadByDict:myDict];
-    
-    
-    MRCircularProgressView *progress = (MRCircularProgressView *)[button viewWithTag:PROGRESS_TAG];
-    for (ASIHTTPRequest *request in queue.operations) {
-        if ([request isExecuting]) {
-            [request setQueuePriority:NSOperationQueuePriorityVeryLow];
-            break;
-        }
-    }
-    for (ASIHTTPRequest *request in queue.operations) {
-        if ([request.url isEqual:url]) {
-            //                request.tag = index;
-            [progress setMyDict:myDict];
-            [progress setHidden:NO];
-            progress.delegate = self;
-            [request setDownloadProgressDelegate:progress];
-        }
-    }*/
 }
 //下载单个课件
 - (void) downloadPDF:(int)index
@@ -546,56 +523,13 @@ NSString *NOTEFolderName3 = @"NOTE";
             [request setDownloadProgressDelegate:progress];
         }
     }
-
-    /*
-    UIButton *button = (UIButton *)[buttonArray objectAtIndex:index % buttonNumber];
-    
-    CoursewareItem *item = [displayArray objectAtIndex:index];
-    NSURL *url = [NSURL URLWithString:item.PDFURL];
-//    NSLog(@"url %@",url);
-    
-    NSString *filePath = item.PDFPath;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSLog(@"filePath %@",filePath);
-    //判断是否已存在文件
-    if ([fileManager fileExistsAtPath:filePath]) {
-//        NSLog(@"return");
-        return;
-    }
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-
-    ASIHTTPRequest *tempRequest = [[ASIHTTPRequest alloc]init];
-    //判断是否已经存在队列中，
-    for (tempRequest in [self.downloadQueue operations]) {
-        if ([tempRequest.url isEqual:request.url]) {
-            return;
-        }
-    }
-
-    MRCircularProgressView *progress = (MRCircularProgressView *)[button viewWithTag:PROGRESS_TAG];
-    [progress setHidden:NO];
-    progress.progress = 0;
-    
-    [request setTag:index];
-    [request setDelegate:self];
-    [request setDidFinishSelector:@selector(requestDone:)];     //下载完成处理
-    [request setDidFailSelector:@selector(requestWentWrong:)];  //下载出错处理
-    [request setDownloadProgressDelegate:progress];//设置每个任务的进度条信息
-    NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:item,@"item", nil];
-    [request setMyDict:myDict];
-    [self.downloadQueue addOperation:request];
-    */
 }
 //下载所有课件
 - (void)downloadAllAction:(id)sender
 {
-    for (int i = [displayArray count] - 1; i >= 0; i --) {
-//        if ([self.downloadQueue operationCount] < buttonNumber) {
+    for (int i = 0; i < [displayArray count]; i ++) {
         [self downloadPDF:i];
-//        }
-        
     }
-//    [self.downloadQueue go];
 }
 
 //下载完成

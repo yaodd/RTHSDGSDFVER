@@ -145,7 +145,7 @@
 //    self.layer.borderColor = tintColor.CGColor;
     self.layer.borderColor = UIColor.clearColor.CGColor;
 //    self.valueLabel.textColor = tintColor;
-    self.valueLabel.textColor = [UIColor whiteColor];
+    self.valueLabel.textColor = [UIColor blueColor];
     self.stopView.backgroundColor = tintColor;
     
 }

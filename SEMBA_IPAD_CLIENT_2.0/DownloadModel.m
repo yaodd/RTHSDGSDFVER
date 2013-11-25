@@ -90,6 +90,12 @@ NSString *NOTEFolderName = @"NOTE";
 - (void)downloadByDict:(NSDictionary *)dict{
     NSURL *url = [dict objectForKey:@"url"];
     NSString *filePath = [dict objectForKey:@"filePath"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:filePath]) {
+        //                NSLog(@"return");
+//        isContinue = YES;
+        return;
+    }
     BOOL isExist = NO;
     for (ASIHTTPRequest *tempRequest in queue.operations) {
         if ([tempRequest.url isEqual:url]) {
@@ -137,9 +143,14 @@ NSString *NOTEFolderName = @"NOTE";
 //下载出错处理
 - (void) requestWentWrong:(ASIHTTPRequest *)request{
     NSLog(@"download error : %@",request.error );
+    if (request.downloadProgressDelegate != nil) {
+        [request.downloadProgressDelegate setHidden:YES];
+        request.downloadProgressDelegate = nil;
+    }
+//    request setDownloadProgressDelegate:;
     
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"出错啦！" message:@"网络连接出错，请检查网络！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    [alertView show];
+//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"出错啦！" message:@"网络连接出错，请检查网络！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//    [alertView show];
 }
 
 @end

@@ -81,12 +81,7 @@ NSString *NOTEFolderName2 = @"NOTE";
     [self.downloadQueue setMaxConcurrentOperationCount:MAX_DOWNLOAD_NUM];      //最大同时下载数
     [self.downloadQueue setShowAccurateProgress:YES];        //是否显示详细进度
     [self.downloadQueue setShouldCancelAllRequestsOnFailure:NO];
-    [self.downloadQueue setDelegate:self];
-//    [self.downloadQueue setRequestDidFailSelector:@selector(queueFailed)];
-//    [self.downloadQueue setRequestDidFinishSelector:@selector(queueFinished)];
-//    [self.downloadQueue setRequestDidStartSelector:@selector(queueStarted)];
-//    [self initSrollViewDatas];
-    
+    [self.downloadQueue setDelegate:self];    
     CGFloat viewY = 32.0f;
     CGFloat leftX = 35.0f;
     UIFont *font = [UIFont systemFontOfSize:20.0f];
