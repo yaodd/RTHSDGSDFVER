@@ -9,6 +9,7 @@
 #import "SetupViewController.h"
 #import "ChangePswViewController.h"
 #import "FeedbackViewController.h"
+#import "LoginViewController.h"
 
 #define START_X     8.0f
 #define START_Y     16.0f
@@ -35,6 +36,9 @@
 NSString *itemImageName = @"setting_item_bg";
 NSString *arrowImageName = @"setting_right_arrow";
 
+//NSString *isAutoDownloadKey = @"isAutoDownLoad";
+//NSString *isPushKey = @"isPush";
+//NSString *isAutoLoginKey = @"isAutoLogin";
 @interface SetupViewController ()
 
 @end
@@ -78,10 +82,14 @@ NSString *arrowImageName = @"setting_right_arrow";
     [downloadLabel setFont:textFont];
     [downloadItem addSubview:downloadLabel];
     
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    
     UISwitch *downloadSwitch = [[UISwitch alloc]initWithFrame:switchRect];
     downloadSwitch.on = NO;
     [downloadSwitch addTarget:self action:@selector(changeAutoDownLoad:) forControlEvents:UIControlEventValueChanged];
     [downloadItem addSubview:downloadSwitch];
+    downloadSwitch.on = [(NSNumber *)[userDefault objectForKey:isAutoDownloadKey] boolValue];
+//    isAutoDownLoad = downloadSwitch.on;
     [self.view addSubview:downloadItem];
     
     top_y += ITEM_HEIGHT;
@@ -96,6 +104,8 @@ NSString *arrowImageName = @"setting_right_arrow";
     UISwitch *pushSwitch = [[UISwitch alloc]initWithFrame:switchRect];
     pushSwitch.on = NO;
     [pushSwitch addTarget:self action:@selector(changePush:) forControlEvents:UIControlEventValueChanged];
+    pushSwitch.on = [(NSNumber *)[userDefault objectForKey:isPushKey] boolValue];
+//    isPushvar = pushSwitch.on;
     [pushItem addSubview:pushSwitch];
     [pushItem addSubview:pushLabel];
     
@@ -115,6 +125,8 @@ NSString *arrowImageName = @"setting_right_arrow";
     UISwitch *autoLoginSwitch = [[UISwitch alloc]initWithFrame:switchRect];
     autoLoginSwitch.on = NO;
     [autoLoginSwitch addTarget: self action:@selector(changeAotoLogin:) forControlEvents:UIControlEventValueChanged];
+    autoLoginSwitch.on = [(NSNumber *)[userDefault objectForKey:isAutoLoginKey] boolValue];
+//    isAutoLogin = autoLoginSwitch.on;
     [autoLoginItem addSubview:autoLoginSwitch];
     [self.view addSubview:autoLoginItem];
     
@@ -189,7 +201,9 @@ NSString *arrowImageName = @"setting_right_arrow";
     [self.navigationController pushViewController:changePswViewController animated:YES];
 }
 - (void)logoutAction:(UIButton *)sender{
-    NSLog(@"action");
+    NSLog(@"logout");
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:[NSNumber numberWithBool:NO] forKey:isLoginOutKey];
     [self.delegate logoutAccount];
 }
 - (void) feedbackAction:(UIButton *)sender{
@@ -206,20 +220,20 @@ NSString *arrowImageName = @"setting_right_arrow";
 //使用自动下载回调的时候可能加一个alertview之类的弹窗提示会比较好。防止用户不断改变switch的值。
 -(void)changeAutoDownLoad:(id)sender{
     UISwitch *mySwitch = (UISwitch *)sender;
-    if(mySwitch.on && mySwitch.on!= isAutoDownLoad){
+    if(mySwitch.on /*&& mySwitch.on!= isAutoDownLoad*/){
         NSLog(@"自动下载开");
         NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
         NSNumber *temp = [NSNumber numberWithBool:mySwitch.on];
-        [userdefault setObject:temp forKey:@"isAutoDownLoad"];
+        [userdefault setObject:temp forKey:isAutoDownloadKey];
         isAutoDownLoad = mySwitch.on;
         //打开自动下载。
         //调用自动下载机制
-    }else if(!mySwitch.on && mySwitch.on != isAutoDownLoad){
+    }else if(!mySwitch.on/* && mySwitch.on != isAutoDownLoad*/){
         NSLog(@"自动下载关");
         NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
         NSNumber *temp = [NSNumber numberWithBool:mySwitch.on];
-        [userdefault setObject:temp forKey:@"isAutoDownLoad"];
-        isAutoDownLoad = mySwitch.on;
+        [userdefault setObject:temp forKey:isAutoDownloadKey];
+//        isAutoDownLoad = mySwitch.on;
         //关闭自动下载
         //暂停当前下载的东西
     }
@@ -227,38 +241,38 @@ NSString *arrowImageName = @"setting_right_arrow";
 
 -(void)changePush:(id)sender{
     UISwitch *mySwitch = (UISwitch *)sender;
-    if(mySwitch.on && mySwitch.on != isPushvar){
+    if(mySwitch.on /*&& mySwitch.on != isPushvar*/){
         NSLog(@"推送开");
         NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
         NSNumber *temp = [NSNumber numberWithBool:mySwitch.on];
-        [userdefault setObject:temp forKey:@"isPush"];
+        [userdefault setObject:temp forKey:isPushKey];
         isPushvar = mySwitch.on;
         //调用接受推送回调
-    }else if(!mySwitch.on && mySwitch.on != isPushvar){
+    }else if(!mySwitch.on/* && mySwitch.on != isPushvar*/){
         NSLog(@"推送关");
         //调用关闭推送回调
         NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
         NSNumber *temp = [NSNumber numberWithBool:mySwitch.on];
-        [userdefault setObject:temp forKey:@"isPush"];
-        isPushvar = mySwitch.on;
+        [userdefault setObject:temp forKey:isPushKey];
+//        isPushvar = mySwitch.on;
     }
 }
 - (void)changeAotoLogin:(id)sender{
     UISwitch *mySwitch = (UISwitch *)sender;
-    if(mySwitch.on && mySwitch.on != isAutoLogin){
+    if(mySwitch.on/* && mySwitch.on != isAutoLogin*/){
         NSLog(@"自动登录开");
         NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
         NSNumber *temp = [NSNumber numberWithBool:mySwitch.on];
-        [userdefault setObject:temp forKey:@"isAutoLogin"];
+        [userdefault setObject:temp forKey:isAutoLoginKey];
         isAutoLogin = mySwitch.on;
         //调用接受推送回调
-    }else if(!mySwitch.on && mySwitch.on != isAutoLogin){
+    }else if(!mySwitch.on/* && mySwitch.on != isAutoLogin*/){
         NSLog(@"自动登录关");
         //调用关闭推送回调
         NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
         NSNumber *temp = [NSNumber numberWithBool:mySwitch.on];
-        [userdefault setObject:temp forKey:@"isAutoLogin"];
-        isAutoLogin = mySwitch.on;
+        [userdefault setObject:temp forKey:isAutoLoginKey];
+//        isAutoLogin = mySwitch.on;
     }
 
 }

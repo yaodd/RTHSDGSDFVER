@@ -42,6 +42,9 @@ NSString *buttonImageName = @"setting_button";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    self.view.layer.cornerRadius = 20.0f;
+
     parentView = self.navigationController.view.superview;
     [self initViews];
 	// Do any additional setup after loading the view.

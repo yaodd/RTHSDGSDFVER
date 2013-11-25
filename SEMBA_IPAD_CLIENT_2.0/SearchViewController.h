@@ -10,7 +10,8 @@
 #import "ASINetworkQueue.h"
 #import "ReaderViewController.h"
 #import "ASIHTTPRequest.h"
-@interface SearchViewController : UIViewController <ReaderViewControllerDelegate,UIScrollViewDelegate,ASIHTTPRequestDelegate,UISearchBarDelegate>
+#import "DownloadModel.h"
+@interface SearchViewController : UIViewController <ReaderViewControllerDelegate,UIScrollViewDelegate,ASIHTTPRequestDelegate,UISearchBarDelegate,DownloadModelDelegate>
 
 
 @property (nonatomic, retain) UIScrollView *coursewareSV;

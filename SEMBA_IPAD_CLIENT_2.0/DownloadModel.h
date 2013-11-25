@@ -10,12 +10,13 @@
 #import "ASIHTTPRequest.h"
 #import "ASINetworkQueue.h"
 #import "MyCourse.h"
+#import "MRCircularProgressView.h"
 @class DownloadModel;
 @protocol DownloadModelDelegate <NSObject>
 
 @optional
 
-- (void) downloadFinished:(ASIHTTPRequest *)request;
+- (void) downloadFinished:(MRCircularProgressView *)progressView;
 
 @end
 @interface DownloadModel : NSObject
@@ -23,6 +24,7 @@
 @property (nonatomic, retain) ASINetworkQueue *queue;
 @property (nonatomic, retain) MyCourse *myCourse;
 @property (nonatomic, assign) id<DownloadModelDelegate> delegate;
+@property (nonatomic, retain) NSMutableDictionary *firstImageDict;
 +(DownloadModel *)getDownloadModel;
 
 - (void)downloadAll;

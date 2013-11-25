@@ -47,8 +47,8 @@
         [touchView setBackgroundColor:[UIColor clearColor]];
 
         UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
-        [touchView addGestureRecognizer:panRecognizer];
-        
+//        [touchView addGestureRecognizer:panRecognizer];
+        [self addGestureRecognizer:panRecognizer];
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
         [touchView addGestureRecognizer:tapRecognizer];
         
@@ -170,11 +170,11 @@
         [UIView animateWithDuration:0.75 delay:0.15 options:UIViewAnimationOptionCurveEaseOut animations:^{
             if (self.center.x < openPoint.x * 1/2) {
                 self.center = closePoint;
-                [self transformArrow:NO];
+//                [self transformArrow:NO];
             }else
             {
                 self.center = openPoint;
-                [self transformArrow:YES];
+//                [self transformArrow:YES];
             }
             
         } completion:^(BOOL finish){
@@ -185,6 +185,7 @@
 //                [self.delegate drawerClose:self];
                 NSLog(@"close");
             }
+            isOpen = !isOpen;
         }];
         
     }
@@ -197,23 +198,23 @@
     [UIView animateWithDuration:0.75 delay:0.15 options:UIViewAnimationOptionTransitionCurlUp animations:^{
         if (isOpen) {
             self.center = closePoint;
-            [self transformArrow:NO];
+//            [self transformArrow:NO];
         }else
         {
             self.center = openPoint;
-            [self transformArrow:YES];
+//            [self transformArrow:YES];
         }
     } completion:^(BOOL finish){
-        
+        isOpen = !isOpen;
     }];
 }
 
 - (void)transformArrow:(BOOL)openOrClose{
     
     if (openOrClose) {
-        [self.delegate drawerOpen:self];
+//        [self.delegate drawerOpen:self];
     } else{
-        [self.delegate drawerClose:self];
+//        [self.delegate drawerClose:self];
     }
     [UIView animateWithDuration:0.3 delay:0.35 options:UIViewAnimationOptionCurveEaseOut animations:^{
         if (openOrClose == YES){
@@ -226,6 +227,7 @@
         }
     } completion:^(BOOL finish){
         self.isOpen = openOrClose;
+        [self closeAllButton];
     }];
     
 }

@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+#define isAutoDownloadKey   @"isAutoDownLoad"
+#define isPushKey           @"isPush"
+#define isAutoLoginKey      @"isAutoLogin"
+
+#define isLoginOutKey       @"isLoginOutKey"
+
+#define ACCOUNT_KEY         @"accountKey"
+#define PASSWORD_KEY        @"passwordKey"
+
 @interface LoginViewController : UIViewController <UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *accountTF;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTF;

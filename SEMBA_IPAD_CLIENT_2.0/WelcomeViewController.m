@@ -68,6 +68,7 @@
 
 - (void)jumpToMainPage
 {
+
 //    [self performSegueWithIdentifier:@"jumpFromWelToMainID" sender:nil];
     LoginViewController *loginViewController = [[LoginViewController alloc]init];
     [self presentViewController:loginViewController animated:YES completion:NO];

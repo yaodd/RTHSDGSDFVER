@@ -271,6 +271,7 @@ float durationOfAnimation = 2.0f;
 #pragma SetupViewControllerDelegate mark
 - (void)logoutAccount{
     [self.delegate logoutAccount];
+    [self removeFromSuperview];
 }
 
 

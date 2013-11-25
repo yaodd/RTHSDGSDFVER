@@ -21,6 +21,8 @@
 #import "ReaderViewController.h"
 #import "UITapGestureRecognizer+category.h"
 #import "CoursewareViewController.h"
+#import "DownloadModel.h"
+#import "MRProgressOverlayView.h"
 NSString *PDFFolderName2 = @"PDF";
 NSString *NOTEFolderName2 = @"NOTE";
 #define PROGRESS_TAG 111111
@@ -28,6 +30,12 @@ NSString *NOTEFolderName2 = @"NOTE";
 
 
 @interface SearchViewController ()
+{
+    DownloadModel *downloadModel;
+    ASINetworkQueue *queue;
+    NSMutableDictionary *firstImageDict;
+    MRProgressOverlayView *overlayView;
+}
 
 @end
 
@@ -59,6 +67,17 @@ NSString *NOTEFolderName2 = @"NOTE";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]];
+
+    downloadModel = [DownloadModel getDownloadModel];
+    queue = downloadModel.queue;
+    downloadModel.delegate = self;
+    firstImageDict = downloadModel.firstImageDict;
+    overlayView = [[MRProgressOverlayView alloc]initWithFrame:CGRectMake(1024 / 2, 768 / 2, overlayView.frame.size.width, overlayView.frame.size.height)];
+    overlayView.mode = MRProgressOverlayViewModeIndeterminate;
+    [self.navigationController.view addSubview:overlayView];
+    [overlayView show:YES];
+    NSLog(@"queue count %d",[queue.operations count]);
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backToMainPage:)];
     [backItem setImage:[UIImage imageNamed:@"pptsearch_cancle"]];
     [self.navigationItem setHidesBackButton:YES];
@@ -67,7 +86,7 @@ NSString *NOTEFolderName2 = @"NOTE";
     self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, 1024 - 50 - 100, 44)];
     [self.searchBar setSearchBarStyle:UISearchBarStyleMinimal];
     self.searchBar.delegate = self;
-    [self.searchBar becomeFirstResponder];
+//    [self.searchBar becomeFirstResponder];第一响应
     
     UIView *searchView = [[UIView alloc]initWithFrame:CGRectMake(50, 0, 1024 - 50 - 100, 44)];
     searchView.backgroundColor = [UIColor clearColor];
@@ -134,9 +153,10 @@ NSString *NOTEFolderName2 = @"NOTE";
     
 }
 - (void)dealloc{
-    for (ASIHTTPRequest *request in self.downloadQueue.operations) {
-        NSLog(@"cancel");
-        [request clearDelegatesAndCancel];
+    for (ASIHTTPRequest *request in queue.operations) {
+//        NSLog(@"cancel");
+//        [request clearDelegatesAndCancel];
+        request.downloadProgressDelegate = nil;
     }
     for (MRCircularProgressView *progress in progressArray) {
         [progress removeLink];
@@ -173,13 +193,19 @@ NSString *NOTEFolderName2 = @"NOTE";
             item.PDFPath = [PDFCoursePath stringByAppendingPathComponent:item.PDFName];
             NSFileManager *fileManager = [NSFileManager defaultManager];
             if ([fileManager fileExistsAtPath:item.PDFPath]) {
-                UIImage *fImage = [self getFirstPageFromPDF:item.PDFPath];
+                
+                UIImage *fImage = [firstImageDict objectForKey:item.PDFPath];
+                if (fImage == nil) {
+                    fImage = [self getFirstPageFromPDF:item.PDFPath];
+                    [firstImageDict setObject:fImage forKey:item.PDFPath];
+                }
                 [item setPDFFirstImage:fImage];
             }
             else
                 [item setPDFFirstImage:nil];
             [coursewareOriginArray addObject:item];
             [coursewareDisplayArray addObject:item];
+            
 
         }
     }
@@ -227,12 +253,17 @@ NSString *NOTEFolderName2 = @"NOTE";
         NSString *PDFName = item.PDFName;
         UIImage *PDFFirstImage = item.PDFFirstImage;
         //        NSString *PDFPath = item.PDFPath;
-        NSString *PDFURL = item.PDFURL;
-        for (ASIHTTPRequest *request in self.downloadQueue.operations) {
-            if ([request.originalURL isEqual:[NSURL URLWithString:PDFURL]]) {
-                request.tag = i;
-                
+        NSURL *PDFURL = [NSURL URLWithString:item.PDFURL];
+        for (ASIHTTPRequest *request in queue.operations) {
+            if ([request.url isEqual:PDFURL]) {
+                NSLog(@"request in");
                 [request setDownloadProgressDelegate:progressView];
+                
+                NSDictionary *requestDict = request.myDict;
+                NSString *filePath = [requestDict objectForKey:@"filePath"];
+                NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:i],@"index",filePath,@"filePath",item,@"item", nil];
+                [request setMyDict:dict];
+                [progressView setMyDict:dict];
                 [progressView setHidden:NO];
             }
         }
@@ -287,7 +318,7 @@ NSString *NOTEFolderName2 = @"NOTE";
         [self.courseSV addSubview:courseItem];
     }
 
-
+    [overlayView dismiss:YES];
 }
 
 - (void)openCourseware:(id)sender
@@ -352,7 +383,13 @@ NSString *NOTEFolderName2 = @"NOTE";
 //点击单个课件下载
 - (void) courseItemAction:(id)sender
 {
+    NSLog(@"action");
+    UIButton *button = (UIButton *)sender;
+    NSDictionary *dict = button.myDict;
     
+    int index = [(NSNumber *)[dict objectForKey:@"index"] integerValue];
+    [self downloadPDF:index];
+    /*
     UIButton *button = (UIButton *)sender;
     NSDictionary *dict = button.myDict;
     int index = [(NSNumber *)[dict objectForKey:@"index"] integerValue];
@@ -360,11 +397,39 @@ NSString *NOTEFolderName2 = @"NOTE";
     [self downloadPDF:index];
     
     [self.downloadQueue go];
+     */
     
 }
 //下载单个课件
 - (void) downloadPDF:(int)index
 {
+    NSLog(@"download");
+    CoursewareItem *item = [coursewareDisplayArray objectAtIndex:index];
+    NSURL *url = [NSURL URLWithString:item.PDFURL];
+    NSString *filePath = item.PDFPath;
+    NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:url,@"url",filePath,@"filePath",item,@"item",[NSNumber numberWithInt:index],@"index", nil];
+    
+    
+    UIButton *button = (UIButton *)[buttonArray objectAtIndex:index];
+    MRCircularProgressView *progress = (MRCircularProgressView *)[button viewWithTag:PROGRESS_TAG];
+    for (ASIHTTPRequest *request in queue.operations) {
+        if ([request isExecuting]) {
+            [request setQueuePriority:NSOperationQueuePriorityVeryLow];
+            break;
+        }
+    }
+    [downloadModel downloadByDict:myDict];
+    for (ASIHTTPRequest *request in queue.operations/*self.downloadQueue.operations*/) {
+        if ([request.url isEqual:url]) {
+            //                request.tag = index;
+            [progress setMyDict:myDict];
+            [progress setHidden:NO];
+//            progress.delegate = self;
+            [request setDownloadProgressDelegate:progress];
+        }
+    }
+
+    /*
     UIButton *button = (UIButton *)[buttonArray objectAtIndex:index];
     
     CoursewareItem *item = [coursewareDisplayArray objectAtIndex:index];
@@ -409,7 +474,7 @@ NSString *NOTEFolderName2 = @"NOTE";
     [request setShouldContinueWhenAppEntersBackground:YES];
     
     [[self downloadQueue] addOperation:request];
-    
+    */
 }
 
 //下载完成
@@ -651,5 +716,31 @@ NSString *NOTEFolderName2 = @"NOTE";
     
     return result;
 }
+
+#pragma DownloadModelDelegate mark
+- (void)downloadFinished:(MRCircularProgressView *)progressView{
+    NSLog(@"downloadFinished");
+    NSDictionary *myDict = progressView.myDict;
+    int index = [(NSNumber *)[myDict objectForKey:@"index"] intValue];
+    NSString *filePath = [myDict objectForKey:@"filePath"];
+    //    if (progress.progress == 100) {
+    
+    CoursewareItem *item = [myDict objectForKey:@"item"];
+    if ([self.buttonArray count] > index) {
+        UIButton *button = [self.buttonArray objectAtIndex:index];
+        NSDictionary *dict = button.myDict;
+        index = [(NSNumber *)[dict objectForKey:@"index"] intValue];
+        //    UIImage *image = [self getFirstPageFromPDF:filePath];
+        UIImage *image = [firstImageDict objectForKey:filePath];
+        item.PDFFirstImage = image;
+        [button setImage:image forState:UIControlStateNormal];
+        [button setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
+        [button removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(openCourseware:) forControlEvents:UIControlEventTouchUpInside];
+        [progressView setHidden:YES];
+    }
+    
+}
+
 
 @end

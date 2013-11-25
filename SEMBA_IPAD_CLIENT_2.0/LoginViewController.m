@@ -13,12 +13,17 @@
 #import "Dao.h"
 #import "SysbsModel.h"
 #import "AppDelegate.h"
+#import "MRProgressOverlayView.h"
 
-BOOL keyBoardIsAppear;
-BOOL shouldLogin;
+
+
 
 @interface LoginViewController ()
-
+{
+    BOOL isAutoLogin;
+    BOOL isLogout;
+    MRProgressOverlayView *overlayView;
+}
 @end
 
 @implementation LoginViewController
@@ -33,6 +38,9 @@ BOOL shouldLogin;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        isLogout = YES;
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:[NSNumber numberWithBool:YES] forKey:isLoginOutKey];
     }
     return self;
 }
@@ -41,12 +49,27 @@ BOOL shouldLogin;
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    
     accountTF.delegate = self;
     passwordTF.delegate = self;
-    [accountTF setText:@"common"];
-    [passwordTF setText:@"72"];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *beforeAccount = [userDefaults objectForKey:ACCOUNT_KEY];
+    NSString *beforePaw = [userDefaults objectForKey:PASSWORD_KEY];
+    
+    [accountTF setText:beforeAccount];
+    [passwordTF setText:beforePaw];
     passwordTF.secureTextEntry = YES;
-    [autoLoginCheck setSelected:NO];
+    isAutoLogin = NO;
+    isAutoLogin = [(NSNumber *)[userDefaults objectForKey:isAutoLoginKey] boolValue];
+    
+    [autoLoginCheck setSelected:isAutoLogin];
+    if (autoLoginCheck.selected == YES) {
+        [autoLoginCheck setBackgroundImage:[UIImage imageNamed:@"check_box_yes"] forState:UIControlStateNormal];
+    } else{
+        [autoLoginCheck setBackgroundImage:[UIImage imageNamed:@"check_box"] forState:UIControlStateNormal];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,6 +86,11 @@ BOOL shouldLogin;
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:accountText,@"account",passwordText,@"password", nil];
     NSThread *loginThread = [[NSThread alloc]initWithTarget:self selector:@selector(loginSelector:) object:dict];
     [loginThread start];
+    overlayView = [[MRProgressOverlayView alloc]init];
+    overlayView.mode = MRProgressOverlayViewModeIndeterminate;
+    [self.view addSubview:overlayView];
+    [overlayView show:YES];
+    
 }
 - (void)loginSelector:(NSDictionary *)loginInfo{
     NSString *accountText = (NSString *)[loginInfo objectForKey:@"account"];
@@ -83,16 +111,17 @@ BOOL shouldLogin;
     }
     Dao *dao = [Dao sharedDao];
     int loginResult = [dao requestForLogin:accountText password:passwordText];
+    [self performSelectorOnMainThread:@selector(overViewDissmiss) withObject:nil waitUntilDone:YES];
     if (loginResult == 1) {
-//<<<<<<< HEAD
-//        [self jumpToMainPage];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:accountTF.text forKey:ACCOUNT_KEY];
+        [userDefaults setObject:passwordTF.text forKey:PASSWORD_KEY];
         NSLog(@"login success");
-        [self performSelectorOnMainThread:@selector(jumpToMainPage) withObject:nil waitUntilDone:NO];
-//=======
+        
+        [self performSelectorOnMainThread:@selector(jumpToMainPage) withObject:nil waitUntilDone:YES];
         SysbsModel *model = [SysbsModel getSysbsModel];
         NSLog(@"%d",model.user.uid);
         //[self jumpToMainPage];
-//>>>>>>> de9b828f95e397c50e37a804bbb966e5d71cd4fc
     } else if (loginResult == 0){
         NSLog(@"网络连接失败！");
     } else if (loginResult == -1){
@@ -101,9 +130,21 @@ BOOL shouldLogin;
         NSLog(@"用户不存在！");
     }
     
+    
+}
+- (void)overViewDissmiss{
+    [overlayView dismiss:YES];
+}
+- (void)viewDidAppear:(BOOL)animated{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    isLogout = [(NSNumber *)[userDefaults objectForKey:isLoginOutKey] boolValue];
+    if (isAutoLogin && isLogout)
+    {
+        [self loginAction:nil];
+    }
 }
 - (void)jumpToMainPage{
-//    DDMenuController *hostController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).hostController;
+
     MainPageViewController *mainController = [[MainPageViewController alloc] init];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mainController];
     DDMenuController *hostController = [[DDMenuController alloc] initWithRootViewController:navController];
@@ -122,11 +163,6 @@ BOOL shouldLogin;
  */
 -(void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    if (keyBoardIsAppear) {
-        return;
-    }
-    NSLog(@"yes");
-    keyBoardIsAppear = YES;
     
     CGRect curFrame = self.loginView.frame;
     [UIView animateWithDuration:0.3f animations:^{
@@ -139,13 +175,7 @@ BOOL shouldLogin;
  */
 -(void) textFieldDidEndEditing:(UITextField *)textField
 {
-    if (!keyBoardIsAppear) {
-        if (shouldLogin) {
-//            [self disappearAnimBegin];
-        }
-        return;
-    }
-    
+
     NSLog(@"no");
     
     
@@ -155,25 +185,11 @@ BOOL shouldLogin;
     [UIView setAnimationDuration:0.3];
     [UIView setAnimationDelegate:self];
     self.loginView.frame = CGRectMake(curFrame.origin.x, curFrame.origin.y + 200, curFrame.size.width, curFrame.size.height);
-    if (shouldLogin) {
-        NSLog(@"ddddddddddddd");
-//        [UIView setAnimationDidStopSelector:@selector(disappearAnimBegin)];
-    }
     
     [UIView commitAnimations];
-    //    [UIView animateWithDuration:0.3f animations:^{
-    //        self.view.frame = CGRectMake(curFrame.origin.x + 200, curFrame.origin.y, curFrame.size.width, curFrame.size.height);
-    
-    //    }];
-    //self.view移回原位置
-    
-    keyBoardIsAppear = NO;
-    shouldLogin = NO;
-    //    if (shouldLogin) {
-    
-    //    }
 }
 - (IBAction)autoLoginCheckAction:(id)sender {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (autoLoginCheck.selected == NO) {
         [autoLoginCheck setBackgroundImage:[UIImage imageNamed:@"check_box_yes"] forState:UIControlStateNormal];
         autoLoginCheck.selected = YES;
@@ -181,6 +197,7 @@ BOOL shouldLogin;
         [autoLoginCheck setBackgroundImage:[UIImage imageNamed:@"check_box"] forState:UIControlStateNormal];
         autoLoginCheck.selected = NO;
     }
+    [userDefaults setObject:[NSNumber numberWithBool:autoLoginCheck.selected] forKey:isAutoLoginKey];
 }
 
 @end

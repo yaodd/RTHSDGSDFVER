@@ -75,7 +75,7 @@
                             <rect key="frame" x="53" y="269" width="21" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <state key="normal" backgroundImage="check_box.png">
+                            <state key="normal" backgroundImage="check_box_yes.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -94,7 +94,7 @@
     <resources>
         <image name="background.png" width="1024" height="768"/>
         <image name="button_log_in.png" width="178" height="51"/>
-        <image name="check_box.png" width="21" height="22"/>
+        <image name="check_box_yes.png" width="22" height="24"/>
         <image name="logo.png" width="364" height="136"/>
         <image name="text_field.png" width="313" height="39"/>
     </resources>

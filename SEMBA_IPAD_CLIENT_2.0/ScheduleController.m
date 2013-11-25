@@ -46,7 +46,7 @@
     
     [self.view setBackgroundColor:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
     
-    self.navigationController.navigationBar.tintColor = [UIColor redColor];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bar_bg"] forBarMetrics:UIBarMetricsDefault];
     
     UIImageView *title = [[UIImageView alloc] initWithFrame:CGRectMake(470, 30, 71, 21)];
@@ -102,7 +102,7 @@
         }
     }
     
-    [scrollView setContentSize:CGSizeMake(scrollView.frame.size.width, (cellCount / 2 + 1) * 500)];
+    [scrollView setContentSize:CGSizeMake(scrollView.frame.size.width, (cellCount + 1) * kDistanceOfCells + kOriginYofTopCell)];
     
 }
 

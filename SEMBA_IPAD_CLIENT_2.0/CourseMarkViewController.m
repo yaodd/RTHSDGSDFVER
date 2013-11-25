@@ -88,6 +88,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.view setBackgroundColor:[UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]];
+
     isEdit = NO;
     self.edgesForExtendedLayout = UIRectEdgeTop;
     self.extendedLayoutIncludesOpaqueBars = NO;
@@ -131,6 +134,7 @@
     
     [markTableView setSeparatorColor:[UIColor clearColor]];
     [markTableView setAllowsSelection:NO];
+    [markTableView setBackgroundColor:[UIColor clearColor]];
     
     [self.view addSubview:markTableView];
     
@@ -248,6 +252,7 @@
     int row = indexPath.row;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell setBackgroundColor:[UIColor clearColor]];
         for (int i = 0; i < ITEM_NUM_IN_ROW; i ++) {
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(i * 256, 0, 256, 280)];
             [view setHidden:YES];
@@ -259,6 +264,7 @@
             [view addSubview:button];
             
             UITextView *markText = [[UITextView alloc]initWithFrame:CGRectMake(imageRect.origin.x + 50, 8 + imageRect.size.height, imageRect.size.width - 100, 40)];
+            [markText setBackgroundColor:[UIColor clearColor]];
             [markText setAllowsEditingTextAttributes:NO];
             [markText setTextColor:[UIColor colorWithRed:85.0 / 255 green:85.0 / 255 blue:85.0 / 255 alpha:1.0]];
             [markText setTag:TEXT_FIELD_TAG];
