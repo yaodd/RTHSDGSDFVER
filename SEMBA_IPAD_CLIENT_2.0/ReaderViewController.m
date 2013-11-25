@@ -120,6 +120,7 @@
 @synthesize markerWidthView;
 @synthesize penWidthView;
 @synthesize swatchView;
+@synthesize noteButton;
 #pragma mark Support methods
 
 - (void)updateScrollViewContentSize
@@ -549,6 +550,7 @@
     // init the preview image
 //    [self.navigationController.navigationBar setHidden:NO];
     
+    
     UIImage *image = [[UIImage alloc]initWithContentsOfFile:@"download_ppt.png"];
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
 
@@ -610,10 +612,21 @@
 //    noteToolbar = [[NoteToolbar alloc] initWithFrame:CGRectMake(0, 648, 1024, 100)];
 //    noteToolbar.delegate = self;
 //    [self.view addSubview:noteToolbar];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 768 / 2 - 40, 41, 80)];
+    [imageView setImage:[UIImage imageNamed:@"entry"]];
+    [self.view addSubview:imageView];
     
-    noteToolDrawerBar = [[NoteToolDrawerBar alloc]initWithFrame:CGRectMake(0, 0, 141, 583) parentView:self.view];
+    noteToolDrawerBar = [[NoteToolDrawerBar alloc]initWithFrame:CGRectMake(0, 0, 174, 539) parentView:self.view];
     noteToolDrawerBar.delegate = self;
     [self.view addSubview:noteToolDrawerBar];
+    
+    UIImage *noteButtonImage = [UIImage imageNamed:@"edit_off"];
+    noteButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 653, noteButtonImage.size.width, noteButtonImage.size.height)];
+    [noteButton setImage:noteButtonImage forState:UIControlStateNormal];
+    [self.view addSubview:noteButton];
+    [noteButton addTarget:self action:@selector(noteButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dragButtonGesture:)];
+    [noteButton addGestureRecognizer:panGesture];
     
 	UITapGestureRecognizer *singleTapOne = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
 	singleTapOne.numberOfTouchesRequired = 1; singleTapOne.numberOfTapsRequired = 1; singleTapOne.delegate = self;
@@ -637,6 +650,25 @@
     
     [self initToolView];
     
+}
+- (void)noteButtonAction:(UIButton *)button{
+    if (button.selected) {
+        [button setImage:[UIImage imageNamed:@"edit_off"] forState:UIControlStateNormal];
+        button.selected = NO;
+    } else{
+        [button setImage:[UIImage imageNamed:@"edit_on"] forState:UIControlStateNormal];
+        button.selected = YES;
+    }
+}
+- (void)dragButtonGesture:(UIPanGestureRecognizer *)recognizer{
+    
+    CGPoint translation = [recognizer translationInView:self.view];
+    CGPoint resultPoint = CGPointMake(noteButton.center.x + translation.x, noteButton.center.y + translation.y);
+    if (resultPoint.x >= 0 && resultPoint.x <= 1024 && resultPoint.y >= 0 && resultPoint.y <= 768) {
+        noteButton.center = CGPointMake(noteButton.center.x + translation.x, noteButton.center.y + translation.y);
+
+    }
+        [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
 }
 
 - (void)initToolView{
@@ -692,7 +724,7 @@
     [markerWidthSlider setMinimumValue:kPenWidthMin];
     [markerWidthSlider setMaximumValue:kPenWidthMax];
     [markerWidthSlider addTarget:self action:@selector(widthChange:) forControlEvents:UIControlEventValueChanged];
-    [markerWidthSlider setValue:kPenWidthDefault];
+    [markerWidthSlider setValue:kPenWidthMax / 2];
     [markerWidthSlider setBackgroundColor:[UIColor clearColor]];
     [markerWidthSlider setTag:PEN_WIDTH_SLIDER_TAG];
     [markerWidthView addSubview:markerWidthSlider];
@@ -1245,11 +1277,11 @@
 				if ([lastHideTime timeIntervalSinceNow] < -0.75) // Delay since hide
 				{
 					if ((mainToolbar.hidden == YES) || (mainPagebar.hidden == YES)
-                        || (noteToolDrawerBar.hidden == YES))
+                        /*|| (noteToolDrawerBar.hidden == YES)*/)
 					{
 						[mainToolbar showToolbar];
                         [mainPagebar showPagebar]; // Show
-                        [noteToolDrawerBar showNoteToolDrawerBar];
+//                        [noteToolDrawerBar showNoteToolDrawerBar];
 //                        [self viewAppear:penWidthView];
 //                        [self viewAppear:swatchView];
 //                        [self viewAppear:eraserWidthView];
@@ -1343,7 +1375,7 @@
 - (void)contentView:(ReaderContentView *)contentView touchesBegan:(NSSet *)touches
 {
 	if ((mainToolbar.hidden == NO) || (mainPagebar.hidden == NO)
-        || (noteToolDrawerBar.hidden == NO))
+        /*|| (noteToolDrawerBar.hidden == NO)*/)
 	{
 		if (touches.count == 1) // Single touches only
 		{
@@ -1358,7 +1390,7 @@
 
 		[mainToolbar hideToolbar];
         [mainPagebar hidePagebar]; // Hide
-        [noteToolDrawerBar hideNoteToolDrawerBar];
+//        [noteToolDrawerBar hideNoteToolDrawerBar];
         [self viewDisappear:markerWidthView];
         [self viewDisappear:eraserWidthView];
         [self viewDisappear:swatchView];
@@ -1734,10 +1766,19 @@
                     UISlider *eraserWidthSlider = (UISlider *)[eraserWidthView viewWithTag:PEN_WIDTH_SLIDER_TAG];
                     if (drawNewView.lineAlpha == 1.0f) {
                         UISlider *penWidthSlider = (UISlider *)[penWidthView viewWithTag:PEN_WIDTH_SLIDER_TAG];
-                        [eraserWidthSlider setValue:penWidthSlider.value];
+                        if (penWidthSlider.value >= kPenWidthMax / 2) {
+                            [eraserWidthSlider setValue:penWidthSlider.value];
+                        }else{
+                            [eraserWidthSlider setValue:kPenWidthMax / 2];
+                        }
                     } else if (drawNewView.lineAlpha == kMarkAlphaDefault){
                         UISlider *markWidthSlider = (UISlider *)[markerWidthView viewWithTag:PEN_WIDTH_SLIDER_TAG];
                         [eraserWidthSlider setValue:markWidthSlider.value];
+                        if (markWidthSlider.value >= kPenWidthMax / 2) {
+                            [eraserWidthSlider setValue:markWidthSlider.value];
+                        } else{
+                            [eraserWidthSlider setValue:kPenWidthMax / 2];
+                        }
                     }
                 }
                                 currentToolType = ACEDrawingToolTypeEraser;
