@@ -48,6 +48,7 @@ NSString *NOTEFolderName3 = @"NOTE";
 {
     DownloadModel *downloadModel;
     ASINetworkQueue *queue;
+    NSMutableDictionary *firstImageDict;
 }
 @end
 
@@ -78,6 +79,7 @@ NSString *NOTEFolderName3 = @"NOTE";
     downloadModel = [DownloadModel getDownloadModel];
     queue = downloadModel.queue;
     downloadModel.delegate = self;
+    firstImageDict = downloadModel.firstImageDict;
     
     if (![self downloadQueue]) {
         [self setDownloadQueue:[[ASINetworkQueue alloc]init]];
@@ -176,7 +178,11 @@ NSString *NOTEFolderName3 = @"NOTE";
         [item setPDFName:[[self.PDFPathArray objectAtIndex:i] lastPathComponent]];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:item.PDFPath]) {
-            UIImage *fImage = [self getFirstPageFromPDF:item.PDFPath];
+            UIImage *fImage = [firstImageDict objectForKey:item.PDFPath];
+            if (fImage == nil) {
+                fImage = [self getFirstPageFromPDF:item.PDFPath];
+                [firstImageDict setObject:fImage forKey:item.PDFPath];
+            }
             [item setPDFFirstImage:fImage];
         }
         else{
@@ -186,8 +192,6 @@ NSString *NOTEFolderName3 = @"NOTE";
         [displayArray addObject:item];
         [self performSelectorOnMainThread:@selector(displayTableView) withObject:nil waitUntilDone:NO];
     }
-//    displayArray = originalArray;
-//    [self performSelectorOnMainThread:@selector(displayTableView) withObject:nil waitUntilDone:YES];
 }
 
 - (void)displayTableView{
@@ -442,9 +446,8 @@ NSString *NOTEFolderName3 = @"NOTE";
 //        NSString *PDFPath = item.PDFPath;
         NSURL *PDFURL = [NSURL URLWithString:item.PDFURL];
         
-        for (ASIHTTPRequest *request in queue.operations/*self.downloadQueue.operations*/) {
+        for (ASIHTTPRequest *request in queue.operations) {
             if ([request.url isEqual:PDFURL]) {
-//                request.tag = index;
                 [request setDownloadProgressDelegate:progressView];
                 
                 NSDictionary *requestDict = request.myDict;
@@ -454,7 +457,6 @@ NSString *NOTEFolderName3 = @"NOTE";
                 [progressView setMyDict:dict];
                 progressView.delegate = self;
                 [progressView setHidden:NO];
-//                [progressView addTarget:self action:@selector(progressValueChange:) forControlEvents:UIControlEventValueChanged];
             }
         }
         if (PDFFirstImage != nil) {
@@ -768,34 +770,30 @@ NSString *NOTEFolderName3 = @"NOTE";
     return result;
 }
 #pragma DownloadModelDelegate mark
-- (void)downloadFinished:(ASIHTTPRequest *)request{
-//    NSLog(@"finished");
-//    [courseTableView reloadData];
-}
-#pragma MRProgressDelegate mark
-- (void)progressFinished:(MRCircularProgressView *)progress{
-    
-//    NSLog(@"out progress %f",progress.progress);
-    NSDictionary *myDict = progress.myDict;
+- (void)downloadFinished:(MRCircularProgressView *)progressView{
+    NSLog(@"downloadFinished");
+    NSDictionary *myDict = progressView.myDict;
     int index = [(NSNumber *)[myDict objectForKey:@"index"] intValue];
     NSString *filePath = [myDict objectForKey:@"filePath"];
-//    if (progress.progress == 100) {
+    //    if (progress.progress == 100) {
     
     CoursewareItem *item = [myDict objectForKey:@"item"];
     
-        UIButton *button = [self.buttonArray objectAtIndex:index % buttonNumber];
-        NSDictionary *dict = button.myDict;
-        index = [(NSNumber *)[dict objectForKey:@"index"] intValue];
-        UIImage *image = [self getFirstPageFromPDF:filePath];
+    UIButton *button = [self.buttonArray objectAtIndex:index % buttonNumber];
+    NSDictionary *dict = button.myDict;
+    index = [(NSNumber *)[dict objectForKey:@"index"] intValue];
+//    UIImage *image = [self getFirstPageFromPDF:filePath];
+    UIImage *image = [firstImageDict objectForKey:filePath];
     item.PDFFirstImage = image;
-        [button setImage:image forState:UIControlStateNormal];
-        [button setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-        [button removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
-        [button addTarget:self action:@selector(openCourseware:) forControlEvents:UIControlEventTouchUpInside];
-        MRCircularProgressView *progressView = (MRCircularProgressView *)[button viewWithTag:PROGRESS_TAG];
-        [progressView setHidden:YES];
-//    }
-     
+    [button setImage:image forState:UIControlStateNormal];
+    [button setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
+    [button removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(openCourseware:) forControlEvents:UIControlEventTouchUpInside];
+    [progressView setHidden:YES];
+}
+#pragma MRProgressDelegate mark
+- (void)progressFinished:(MRCircularProgressView *)progress{
+    return;
 }
 - (void)progressValueChange:(MRCircularProgressView *)progress{
 

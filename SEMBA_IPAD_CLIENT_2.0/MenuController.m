@@ -7,7 +7,6 @@
 //
 
 #import "MenuController.h"
-#import "DDMenuController.h"
 #import "AppDelegate.h"
 #import "EvaluateController.h"
 #import "ScheduleController.h"
@@ -57,10 +56,15 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 //    hostController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).hostController;
+    hostController.delegate = self;
+    
     NSLog(@"MenuView did load");
     currentRow = 0;
     
     float originY = 20;
+    
+    //Background Color
+    [self.view setBackgroundColor:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
     
     //Background Image
     CGRect backgroundFrame = CGRectMake(0, originY, menuWidth+5, 748);
@@ -447,6 +451,14 @@
     currentRow = indexPath.row;
     [self.list reloadData];
     //[list deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma Mark - DDMenuController Delegate
+- (BOOL)isPresentNoticeView
+{
+    if(currentRow == 4)
+        return YES;
+    return NO;
 }
 
 

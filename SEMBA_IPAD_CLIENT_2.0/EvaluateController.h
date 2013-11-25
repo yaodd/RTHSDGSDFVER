@@ -13,6 +13,5 @@
 @property (nonatomic, strong) UIImageView *line;
 @property (nonatomic, strong) UIImageView *lineTop;
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, retain) UIImageView *MM;
 
 @end
