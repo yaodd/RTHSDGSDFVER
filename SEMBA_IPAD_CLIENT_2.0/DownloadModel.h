@@ -11,11 +11,18 @@
 #import "ASINetworkQueue.h"
 #import "MyCourse.h"
 @class DownloadModel;
+@protocol DownloadModelDelegate <NSObject>
 
+@optional
+
+- (void) downloadFinished:(ASIHTTPRequest *)request;
+
+@end
 @interface DownloadModel : NSObject
 
 @property (nonatomic, retain) ASINetworkQueue *queue;
 @property (nonatomic, retain) MyCourse *myCourse;
+@property (nonatomic, assign) id<DownloadModelDelegate> delegate;
 +(DownloadModel *)getDownloadModel;
 
 - (void)downloadAll;

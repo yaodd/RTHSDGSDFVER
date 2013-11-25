@@ -24,11 +24,11 @@ NSString *NOTEFolderName = @"NOTE";
 +(DownloadModel *)getDownloadModel{
     if (sharedModel == nil) {
         sharedModel = [[DownloadModel alloc]init];
+        
     }
     return sharedModel;
 }
-//下载全部
-- (void)downloadAll{
+- (id)init{
     if (!queue) {
         queue = [[ASINetworkQueue alloc]init];
         [queue reset];
@@ -37,6 +37,11 @@ NSString *NOTEFolderName = @"NOTE";
         [queue setMaxConcurrentOperationCount:MAX_DOWNLOAD_NUM];
         [queue setDelegate:self];
     }
+    return self;
+}
+//下载全部
+- (void)downloadAll{
+    
     for (Course *course in myCourse.courseArr) {
 //        NSLog(@"download");
         NSString *courseFolderName = [NSString stringWithFormat:@"%d",course.cid];
@@ -87,9 +92,10 @@ NSString *NOTEFolderName = @"NOTE";
     NSString *filePath = [dict objectForKey:@"filePath"];
     BOOL isExist = NO;
     for (ASIHTTPRequest *tempRequest in queue.operations) {
-        if ([tempRequest.originalURL isEqual:url]) {
+        if ([tempRequest.url isEqual:url]) {
             [tempRequest setQueuePriority:NSOperationQueuePriorityVeryHigh];
             isExist = YES;
+            NSLog(@"yes");
             break;
         }
     }
@@ -100,6 +106,7 @@ NSString *NOTEFolderName = @"NOTE";
         [request setMyDict:dict];
         [request setDidFinishSelector:@selector(requestDone:)];     //下载完成处理
         [request setDidFailSelector:@selector(requestWentWrong:)];  //下载出错处
+        [request setQueuePriority:NSOperationQueuePriorityVeryHigh];
         [queue addOperation:request];
         [queue go];
     }
@@ -124,6 +131,7 @@ NSString *NOTEFolderName = @"NOTE";
     NSDictionary *dict = request.myDict;
     NSString *filePath = [dict objectForKey:@"filePath"];
     [request.responseData writeToFile:filePath atomically:YES];
+    [self.delegate downloadFinished:request];
 //    UIImage *image = [self getFirstPageFromPDF:filePath];
 }
 //下载出错处理
@@ -132,10 +140,6 @@ NSString *NOTEFolderName = @"NOTE";
     
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"出错啦！" message:@"网络连接出错，请检查网络！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alertView show];
-    
-//    int index = request.tag;
-//    UIButton *button = [self.buttonArray objectAtIndex:index];
-    //    UIProgressView *progressView = (UIProgressView *)[button viewWithTag:PROGRESS_TAG];
 }
 
 @end

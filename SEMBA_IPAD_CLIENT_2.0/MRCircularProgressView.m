@@ -194,13 +194,12 @@
 
 - (void)setProgress:(float)progress {
     
-//    NSLog(@"progress %f" ,progress);
-//    NSLog(@"int %d",(int)progress);
-    int result = (int)progress;
+//    NSLog(@"in progress %f" ,_progress);
+//    NSLog(@"int %d",(int)_progress);
+    int result = (int)_progress;
     if (result == 1) {
         [self.delegate progressFinished:self];
     }
-    
     /*
     NSParameterAssert(progress >= 0 && progress <= 1);
     
@@ -228,6 +227,7 @@
     } else {
         [self animateToProgress:progress];
     }
+    
 
     /*
     // Stop running animation
@@ -261,6 +261,7 @@
 }
 
 - (void)setProgress:(float)progress animated:(BOOL)animated {
+    
     if (animated) {
         if (self.progress == progress) {
             return;

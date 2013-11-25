@@ -175,10 +175,10 @@ BOOL shouldLogin;
 }
 - (IBAction)autoLoginCheckAction:(id)sender {
     if (autoLoginCheck.selected == NO) {
-        [autoLoginCheck setBackgroundColor:[UIColor blueColor]];
+        [autoLoginCheck setBackgroundImage:[UIImage imageNamed:@"check_box_yes"] forState:UIControlStateNormal];
         autoLoginCheck.selected = YES;
     } else{
-        [autoLoginCheck setBackgroundColor:[UIColor blackColor]];
+        [autoLoginCheck setBackgroundImage:[UIImage imageNamed:@"check_box"] forState:UIControlStateNormal];
         autoLoginCheck.selected = NO;
     }
 }

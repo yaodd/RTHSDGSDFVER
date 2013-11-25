@@ -54,8 +54,8 @@
 @property (nonatomic, retain) UIView *penWidthView;
 @property (nonatomic, retain) UIView *markerWidthView;
 @property (nonatomic, retain) UIView *eraserWidthView;
-
 @property (nonatomic, retain) NSString *notePath;
+@property (nonatomic, retain) UIButton *noteButton;
 - (id)initWithReaderDocument:(ReaderDocument *)object;
 
 - (void)initSlider;

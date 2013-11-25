@@ -55,10 +55,10 @@
         [self addSubview:touchView];
         
         arrowIV = [[UIImageView alloc]initWithFrame:CGRectMake(0, frame.size.height / 2 - 20, 40, 40)];
-        [arrowIV setBackgroundColor:[UIColor blueColor]];
+        [arrowIV setBackgroundColor:[UIColor clearColor]];
         [touchView addSubview:arrowIV];
         
-        closePoint = CGPointMake(0 - 30, parentRect.size.height / 2);
+        closePoint = CGPointMake(0 - (self.frame.size.width / 2 - 40), parentRect.size.height / 2);
         openPoint = CGPointMake(frame.size.width / 2, parentRect.size.height / 2);
         self.center = closePoint;
         
@@ -73,15 +73,16 @@
     imageNameHArray = [[NSMutableArray alloc]initWithObjects:@"ppt_toolbox_colorpicker_bg_active",@"ppt_toolbox_pencil_active",@"ppt_toolbox_brush_active",@"ppt_toolbox_eraser_active",@"ppt_toolbox_camera_active",@"ppt_toolbox_recorder_active", nil];    CGFloat topButtonY = BUTTON_Y;
     buttonArray = [[NSMutableArray alloc]init];
     for (int i = 0 ; i < 6; i ++) {
-        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(BUTTON_X, topButtonY, BUTTON_WIDTH_SMALL, BUTTON_HEIGHT_SMALL)];
-//        [button setBackgroundColor:[UIColor grayColor]];
         UIImage *image = [UIImage imageNamed:[imageNameNArray objectAtIndex:i]];
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(BUTTON_X, topButtonY, image.size.width, image.size.height)];
+//        [button setBackgroundColor:[UIColor grayColor]];
+        
         [button setBackgroundImage:image forState:UIControlStateNormal];
         [button setTag:i + 1];
         [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
         [buttonArray addObject:button];
         [self addSubview:button];
-        topButtonY += (BUTTON_HEIGHT_SMALL + BUTTON_SPACE);
+        topButtonY += (image.size.height + BUTTON_SPACE);
     }
 }
 
@@ -122,17 +123,18 @@
     if (button.tag == 1) {
         return;
     }
+    UIImage *image = [UIImage imageNamed:[imageNameHArray objectAtIndex:index]];
     CGRect rect = button.frame;
-    rect.origin.y -= 8;
+    rect.origin.y -= ((image.size.height - rect.size.height) / 2);
     rect.origin.x = 0;
-    rect.size.width += 59;
-    rect.size.height += 16;
+    rect.size.width = image.size.width;
+    rect.size.height = image.size.height;
 
     [UIView animateWithDuration:0.5 animations:^{
         button.frame = rect;
         
     } completion:^(BOOL finish){
-        [button setBackgroundImage:[UIImage imageNamed:[imageNameHArray objectAtIndex:index]] forState:UIControlStateNormal];
+        [button setBackgroundImage:image forState:UIControlStateNormal];
     }];
 }
 - (void)animationOfButtonClose:(UIButton *)button{
@@ -140,15 +142,16 @@
     if (button.tag == 1) {
         return;
     }
+    UIImage *image = [UIImage imageNamed:[imageNameNArray objectAtIndex:index]];
     CGRect rect = button.frame;
-    rect.origin.y += 8;
+    rect.origin.y += ((rect.size.height - image.size.height) / 2);
     rect.origin.x = 0;
-    rect.size.height -= 16;
-    rect.size.width -= 59;
+    rect.size.height = image.size.height;
+    rect.size.width = image.size.width;
     [UIView animateWithDuration:0.3 animations:^{
         button.frame = rect;
     } completion:^(BOOL finish){
-        [button setBackgroundImage:[UIImage imageNamed:[imageNameNArray objectAtIndex:index]] forState:UIControlStateNormal];
+        [button setBackgroundImage:image forState:UIControlStateNormal];
     }];
 }
 
