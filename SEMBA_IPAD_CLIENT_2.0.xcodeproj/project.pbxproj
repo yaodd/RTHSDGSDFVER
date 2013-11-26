@@ -62,6 +62,7 @@
 		59D096EB183600B00097C6AC /* RegisterContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D096E6183600B00097C6AC /* RegisterContentController.m */; };
 		59D096EC183600B00097C6AC /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D096E8183600B00097C6AC /* RegisterController.m */; };
 		59D096ED183600B00097C6AC /* RegisterHistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D096EA183600B00097C6AC /* RegisterHistoryController.m */; };
+		59FD36B11844638300C01940 /* ForgetPSWView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FD36B01844638300C01940 /* ForgetPSWView.m */; };
 		9C0203B918347CC400060D96 /* ReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0203B818347CC400060D96 /* ReaderViewController.m */; };
 		9C0F8AB0181F5BC100FEFABA /* CoursewareItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F8AAF181F5BC100FEFABA /* CoursewareItem.m */; };
 		9C0F8AB3181FB88C00FEFABA /* CoursewareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F8AB2181FB88C00FEFABA /* CoursewareViewController.m */; };
@@ -412,6 +413,8 @@
 		59D096E8183600B00097C6AC /* RegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterController.m; sourceTree = "<group>"; };
 		59D096E9183600B00097C6AC /* RegisterHistoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterHistoryController.h; sourceTree = "<group>"; };
 		59D096EA183600B00097C6AC /* RegisterHistoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterHistoryController.m; sourceTree = "<group>"; };
+		59FD36AF1844638300C01940 /* ForgetPSWView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPSWView.h; sourceTree = "<group>"; };
+		59FD36B01844638300C01940 /* ForgetPSWView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPSWView.m; sourceTree = "<group>"; };
 		9C0203B818347CC400060D96 /* ReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderViewController.m; sourceTree = "<group>"; };
 		9C0F8AAE181F5BC100FEFABA /* CoursewareItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoursewareItem.h; sourceTree = "<group>"; };
 		9C0F8AAF181F5BC100FEFABA /* CoursewareItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoursewareItem.m; sourceTree = "<group>"; };
@@ -970,6 +973,8 @@
 				9C9240B61830D01800415735 /* LoginViewController.h */,
 				9C9240B71830D01800415735 /* LoginViewController.m */,
 				9C9240B81830D01800415735 /* LoginViewController.xib */,
+				59FD36AF1844638300C01940 /* ForgetPSWView.h */,
+				59FD36B01844638300C01940 /* ForgetPSWView.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -1878,6 +1883,7 @@
 				9CBD161E181E695900075BDF /* ReaderContentView.m in Sources */,
 				9CBD1618181E695900075BDF /* NoteToolbar.m in Sources */,
 				9CF2D5AF1836154E0026502F /* UITextView+category.m in Sources */,
+				59FD36B11844638300C01940 /* ForgetPSWView.m in Sources */,
 				59D096E1183600850097C6AC /* LeftCell.m in Sources */,
 				9C9240B11830AF8E00415735 /* MRCircularProgressView.m in Sources */,
 				9CBD1626181E697800075BDF /* Reachability.m in Sources */,
