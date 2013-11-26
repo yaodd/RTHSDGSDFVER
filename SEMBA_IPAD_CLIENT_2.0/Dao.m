@@ -19,7 +19,7 @@
 
 //此处为基本ip地址
 //NSString *baseUrl = @"http://localhost/EMBAWEB/" ;
-NSString *baseUrl = @"http://222.200.177.14/EMBAWEB/";
+NSString *baseUrl = @"http://222.200.177.14/EMBAWEBDEVELOP/";
 NSString *Url = @"http://localhost/test.php";
 NSString *checkInUrl = @"checkin.php";
 NSString *checkInHistory = @"checkinhistory.php";
