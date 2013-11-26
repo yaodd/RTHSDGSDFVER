@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ForgetPSWView.h"
 
 #define isAutoDownloadKey   @"isAutoDownLoad"
 #define isPushKey           @"isPush"
@@ -24,5 +25,8 @@
 - (IBAction)loginAction:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *loginView;
 @property (strong, nonatomic) IBOutlet UIButton *autoLoginCheck;
+@property (strong, nonatomic) ForgetPSWView *forgetView;
+@property (strong, nonatomic) UIView *blurView;
+- (IBAction)ForgetPSWBtnPressed:(id)sender;
 
 @end

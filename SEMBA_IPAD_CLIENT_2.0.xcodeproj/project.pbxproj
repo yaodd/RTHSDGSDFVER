@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2B5AA8C91830EBFC00CC0DBD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9240B71830D01800415735 /* LoginViewController.m */; };
 		2B5AA8CA1830ECBB00CC0DBD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C9240B81830D01800415735 /* LoginViewController.xib */; };
-		2B98B0FB1839DAD900EBA2E0 /* SetUpView.h in Sources */ = {isa = PBXBuildFile; fileRef = 2B98B0F91839DAD900EBA2E0 /* SetUpView.h */; };
 		2B98B0FC1839DAD900EBA2E0 /* SetUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B98B0FA1839DAD900EBA2E0 /* SetUpView.m */; };
 		2BB8153A1830AD7C00736512 /* Dao.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB815391830AD7B00736512 /* Dao.m */; };
 		2BB815471830AE0200736512 /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB8153C1830AE0200736512 /* Course.m */; };
@@ -62,7 +61,11 @@
 		59D096EB183600B00097C6AC /* RegisterContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D096E6183600B00097C6AC /* RegisterContentController.m */; };
 		59D096EC183600B00097C6AC /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D096E8183600B00097C6AC /* RegisterController.m */; };
 		59D096ED183600B00097C6AC /* RegisterHistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D096EA183600B00097C6AC /* RegisterHistoryController.m */; };
+		59EA48131845E71500F17411 /* RegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59EA48121845E71500F17411 /* RegisterView.m */; };
+		59EA48161845F66400F17411 /* RegisterResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59EA48151845F66400F17411 /* RegisterResultController.m */; };
 		59FD36B11844638300C01940 /* ForgetPSWView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FD36B01844638300C01940 /* ForgetPSWView.m */; };
+		59FD36B41844720E00C01940 /* SendEmailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FD36B31844720E00C01940 /* SendEmailController.m */; };
+		59FD36B71844724700C01940 /* ModifyPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FD36B61844724700C01940 /* ModifyPSWController.m */; };
 		9C0203B918347CC400060D96 /* ReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0203B818347CC400060D96 /* ReaderViewController.m */; };
 		9C0F8AB0181F5BC100FEFABA /* CoursewareItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F8AAF181F5BC100FEFABA /* CoursewareItem.m */; };
 		9C0F8AB3181FB88C00FEFABA /* CoursewareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F8AB2181FB88C00FEFABA /* CoursewareViewController.m */; };
@@ -420,8 +423,16 @@
 		59D096E8183600B00097C6AC /* RegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterController.m; sourceTree = "<group>"; };
 		59D096E9183600B00097C6AC /* RegisterHistoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterHistoryController.h; sourceTree = "<group>"; };
 		59D096EA183600B00097C6AC /* RegisterHistoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterHistoryController.m; sourceTree = "<group>"; };
+		59EA48111845E71500F17411 /* RegisterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterView.h; sourceTree = "<group>"; };
+		59EA48121845E71500F17411 /* RegisterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterView.m; sourceTree = "<group>"; };
+		59EA48141845F66400F17411 /* RegisterResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterResultController.h; sourceTree = "<group>"; };
+		59EA48151845F66400F17411 /* RegisterResultController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterResultController.m; sourceTree = "<group>"; };
 		59FD36AF1844638300C01940 /* ForgetPSWView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPSWView.h; sourceTree = "<group>"; };
 		59FD36B01844638300C01940 /* ForgetPSWView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPSWView.m; sourceTree = "<group>"; };
+		59FD36B21844720E00C01940 /* SendEmailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendEmailController.h; sourceTree = "<group>"; };
+		59FD36B31844720E00C01940 /* SendEmailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendEmailController.m; sourceTree = "<group>"; };
+		59FD36B51844724700C01940 /* ModifyPSWController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPSWController.h; sourceTree = "<group>"; };
+		59FD36B61844724700C01940 /* ModifyPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyPSWController.m; sourceTree = "<group>"; };
 		9C0203B818347CC400060D96 /* ReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderViewController.m; sourceTree = "<group>"; };
 		9C0F8AAE181F5BC100FEFABA /* CoursewareItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoursewareItem.h; sourceTree = "<group>"; };
 		9C0F8AAF181F5BC100FEFABA /* CoursewareItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoursewareItem.m; sourceTree = "<group>"; };
@@ -961,6 +972,10 @@
 				59D096E8183600B00097C6AC /* RegisterController.m */,
 				59D096E9183600B00097C6AC /* RegisterHistoryController.h */,
 				59D096EA183600B00097C6AC /* RegisterHistoryController.m */,
+				59EA48111845E71500F17411 /* RegisterView.h */,
+				59EA48121845E71500F17411 /* RegisterView.m */,
+				59EA48141845F66400F17411 /* RegisterResultController.h */,
+				59EA48151845F66400F17411 /* RegisterResultController.m */,
 			);
 			name = Register;
 			sourceTree = "<group>";
@@ -997,6 +1012,10 @@
 				9C9240B81830D01800415735 /* LoginViewController.xib */,
 				59FD36AF1844638300C01940 /* ForgetPSWView.h */,
 				59FD36B01844638300C01940 /* ForgetPSWView.m */,
+				59FD36B21844720E00C01940 /* SendEmailController.h */,
+				59FD36B31844720E00C01940 /* SendEmailController.m */,
+				59FD36B51844724700C01940 /* ModifyPSWController.h */,
+				59FD36B61844724700C01940 /* ModifyPSWController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -1916,7 +1935,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B98B0FB1839DAD900EBA2E0 /* SetUpView.h in Sources */,
 				2B98B0FC1839DAD900EBA2E0 /* SetUpView.m in Sources */,
 				9CF2D65B1839FF810026502F /* SearchViewController.m in Sources */,
 				59D096D81836004D0097C6AC /* EvaluateController.m in Sources */,
@@ -1938,6 +1956,7 @@
 				2BB815481830AE0200736512 /* File.m in Sources */,
 				9CBD1622181E695900075BDF /* ThumbsMainToolbar.m in Sources */,
 				9CBD161C181E695900075BDF /* ReaderMainToolbar.m in Sources */,
+				59FD36B71844724700C01940 /* ModifyPSWController.m in Sources */,
 				9CBD15FF181E692800075BDF /* ReaderThumbsView.m in Sources */,
 				9C51BF88182B40D60071A1D1 /* CourseMarkViewController.m in Sources */,
 				59D096E4183600900097C6AC /* CellData.m in Sources */,
@@ -1957,6 +1976,7 @@
 				9CF2D5AF1836154E0026502F /* UITextView+category.m in Sources */,
 				59FD36B11844638300C01940 /* ForgetPSWView.m in Sources */,
 				59D096E1183600850097C6AC /* LeftCell.m in Sources */,
+				59FD36B41844720E00C01940 /* SendEmailController.m in Sources */,
 				9C9240B11830AF8E00415735 /* MRCircularProgressView.m in Sources */,
 				9CBD1626181E697800075BDF /* Reachability.m in Sources */,
 				2BB815491830AE0200736512 /* MyCourse.m in Sources */,
@@ -1970,6 +1990,7 @@
 				9CBD161F181E695900075BDF /* ReaderContentPage.m in Sources */,
 				591E5D0A183F43A4000B9824 /* DataItem.m in Sources */,
 				9CBD15D4181E679600075BDF /* UITapGestureRecognizer+category.m in Sources */,
+				59EA48161845F66400F17411 /* RegisterResultController.m in Sources */,
 				59D096DB183600690097C6AC /* ScheduleController.m in Sources */,
 				9CBD1643181E699D00075BDF /* ASIDataCompressor.m in Sources */,
 				9C51E80A1844472B003F2130 /* MRMessageInterceptor.m in Sources */,
@@ -1996,6 +2017,7 @@
 				2BB8154B1830AE0200736512 /* SysbsModel.m in Sources */,
 				9CBD15D8181E68CA00075BDF /* UIButton+associate.m in Sources */,
 				9C0203B918347CC400060D96 /* ReaderViewController.m in Sources */,
+				59EA48131845E71500F17411 /* RegisterView.m in Sources */,
 				2BB8154C1830AE0200736512 /* User.m in Sources */,
 				9C51BF8E182C97DB0071A1D1 /* NoteToolDrawerBar.m in Sources */,
 				9CBD163F181E699D00075BDF /* ASIHTTPRequest.m in Sources */,

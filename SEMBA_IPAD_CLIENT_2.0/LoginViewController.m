@@ -32,6 +32,8 @@
 @synthesize accountTF;
 @synthesize loginView;
 @synthesize autoLoginCheck;
+@synthesize forgetView;
+@synthesize blurView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,6 +43,7 @@
         isLogout = YES;
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:[NSNumber numberWithBool:YES] forKey:isLoginOutKey];
+        
     }
     return self;
 }
@@ -70,6 +73,15 @@
         [autoLoginCheck setBackgroundImage:[UIImage imageNamed:@"check_box"] forState:UIControlStateNormal];
     }
     
+    blurView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+    [blurView setBackgroundColor:[UIColor blackColor]];
+    [blurView setAlpha:0.0f];
+    [blurView setHidden:YES];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapSelector:)];
+    [blurView addGestureRecognizer:tapGesture];
+    
+    forgetView = [[ForgetPSWView alloc] initWithDefault:self];
+    forgetView.alpha = 0.0f;
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,7 +117,7 @@
         //            alertView.delegate = self;
         [alertView show];
         
-        
+        [self performSelectorOnMainThread:@selector(overViewDissmiss) withObject:nil waitUntilDone:YES];
         [loginButton setEnabled:YES];
         return;
     }
@@ -199,5 +211,36 @@
     }
     [userDefaults setObject:[NSNumber numberWithBool:autoLoginCheck.selected] forKey:isAutoLoginKey];
 }
+
+//Event When click forget button
+- (IBAction)ForgetPSWBtnPressed:(id)sender {
+    [self showBlur];
+    [forgetView showModifyPSWView];
+}
+
+- (void)tapSelector:(UITapGestureRecognizer *)gesture{
+    [forgetView hideModifyPSWView];
+    [self hideBlur];
+}
+
+- (void)showBlur{
+    [self.view addSubview:blurView];
+    [blurView setHidden:NO];
+    [UIView animateWithDuration:0.5f animations:^{
+        [blurView setAlpha:0.5f];
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+- (void)hideBlur{
+    [UIView animateWithDuration:0.5f animations:^{
+        [blurView setAlpha:0.0f];
+    } completion:^(BOOL finished){
+        [blurView setHidden:YES];
+        [blurView removeFromSuperview];
+    }];
+}
+
 
 @end

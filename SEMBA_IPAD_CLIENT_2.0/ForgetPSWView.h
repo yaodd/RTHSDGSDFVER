@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SendEmailController.h"
 
 @interface ForgetPSWView : UIView
+@property (nonatomic, retain)UIViewController *outViewController;
+
+-(id)initWithDefault:(UIViewController *)controler;
+
+- (void)showModifyPSWView;
+
+- (void)hideModifyPSWView;
 
 @end

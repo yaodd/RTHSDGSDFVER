@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "Dao.h"
+#import "RegisterResultController.h"
 
 @interface RegisterContentController : UIViewController<CLLocationManagerDelegate>
 
-@property (nonatomic, retain) UIButton *checkBtn;
+@property (nonatomic, retain) UIButton *historyBtn;
 
 @property (nonatomic, strong) CLLocationManager *locateManager;
 
@@ -20,6 +21,10 @@
 
 @property (nonatomic, strong) UILabel *hintText;
 
+@property (nonatomic, strong) UIButton *registerBtn;
+
 - (IBAction)checkBtnPressed:(id)sender;
+
+- (IBAction)registerBtnPressed:(id)sender;
 
 @end

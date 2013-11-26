@@ -8,13 +8,17 @@
 
 #import "RegisterContentController.h"
 #import "RegisterHistoryController.h"
-#define kCheckBtnRect CGRectMake(100, 200, 150, 50)
+
 #define kIsDayForClass 1
 #define kLatitudeUp 23.070
 #define kLatitudeLow 23.068
 #define kLongitudeUp 113.386
 #define kLongitudeLow 113.384
 #define kRegistered [NSString stringWithFormat:@"registered"]
+#define kSuccess 0
+#define kFailTime 1
+#define kFailWifi 2
+#define kFailPlace 3
 
 @interface RegisterContentController ()
 
@@ -24,10 +28,11 @@
 {
     NSThread *request;
 }
-@synthesize checkBtn;
-@synthesize  locateManager;
+@synthesize historyBtn;
+@synthesize locateManager;
 @synthesize activity;
 @synthesize hintText;
+@synthesize registerBtn;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,11 +58,22 @@
 	// Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
-    checkBtn = [[UIButton alloc] initWithFrame:kCheckBtnRect];
-    checkBtn.backgroundColor = [UIColor greenColor];
-    [checkBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [checkBtn addTarget:self action:@selector(checkBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:checkBtn];
+    CGRect registerFrame = CGRectMake(50, 200, 100, 50);
+    registerBtn = [[UIButton alloc] initWithFrame:registerFrame];
+    [registerBtn setTitle:@"签到" forState:UIControlStateNormal];
+    [registerBtn setBackgroundImage:[UIImage imageNamed:@"setting_button"] forState:UIControlStateNormal];
+    [registerBtn addTarget:self action:@selector(registerBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:registerBtn];
+    
+    
+    historyBtn = [[UIButton alloc] initWithFrame:CGRectMake(registerFrame.origin.x + registerFrame.size.width + 10,
+                                                            registerFrame.origin.y,
+                                                            150,
+                                                            registerFrame.size.height)];
+    [historyBtn setBackgroundImage:[UIImage imageNamed:@"setting_button"] forState:UIControlStateNormal];
+    [historyBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [historyBtn addTarget:self action:@selector(checkBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:historyBtn];
     
     activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(120, 200, 50, 50)];
     activity.backgroundColor = [UIColor clearColor];
@@ -77,9 +93,19 @@
     hintText.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:hintText];
     
-    [self startRegister];
+    //[self startRegister];
 }
 
+- (IBAction)checkBtnPressed:(id)sender
+{
+    RegisterHistoryController *controller = [[RegisterHistoryController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (IBAction)registerBtnPressed:(id)sender
+{
+    
+}
 
 #pragma Mark - start checking location
 - (void)startRegister
@@ -94,6 +120,7 @@
     CLLocation *current = [[CLLocation alloc] initWithLatitude:self.locateManager.location.coordinate.latitude
                                                      longitude:self.locateManager.location.coordinate.longitude];
     
+    
     NSDate *now = [NSDate date];
     
     //Dao *dao = [Dao sharedDao];
@@ -105,29 +132,45 @@
         if(current.coordinate.latitude <= kLatitudeUp && current.coordinate.latitude >= kLatitudeLow
            && current.coordinate.longitude <= kLongitudeUp && current.coordinate.longitude > kLongitudeLow)
         {
-            [self.checkBtn setTitle:@"查看签到历史" forState:UIControlStateNormal];
+            [self.historyBtn setTitle:@"查看签到历史" forState:UIControlStateNormal];
             [self.hintText setText:@"签到完成啦"];
             
             //TimeStamp
             long timeSp = (long)[now timeIntervalSince1970];
             timeSp = timeSp - timeSp % 86400;
-
+            
             NSDate *d = [NSDate dateWithTimeIntervalSince1970:timeSp];
             NSLog(@"ddd%@", d);
-
+            
             NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
             [userDefault setObject:d forKey:kRegistered];
-
+            
         }
         else {
-            [self.checkBtn setTitle:@"查看签到历史" forState:UIControlStateNormal];
+            [self.historyBtn setTitle:@"查看签到历史" forState:UIControlStateNormal];
             [self.hintText setText:@"不好意思，你还没到上课地点"];
         }
     }else {
         [self.hintText setText:@"今天不用上课"];
-        [self.checkBtn setTitle:@"查看签到历史" forState:UIControlStateNormal];
+        [self.historyBtn setTitle:@"查看签到历史" forState:UIControlStateNormal];
     }
+    
+}
 
+- (BOOL)checkPlace
+{
+    return NO;
+}
+
+- (BOOL)checkInternet
+{
+    
+    return NO;
+}
+
+- (BOOL)checkTime
+{
+    return NO;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -139,12 +182,6 @@
     } completion:^(BOOL finished) {
         [self.activity stopAnimating];
     }];
-}
-
-- (IBAction)checkBtnPressed:(id)sender
-{
-    RegisterHistoryController *controller = [[RegisterHistoryController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

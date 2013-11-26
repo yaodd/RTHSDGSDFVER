@@ -14,7 +14,7 @@
 #import "NoticeController.h"
 #import "RegisterController.h"
 #import "RegisterContentController.h"
-#import "SetUpView.h"
+
 #define menuWidth 238
 
 
@@ -40,6 +40,7 @@
 @synthesize blurView;
 @synthesize setupView;
 @synthesize noticeController;
+@synthesize registerView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -110,7 +111,7 @@
     registerBtn = [[UIButton alloc] init];
     registerBtn.frame = registerFrame;
     registerBtn.backgroundColor = [UIColor clearColor];
-    [registerBtn addTarget:self action:@selector(registerBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [registerBtn addTarget:self action:@selector(showRegisterView) forControlEvents:UIControlEventTouchUpInside];
     [registerBtn setImage:[UIImage imageNamed:@"news center-sign"] forState:UIControlStateNormal];
     [self.view addSubview:registerBtn];
     
@@ -154,37 +155,42 @@
     [hostController.view addSubview:noticeController.view];
 
     
-    //Declare the setting view and background view
+    //The background view when pop a view
     blurView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1024, 768)];
     [blurView setBackgroundColor:[UIColor blackColor]];
     [blurView setAlpha:0.0f];
     [blurView setHidden:YES];
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapSelector:)];
     [blurView addGestureRecognizer:tapGesture];
-//    [hostController.view addSubview:blurView];
 
     setupView = [[SetUpView alloc]initWithDefault:hostController];
     setupView.delegate = self;
     setupView.alpha = 0.0f;
+    
+    registerView = [[RegisterView alloc] initWithDefault:hostController];
+    registerView.alpha = 0.0f;
 }
 
 - (void)dealloc{
     self.delegate = nil;
 }
 
+//Methods about showing and hiding the setting view
 - (void)showSetupWindow{
-//    [self.view bringSubviewToFront:setupView];
-//    [hostController.view addSubview:setupView];
+    
     [hostController.tap setEnabled:NO];
     [self showBlur];
     [setupView showSetupView];
 }
 
 - (void)tapSelector:(UITapGestureRecognizer *)gesture{
-    [setupView hideSetupView];
+    if(setupView.alpha == 1.0f){
+        [setupView hideSetupView];
+    }else if (registerView.alpha == 1.0f){
+        [registerView hideRegisterView];
+    }
     [self hideBlur];
     [hostController.tap setEnabled:YES];
-//    [setupView removeFromSuperview];
 }
 
 - (void)showBlur{
@@ -210,11 +216,20 @@
     [self hideBlur];
     [hostController.tap setEnabled:YES];
 }
+
 - (void)logoutAccount{
     [setupView hideSetupView];
     [self hideBlur];
     [hostController.tap setEnabled:YES];
     [hostController dismissViewControllerAnimated:YES completion:nil];
+}
+
+//Methods about showing and hiding register view
+- (void)showRegisterView
+{
+    [hostController.tap setEnabled:NO];
+    [self showBlur];
+    [registerView showRegisterView];
 }
 
 - (void)didReceiveMemoryWarning

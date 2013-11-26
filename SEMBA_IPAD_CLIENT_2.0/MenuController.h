@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MenuCell.h"
 #import "SetUpView.h"
+#import "RegisterView.h"
 #import "DDMenuController.h"
 
 @class NoticeController;
@@ -31,6 +32,8 @@
 @property (nonatomic, retain) UIView *blurView;
 @property (nonatomic, retain) SetUpView *setupView;
 @property (nonatomic, retain) NoticeController *noticeController;
+@property (nonatomic, retain) RegisterView *registerView;
+
 - (IBAction)registerBtnPressed:(id)sender;
 
 @end

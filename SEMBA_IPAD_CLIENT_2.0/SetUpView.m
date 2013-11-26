@@ -53,6 +53,7 @@ float durationOfAnimation = 2.0f;
         [self removeFromSuperview];
     }];
 }
+
 - (void)showSetupView{
     [outViewController.view addSubview:self];
     CGRect rect = self.frame;
