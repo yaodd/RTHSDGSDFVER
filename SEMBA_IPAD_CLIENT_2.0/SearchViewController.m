@@ -22,6 +22,7 @@
 #import "UITapGestureRecognizer+category.h"
 #import "CoursewareViewController.h"
 #import "DownloadModel.h"
+#import "MRProgressOverlayView.h"
 NSString *PDFFolderName2 = @"PDF";
 NSString *NOTEFolderName2 = @"NOTE";
 #define PROGRESS_TAG 111111
@@ -33,6 +34,7 @@ NSString *NOTEFolderName2 = @"NOTE";
     DownloadModel *downloadModel;
     ASINetworkQueue *queue;
     NSMutableDictionary *firstImageDict;
+    MRProgressOverlayView *overlayView;
 }
 
 @end
@@ -65,10 +67,16 @@ NSString *NOTEFolderName2 = @"NOTE";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]];
+
     downloadModel = [DownloadModel getDownloadModel];
     queue = downloadModel.queue;
     downloadModel.delegate = self;
     firstImageDict = downloadModel.firstImageDict;
+    overlayView = [[MRProgressOverlayView alloc]initWithFrame:CGRectMake(1024 / 2, 768 / 2, overlayView.frame.size.width, overlayView.frame.size.height)];
+    overlayView.mode = MRProgressOverlayViewModeIndeterminate;
+    [self.navigationController.view addSubview:overlayView];
+    [overlayView show:YES];
     NSLog(@"queue count %d",[queue.operations count]);
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backToMainPage:)];
     [backItem setImage:[UIImage imageNamed:@"pptsearch_cancle"]];
@@ -78,7 +86,7 @@ NSString *NOTEFolderName2 = @"NOTE";
     self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, 1024 - 50 - 100, 44)];
     [self.searchBar setSearchBarStyle:UISearchBarStyleMinimal];
     self.searchBar.delegate = self;
-    [self.searchBar becomeFirstResponder];
+//    [self.searchBar becomeFirstResponder];第一响应
     
     UIView *searchView = [[UIView alloc]initWithFrame:CGRectMake(50, 0, 1024 - 50 - 100, 44)];
     searchView.backgroundColor = [UIColor clearColor];
@@ -197,12 +205,12 @@ NSString *NOTEFolderName2 = @"NOTE";
                 [item setPDFFirstImage:nil];
             [coursewareOriginArray addObject:item];
             [coursewareDisplayArray addObject:item];
-            [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
-
+            
+//            [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
         }
 //        [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
     }
-//    [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
     
 }
 
@@ -311,7 +319,7 @@ NSString *NOTEFolderName2 = @"NOTE";
         [self.courseSV addSubview:courseItem];
     }
 
-
+    [overlayView dismiss:YES];
 }
 
 - (void)openCourseware:(id)sender

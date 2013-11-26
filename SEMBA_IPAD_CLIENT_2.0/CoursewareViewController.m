@@ -75,6 +75,8 @@ NSString *NOTEFolderName3 = @"NOTE";
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]];
+
     
     downloadModel = [DownloadModel getDownloadModel];
     queue = downloadModel.queue;
@@ -93,7 +95,8 @@ NSString *NOTEFolderName3 = @"NOTE";
     self.courseTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width - 64)];
     self.courseTableView.delegate = self;
     self.courseTableView.dataSource = self;
-//    [self.courseTableView setSeparatorColor:[UIColor clearColor]];
+    [self.courseTableView setBackgroundColor:[UIColor clearColor]];
+    [self.courseTableView setSeparatorColor:[UIColor clearColor]];
     [self.courseTableView setSectionIndexColor:[UIColor clearColor]];
     [self.courseTableView setAllowsSelection:NO];
     
@@ -103,7 +106,7 @@ NSString *NOTEFolderName3 = @"NOTE";
     NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(initDatas) object:nil];
     [thread start];
     
-	self.view.backgroundColor = [UIColor clearColor]; // Transparent
+//	self.view.backgroundColor = [UIColor clearColor]; // Transparent
 
 	self.title = @"课件";
     
@@ -382,6 +385,7 @@ NSString *NOTEFolderName3 = @"NOTE";
     int count = ITEM_NUM_IN_ROW;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell setBackgroundColor:[UIColor clearColor]];
         for (int i = 0; i < ITEM_NUM_IN_ROW; i ++) {
             UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(250 * i + 24, 20, 226, 168)];
             [button setTag:i + 1];
