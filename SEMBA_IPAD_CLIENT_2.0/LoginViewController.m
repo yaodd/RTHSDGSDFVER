@@ -41,6 +41,7 @@
         isLogout = YES;
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:[NSNumber numberWithBool:YES] forKey:isLoginOutKey];
+        
     }
     return self;
 }
@@ -105,7 +106,7 @@
         //            alertView.delegate = self;
         [alertView show];
         
-        
+        [self performSelectorOnMainThread:@selector(overViewDissmiss) withObject:nil waitUntilDone:YES];
         [loginButton setEnabled:YES];
         return;
     }

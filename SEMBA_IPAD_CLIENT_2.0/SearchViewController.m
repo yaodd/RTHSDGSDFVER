@@ -206,8 +206,9 @@ NSString *NOTEFolderName2 = @"NOTE";
             [coursewareOriginArray addObject:item];
             [coursewareDisplayArray addObject:item];
             
-
+//            [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
         }
+//        [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
     }
     [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
     
