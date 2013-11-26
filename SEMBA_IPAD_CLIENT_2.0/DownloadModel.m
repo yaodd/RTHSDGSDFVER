@@ -30,15 +30,17 @@ NSString *NOTEFolderName = @"NOTE";
     return sharedModel;
 }
 - (id)init{
-    if (!queue) {
-        queue = [[ASINetworkQueue alloc]init];
-        [queue reset];
-        [queue setShowAccurateProgress:YES];
-        [queue setShouldCancelAllRequestsOnFailure:NO];
-        [queue setMaxConcurrentOperationCount:MAX_DOWNLOAD_NUM];
-        [queue setDelegate:self];
-        
-        firstImageDict = [[NSMutableDictionary alloc]init];
+    self = [super init];
+    if (self) {
+        if (!queue) {
+            self.queue = [[ASINetworkQueue alloc]init];
+            [self.queue reset];
+            [self.queue setShowAccurateProgress:YES];
+            [self.queue setShouldCancelAllRequestsOnFailure:NO];
+            [self.queue setMaxConcurrentOperationCount:MAX_DOWNLOAD_NUM];
+            [self.queue setDelegate:self];
+        }
+        self.firstImageDict = [[NSMutableDictionary alloc]init];
     }
     return self;
 }
@@ -182,7 +184,8 @@ NSString *NOTEFolderName = @"NOTE";
     
 	int count = CGPDFDocumentGetNumberOfPages (document);
     if (count == 0) {
-		return NULL;
+        CGPDFDocumentRelease(document);
+		return nil;
     }
     
     //	return document;

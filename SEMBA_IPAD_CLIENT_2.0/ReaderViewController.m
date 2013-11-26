@@ -364,11 +364,10 @@
     NSString *filePath=[[NSString alloc]initWithString:[self.notePath stringByAppendingPathComponent:fileName]];
 
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
-    NSData *imageData = [[NSData alloc]init];
+    
     
     if (dict != nil) {
-        imageData = [dict objectForKey:@"imageData"];
-        
+        NSData *imageData = [[NSData alloc]initWithData:[dict objectForKey:@"imageData"]];
         noteImage = [UIImage imageWithData:imageData scale:[[UIScreen mainScreen] scale]];
         
     }
@@ -893,9 +892,8 @@
 -(void)cancelAction:(id)sender
 {
     [self showMarkEditView:markEditView];
-    NSString *text = markField.text;
     int page = [document.pageNumber intValue];
-    text = [NSString stringWithFormat:@"Page %d",page];
+    NSString *text = [NSString stringWithFormat:@"Page %d",page];
     [document.markTexts setObject:text forKey:[NSString stringWithFormat:@"%d",page]];
 
 }

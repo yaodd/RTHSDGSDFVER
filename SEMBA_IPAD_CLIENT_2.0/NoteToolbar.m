@@ -27,7 +27,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        CGFloat viewWidth = self.bounds.size.width;
+//        CGFloat viewWidth = self.bounds.size.width;
         
         [self setBackgroundColor:[UIColor redColor]];
         
@@ -102,7 +102,7 @@
         [clearButton setTitle:@"clear" forState:UIControlStateNormal];
         [clearButton addTarget:self action:@selector(clearButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:clearButton];
-        leftButtonX += (BUTTON_WIDTH + BUTTON_SPACE);
+//        leftButtonX += (BUTTON_WIDTH + BUTTON_SPACE);
         
         
     }

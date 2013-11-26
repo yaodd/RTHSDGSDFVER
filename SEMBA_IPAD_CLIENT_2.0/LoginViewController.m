@@ -22,6 +22,8 @@
 {
     BOOL isAutoLogin;
     BOOL isLogout;
+    BOOL keyBoardIsAppear;
+    BOOL shouldLogin;
     MRProgressOverlayView *overlayView;
 }
 @end
@@ -51,7 +53,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    
+    keyBoardIsAppear = NO;
+    shouldLogin = NO;
     accountTF.delegate = self;
     passwordTF.delegate = self;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -114,6 +117,7 @@
     int loginResult = [dao requestForLogin:accountText password:passwordText];
     [self performSelectorOnMainThread:@selector(overViewDissmiss) withObject:nil waitUntilDone:YES];
     if (loginResult == 1) {
+        shouldLogin = YES;
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:accountTF.text forKey:ACCOUNT_KEY];
         [userDefaults setObject:passwordTF.text forKey:PASSWORD_KEY];
@@ -144,6 +148,10 @@
         [self loginAction:nil];
     }
 }
+- (void)viewWillAppear:(BOOL)animated{
+    keyBoardIsAppear = NO;
+    shouldLogin = NO;
+}
 - (void)jumpToMainPage{
 
     MainPageViewController *mainController = [[MainPageViewController alloc] init];
@@ -157,6 +165,7 @@
     
 }
 
+
 #pragma Mark UITextFieldDelegate
 // 下面两个方法是为了防止TextView让键盘挡住的方法
 /*
@@ -164,11 +173,16 @@
  */
 -(void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    
+    if (keyBoardIsAppear) {
+        return;
+    }
+    NSLog(@"yes");
+    keyBoardIsAppear = YES;
     CGRect curFrame = self.loginView.frame;
     [UIView animateWithDuration:0.3f animations:^{
         self.loginView.frame = CGRectMake(curFrame.origin.x, curFrame.origin.y - 200, curFrame.size.width, curFrame.size.height);
     }];
+    
 }
 
 /**
@@ -177,9 +191,12 @@
 -(void) textFieldDidEndEditing:(UITextField *)textField
 {
 
-    NSLog(@"no");
-    
-    
+    if (!keyBoardIsAppear) {
+        if (shouldLogin) {
+//            [self disappearAnimBegin];
+        }
+        return;
+    }
     
     CGRect curFrame=self.loginView.frame;
     [UIView beginAnimations:@"drogDownKeyBoard" context:nil];
@@ -188,6 +205,9 @@
     self.loginView.frame = CGRectMake(curFrame.origin.x, curFrame.origin.y + 200, curFrame.size.width, curFrame.size.height);
     
     [UIView commitAnimations];
+    keyBoardIsAppear = NO;
+    shouldLogin = NO;
+
 }
 - (IBAction)autoLoginCheckAction:(id)sender {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];

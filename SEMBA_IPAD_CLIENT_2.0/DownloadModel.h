@@ -26,7 +26,8 @@
 @property (nonatomic, assign) id<DownloadModelDelegate> delegate;
 @property (nonatomic, retain) NSMutableDictionary *firstImageDict;
 +(DownloadModel *)getDownloadModel;
-
+- (void) createDir:(NSString *)dirPath;
+- (UIImage *)getFirstPageFromPDF:(NSString *)aFilePath;
 - (void)downloadAll;
 - (void)downloadByDict:(NSDictionary *)dict;
 @end
