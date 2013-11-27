@@ -53,7 +53,7 @@
         [self addSubview:cancelButton];
         
         
-        leftButtonX += (BUTTON_WIDTH + BUTTON_SPACE);
+//        leftButtonX += (BUTTON_WIDTH + BUTTON_SPACE);
         
         
         CGFloat rightButtonX = 1024 - BUTTON_X - BUTTON_WIDTH;
@@ -74,7 +74,7 @@
         [finishButton addTarget:self action:@selector(finishAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:finishButton];
         [finishButton setHidden:YES];
-        rightButtonX -= (BUTTON_WIDTH + BUTTON_SPACE);
+//        rightButtonX -= (BUTTON_WIDTH + BUTTON_SPACE);
         
     }
     return self;

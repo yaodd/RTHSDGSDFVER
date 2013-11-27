@@ -74,11 +74,11 @@
         [self addSubview:bg];
 		CGFloat viewWidth = self.bounds.size.width;
 
-		UIImage *imageH = [UIImage imageNamed:@"Reader-Button-H"];
-		UIImage *imageN = [UIImage imageNamed:@"Reader-Button-N"];
+//		UIImage *imageH = [UIImage imageNamed:@"Reader-Button-H"];
+//		UIImage *imageN = [UIImage imageNamed:@"Reader-Button-N"];
 
-		UIImage *buttonH = [imageH stretchableImageWithLeftCapWidth:5 topCapHeight:0];
-		UIImage *buttonN = [imageN stretchableImageWithLeftCapWidth:5 topCapHeight:0];
+//		UIImage *buttonH = [imageH stretchableImageWithLeftCapWidth:5 topCapHeight:0];
+//		UIImage *buttonN = [imageN stretchableImageWithLeftCapWidth:5 topCapHeight:0];
 
 		CGFloat titleX = BUTTON_X;
         CGFloat titleWidth = (viewWidth - (titleX + titleX));
@@ -102,7 +102,7 @@
 		doneButton.exclusiveTouch = YES;
 
 		[self addSubview:doneButton];
-        leftButtonX += (DONE_BUTTON_WIDTH + BUTTON_SPACE);
+//        leftButtonX += (DONE_BUTTON_WIDTH + BUTTON_SPACE);
 
 		titleX += (DONE_BUTTON_WIDTH + BUTTON_SPACE);
         titleWidth -= (DONE_BUTTON_WIDTH + BUTTON_SPACE);

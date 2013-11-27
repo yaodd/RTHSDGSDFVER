@@ -8,15 +8,20 @@
 
 #import "RegisterResultController.h"
 #define kSuccess 0
-#define kFailTime 1
+#define kFailOverTime 1
+#define kFailNotTime 5
 #define kFailWifi 2
 #define kFailPlace 3
+#define kFailDate 4
 
 @interface RegisterResultController ()
 
 @end
 
 @implementation RegisterResultController
+{
+    NSString *result;
+}
 @synthesize tryAgain;
 @synthesize resultText;
 
@@ -37,11 +42,12 @@
     resultText = [[UILabel alloc] init];
     resultText.frame = CGRectMake(10, 50, 200, 50);
     resultText.font = [UIFont fontWithName:@"Heiti SC" size:20.0];
-    resultText.textColor = [UIColor blackColor];
+    resultText.textColor = [UIColor whiteColor];
     resultText.textAlignment = NSTextAlignmentLeft;
     resultText.lineBreakMode = NSLineBreakByCharWrapping;
     resultText.numberOfLines = 0;
-    resultText.backgroundColor = [UIColor clearColor];
+    resultText.backgroundColor = [UIColor blackColor];
+    resultText.text = result;
     [self.view addSubview:resultText];
     
     tryAgain = [[UIButton alloc] init];
@@ -54,24 +60,41 @@
 
 - (void)startRegister:(int)returnValue
 {
+    NSLog(@"register return value:%d", returnValue);
     switch (returnValue) {
-        case 0:
-            resultText.text = @"签到成功";
+        case kSuccess:
+            NSLog(@"签到成功");
+            result = @"签到成功";
             [tryAgain setHidden:YES];
             break;
             
-        case 1:
-            resultText.text = @"签到失败，已经过了签到时间";
+        case kFailOverTime:
+            NSLog(@"已经过了亲到时间");
+            result = @"签到失败，已经过了签到时间";
             [tryAgain setHidden:NO];
             break;
             
-        case 2:
-            resultText.text = @"签到失败，请检查网络";
+        case kFailWifi:
+            NSLog(@"网络出错");
+            result = @"签到失败，请检查网络";
             [tryAgain setHidden:NO];
             break;
             
-        case 3:
-            resultText.text = @"签到失败，您还没到上课地点";
+        case kFailPlace:
+            NSLog(@"没到上课地点");
+            result = @"签到失败，您还没到上课地点";
+            [tryAgain setHidden:NO];
+            break;
+            
+        case kFailNotTime:
+            NSLog(@"还没到上课时间");
+            result = @"签到失败，还没到签到时间";
+            [tryAgain setHidden:NO];
+            break;
+            
+        case kFailDate:
+            NSLog(@"不是上课日期");
+            result = @"签到失败，今天不用上课";
             [tryAgain setHidden:NO];
             break;
             

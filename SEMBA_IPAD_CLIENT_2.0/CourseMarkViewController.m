@@ -171,7 +171,8 @@
     
 	int count = CGPDFDocumentGetNumberOfPages (documentRef);
     if (count == 0) {
-		return NULL;
+        CGPDFDocumentRelease(documentRef);
+		return nil;
     }
     
     //	return document;
