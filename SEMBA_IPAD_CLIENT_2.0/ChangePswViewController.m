@@ -99,7 +99,7 @@ NSString *buttonImageName = @"setting_button";
     [newSecondPswTF setBackground:[UIImage imageNamed:TFImageName]];
     newSecondPswTF.delegate = self;
     [self.view addSubview:newSecondPswTF];
-    top_y += ITEM_SPACE;
+//    top_y += ITEM_SPACE;
     
     UIButton *sureButton = [[UIButton alloc]initWithFrame:CGRectMake(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT)];
     [sureButton setBackgroundImage:[UIImage imageNamed:buttonImageName] forState:UIControlStateNormal];
