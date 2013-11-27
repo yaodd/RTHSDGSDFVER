@@ -14,7 +14,7 @@
 #define BUTTON_HEIGHT_SMALL   73.0f
 #define BUTTON_WIDTH_LARGE    156.0f
 #define BUTTON_HEIGHT_LARGE   88.0f
-#define BUTTON_SPACE    10.0f
+#define BUTTON_SPACE    16.0f
 
 
 @implementation NoteToolDrawerBar

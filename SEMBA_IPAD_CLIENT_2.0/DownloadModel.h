@@ -29,5 +29,6 @@
 - (void) createDir:(NSString *)dirPath;
 - (UIImage *)getFirstPageFromPDF:(NSString *)aFilePath;
 - (void)downloadAll;
+- (void)cancelAll;
 - (void)downloadByDict:(NSDictionary *)dict;
 @end

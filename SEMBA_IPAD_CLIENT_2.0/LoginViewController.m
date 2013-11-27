@@ -25,6 +25,7 @@
     BOOL keyBoardIsAppear;
     BOOL shouldLogin;
     MRProgressOverlayView *overlayView;
+    CGRect originalFrame;
 }
 @end
 
@@ -43,6 +44,9 @@
         isLogout = YES;
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:[NSNumber numberWithBool:YES] forKey:isLoginOutKey];
+        if ([userDefaults objectForKey:isAutoDownloadKey] == nil) {
+            [userDefaults setObject:[NSNumber numberWithBool:YES] forKey:isAutoDownloadKey];
+        }
         
     }
     return self;
@@ -61,8 +65,18 @@
     NSString *beforeAccount = [userDefaults objectForKey:ACCOUNT_KEY];
     NSString *beforePaw = [userDefaults objectForKey:PASSWORD_KEY];
     
+    UIView *accountSpaceView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 7, accountTF.frame.size.height)];
+    UIView *pswSpaceView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 7, passwordTF.frame.size.height)];
+
+    [accountTF setLeftView:accountSpaceView];
+    [passwordTF setLeftView:pswSpaceView];
+    
+    [accountTF setLeftViewMode:UITextFieldViewModeAlways];
+    [passwordTF setLeftViewMode:UITextFieldViewModeAlways];
+    
     [accountTF setText:beforeAccount];
     [passwordTF setText:beforePaw];
+    
     passwordTF.secureTextEntry = YES;
     isAutoLogin = NO;
     isAutoLogin = [(NSNumber *)[userDefaults objectForKey:isAutoLoginKey] boolValue];
@@ -73,7 +87,7 @@
     } else{
         [autoLoginCheck setBackgroundImage:[UIImage imageNamed:@"check_box"] forState:UIControlStateNormal];
     }
-    
+    originalFrame = self.loginView.frame;
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,7 +124,7 @@
         [alertView show];
         
         [self performSelectorOnMainThread:@selector(overViewDissmiss) withObject:nil waitUntilDone:YES];
-        [loginButton setEnabled:YES];
+//        [loginButton setEnabled:YES];
         return;
     }
     Dao *dao = [Dao sharedDao];
@@ -128,10 +142,29 @@
         NSLog(@"%d",model.user.uid);
         //[self jumpToMainPage];
     } else if (loginResult == 0){
+        UIAlertView*alertView = [[UIAlertView alloc]initWithTitle:@"出错啦"
+                                                          message:@"网络连接失败，是否脱机登录？"
+                                                         delegate:self
+                                                cancelButtonTitle:@"是"
+                                                otherButtonTitles:@"否",nil];
+        [alertView show];
         NSLog(@"网络连接失败！");
+        
     } else if (loginResult == -1){
+        UIAlertView*alertView = [[UIAlertView alloc]initWithTitle:@"出错啦"
+                                                          message:@"密码输入错误，请重新输入！"
+                                                         delegate:nil
+                                                cancelButtonTitle:@"确定"
+                                                otherButtonTitles:nil];
+        [alertView show];
         NSLog(@"密码输入错误！");
     } else if (loginResult == -2){
+        UIAlertView*alertView = [[UIAlertView alloc]initWithTitle:@"出错啦"
+                                                          message:@"用户不存在，请检查用户名！"
+                                                         delegate:nil
+                                                cancelButtonTitle:@"确定"
+                                                otherButtonTitles:nil];
+        [alertView show];
         NSLog(@"用户不存在！");
     }
     
@@ -174,10 +207,13 @@
 -(void) textFieldDidBeginEditing:(UITextField *)textField
 {
     if (keyBoardIsAppear) {
-        return;
+//        return;
     }
     NSLog(@"yes");
     keyBoardIsAppear = YES;
+    if (self.loginView.frame.origin.y != originalFrame.origin.y) {
+        return;
+    }
     CGRect curFrame = self.loginView.frame;
     [UIView animateWithDuration:0.3f animations:^{
         self.loginView.frame = CGRectMake(curFrame.origin.x, curFrame.origin.y - 200, curFrame.size.width, curFrame.size.height);
@@ -191,13 +227,17 @@
 -(void) textFieldDidEndEditing:(UITextField *)textField
 {
 
+    NSLog(@"end");
     if (!keyBoardIsAppear) {
         if (shouldLogin) {
 //            [self disappearAnimBegin];
         }
+//        keyBoardIsAppear = NO;
+      //  return;
+    }
+    if (self.loginView.frame.origin.y == originalFrame.origin.y) {
         return;
     }
-    
     CGRect curFrame=self.loginView.frame;
     [UIView beginAnimations:@"drogDownKeyBoard" context:nil];
     [UIView setAnimationDuration:0.3];
@@ -220,5 +260,11 @@
     }
     [userDefaults setObject:[NSNumber numberWithBool:autoLoginCheck.selected] forKey:isAutoLoginKey];
 }
+#pragma UIAlertViewDelegate mark -
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        [self jumpToMainPage];
+    }
+}
 @end

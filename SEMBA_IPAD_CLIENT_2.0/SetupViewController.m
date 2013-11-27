@@ -10,6 +10,7 @@
 #import "ChangePswViewController.h"
 #import "FeedbackViewController.h"
 #import "LoginViewController.h"
+#import "DownloadModel.h"
 
 #define START_X     8.0f
 #define START_Y     16.0f
@@ -220,12 +221,14 @@ NSString *arrowImageName = @"setting_right_arrow";
 //使用自动下载回调的时候可能加一个alertview之类的弹窗提示会比较好。防止用户不断改变switch的值。
 -(void)changeAutoDownLoad:(id)sender{
     UISwitch *mySwitch = (UISwitch *)sender;
+    DownloadModel *downloadModel = [DownloadModel getDownloadModel];
     if(mySwitch.on /*&& mySwitch.on!= isAutoDownLoad*/){
         NSLog(@"自动下载开");
         NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
         NSNumber *temp = [NSNumber numberWithBool:mySwitch.on];
         [userdefault setObject:temp forKey:isAutoDownloadKey];
         isAutoDownLoad = mySwitch.on;
+        [downloadModel downloadAll];
         //打开自动下载。
         //调用自动下载机制
     }else if(!mySwitch.on/* && mySwitch.on != isAutoDownLoad*/){
@@ -233,6 +236,7 @@ NSString *arrowImageName = @"setting_right_arrow";
         NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
         NSNumber *temp = [NSNumber numberWithBool:mySwitch.on];
         [userdefault setObject:temp forKey:isAutoDownloadKey];
+        [downloadModel cancelAll];
 //        isAutoDownLoad = mySwitch.on;
         //关闭自动下载
         //暂停当前下载的东西

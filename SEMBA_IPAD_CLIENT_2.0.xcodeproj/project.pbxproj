@@ -264,6 +264,11 @@
 		9C52AE33183F39A70017EB07 /* pptsearch_ppt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C52AE2F183F39A70017EB07 /* pptsearch_ppt@2x.png */; };
 		9C52AE34183F39A70017EB07 /* pptsearch_cancle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C52AE30183F39A70017EB07 /* pptsearch_cancle.png */; };
 		9C52AE35183F39A70017EB07 /* pptsearch_ppt.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C52AE31183F39A70017EB07 /* pptsearch_ppt.png */; };
+		9C6BAC9F1845DD87008B12A4 /* image01.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6BAC9D1845DD87008B12A4 /* image01.png */; };
+		9C6BACA01845DD87008B12A4 /* image01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6BAC9E1845DD87008B12A4 /* image01@2x.png */; };
+		9C6BACA41845DE7C008B12A4 /* lixinchun.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6BACA11845DE7C008B12A4 /* lixinchun.png */; };
+		9C6BACA51845DE7C008B12A4 /* lutaihong.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6BACA21845DE7C008B12A4 /* lutaihong.png */; };
+		9C6BACA61845DE7C008B12A4 /* maoyunshi.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6BACA31845DE7C008B12A4 /* maoyunshi.png */; };
 		9C77E18C183F5729006737E5 /* DownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C77E18B183F5729006737E5 /* DownloadModel.m */; };
 		9C9240B11830AF8E00415735 /* MRCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9240B01830AF8E00415735 /* MRCircularProgressView.m */; };
 		9CB9908A183E00390082BAF5 /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB99089183E00390082BAF5 /* SetupViewController.m */; };
@@ -637,6 +642,11 @@
 		9C52AE2F183F39A70017EB07 /* pptsearch_ppt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pptsearch_ppt@2x.png"; sourceTree = "<group>"; };
 		9C52AE30183F39A70017EB07 /* pptsearch_cancle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pptsearch_cancle.png; sourceTree = "<group>"; };
 		9C52AE31183F39A70017EB07 /* pptsearch_ppt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pptsearch_ppt.png; sourceTree = "<group>"; };
+		9C6BAC9D1845DD87008B12A4 /* image01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image01.png; sourceTree = "<group>"; };
+		9C6BAC9E1845DD87008B12A4 /* image01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image01@2x.png"; sourceTree = "<group>"; };
+		9C6BACA11845DE7C008B12A4 /* lixinchun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lixinchun.png; sourceTree = "<group>"; };
+		9C6BACA21845DE7C008B12A4 /* lutaihong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lutaihong.png; sourceTree = "<group>"; };
+		9C6BACA31845DE7C008B12A4 /* maoyunshi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maoyunshi.png; sourceTree = "<group>"; };
 		9C77E18A183F5729006737E5 /* DownloadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadModel.h; sourceTree = "<group>"; };
 		9C77E18B183F5729006737E5 /* DownloadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadModel.m; sourceTree = "<group>"; };
 		9C9240AF1830AF8E00415735 /* MRCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCircularProgressView.h; sourceTree = "<group>"; };
@@ -1343,6 +1353,11 @@
 		9CBD15BE181E4FEC00075BDF /* Resourse */ = {
 			isa = PBXGroup;
 			children = (
+				9C6BAC9D1845DD87008B12A4 /* image01.png */,
+				9C6BAC9E1845DD87008B12A4 /* image01@2x.png */,
+				9C6BACA11845DE7C008B12A4 /* lixinchun.png */,
+				9C6BACA21845DE7C008B12A4 /* lutaihong.png */,
+				9C6BACA31845DE7C008B12A4 /* maoyunshi.png */,
 				9C111BB21842236F001E536A /* Login */,
 				591E5D11183F5EE0000B9824 /* Schedule */,
 				9C52AE29183F37BA0017EB07 /* nav_bar_bg.png */,
@@ -1826,12 +1841,15 @@
 				9C52ADFF183F33BA0017EB07 /* setting_nav_back.png in Resources */,
 				591E5D48183F6913000B9824 /* ppt_pressed.png in Resources */,
 				9C52AD56183F327D0017EB07 /* ppt_toolbox_black@2x.png in Resources */,
+				9C6BACA61845DE7C008B12A4 /* maoyunshi.png in Resources */,
 				591E5D5E183F7DA8000B9824 /* news center-mail.png in Resources */,
 				9C111BAC18420F62001E536A /* ppt_toolbox_recorder.png in Resources */,
+				9C6BACA51845DE7C008B12A4 /* lutaihong.png in Resources */,
 				9C0F8AE61827636200FEFABA /* Reader-Button-H.png in Resources */,
 				9C0F8AE21827636200FEFABA /* Reader-Print.png in Resources */,
 				9C111BD618423A21001E536A /* edit_off@2x.png in Resources */,
 				9C52AD95183F32AC0017EB07 /* bookmark_edit_changename.png in Resources */,
+				9C6BACA01845DD87008B12A4 /* image01@2x.png in Resources */,
 				591E5D21183F5EEC000B9824 /* course_month@2x.png in Resources */,
 				590367B61841E1D000C4D1D0 /* schedule@2x.png in Resources */,
 				9C111BD918423A21001E536A /* entry.png in Resources */,
@@ -1848,6 +1866,7 @@
 				9C111B9918420F62001E536A /* ppt_toolbox_brush@2x.png in Resources */,
 				9C52ADC4183F33290017EB07 /* news center-circle on the menu@2x.png in Resources */,
 				9C52ADFA183F33BA0017EB07 /* setting_bg@2x.png in Resources */,
+				9C6BAC9F1845DD87008B12A4 /* image01.png in Resources */,
 				9C0F8AE61827636200FEFABA /* Reader-Button-H.png in Resources */,
 				9C52ADF9183F33BA0017EB07 /* setting_bg.png in Resources */,
 				9C52ADCE183F33290017EB07 /* news center-next mail@2x.png in Resources */,
@@ -1887,6 +1906,7 @@
 				9C52AD49183F327D0017EB07 /* ppt_nav_bar.png in Resources */,
 				9C52AE02183F33BA0017EB07 /* setting_nav_bar@2x.png in Resources */,
 				9C111BD818423A21001E536A /* edit_on@2x.png in Resources */,
+				9C6BACA41845DE7C008B12A4 /* lixinchun.png in Resources */,
 				9C52ADDF183F33290017EB07 /* news center.png in Resources */,
 				9C52AD99183F32AC0017EB07 /* bookmark_edit_item_bg.png in Resources */,
 				9C52AE35183F39A70017EB07 /* pptsearch_ppt.png in Resources */,

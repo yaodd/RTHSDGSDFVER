@@ -91,6 +91,11 @@ NSString *NOTEFolderName = @"NOTE";
     [queue go];
     
 }
+
+//取消全部
+- (void)cancelAll{
+    [queue cancelAllOperations];
+}
 //下载单个
 - (void)downloadByDict:(NSDictionary *)dict{
     NSURL *url = [dict objectForKey:@"url"];
