@@ -18,7 +18,7 @@
 #define ACCOUNT_KEY         @"accountKey"
 #define PASSWORD_KEY        @"passwordKey"
 
-@interface LoginViewController : UIViewController <UITextFieldDelegate>
+@interface LoginViewController : UIViewController <UITextFieldDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *accountTF;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTF;
 @property (strong, nonatomic) IBOutlet UIButton *loginButton;

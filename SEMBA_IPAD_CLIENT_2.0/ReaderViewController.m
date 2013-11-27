@@ -341,12 +341,17 @@
 //		[mainPagebar updatePagebar]; // Update the pagebar display
 
 		[self updateToolbarBookmarkIcon]; // Update bookmark
-        currentPage = page; // Track current page number
-        
-        NSNumber *key = [NSNumber numberWithInteger:page]; // # key
-        ReaderContentView *newContentView = [contentViews objectForKey:key];
-		
-        [self addDrawView:newContentView];
+//        if (noteButton.selected) {
+//            [self startDraw];
+//        } else{
+            currentPage = page; // Track current page number
+            NSNumber *key = [NSNumber numberWithInteger:page]; // # key
+            ReaderContentView *newContentView = [contentViews objectForKey:key];
+            [self addDrawView:newContentView];
+//        }
+        if (noteButton.selected) {
+            [self startDraw];
+        }
 	}
 }
 
@@ -364,11 +369,10 @@
     NSString *filePath=[[NSString alloc]initWithString:[self.notePath stringByAppendingPathComponent:fileName]];
 
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
-    NSData *imageData = [[NSData alloc]init];
+    
     
     if (dict != nil) {
-        imageData = [dict objectForKey:@"imageData"];
-        
+        NSData *imageData = [[NSData alloc]initWithData:[dict objectForKey:@"imageData"]];
         noteImage = [UIImage imageWithData:imageData scale:[[UIScreen mainScreen] scale]];
         
     }
@@ -664,7 +668,10 @@
         NSNumber *key = [NSNumber numberWithInteger:page]; // # key
         ReaderContentView *newContentView = [contentViews objectForKey:key];
         [self addDrawView:newContentView];
-        
+        if (mainPagebar.hidden == YES || mainToolbar.hidden == YES) {
+            [mainToolbar showToolbar];
+            [mainPagebar showPagebar];
+        }
     } else{
         [button setImage:[UIImage imageNamed:@"edit_on"] forState:UIControlStateNormal];
         button.selected = YES;
@@ -893,9 +900,8 @@
 -(void)cancelAction:(id)sender
 {
     [self showMarkEditView:markEditView];
-    NSString *text = markField.text;
     int page = [document.pageNumber intValue];
-    text = [NSString stringWithFormat:@"Page %d",page];
+    NSString *text = [NSString stringWithFormat:@"Page %d",page];
     [document.markTexts setObject:text forKey:[NSString stringWithFormat:@"%d",page]];
 
 }
@@ -953,7 +959,7 @@
 #pragma Notebar delegate
 
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar choiceColor:(UIButton *)button{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Selet a color"
+    /*UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Selet a color"
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
                                                destructiveButtonTitle:nil
@@ -961,6 +967,7 @@
     
     [actionSheet setTag:kActionSheetColor];
     [actionSheet showInView:self.view];
+     */
 }
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar choiceWidth:(UIButton *)button{
     self.lineWidthSlider.hidden = !self.lineWidthSlider.hidden;
@@ -1644,7 +1651,7 @@
 	}
 }
 
-
+/*
 #pragma mark - Action Sheet Delegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -1711,7 +1718,7 @@
         }
     }
 }
-
+*/
 #pragma CourseMarkView delegate
 - (void) courseMarkViewController:(CourseMarkViewController *)viewController gotoPage:(NSInteger)page
 {
@@ -1745,15 +1752,15 @@
         }
         
     } else{
-        [self stopDraw];
-        [self saveDraw];
-        int page = [document.pageNumber intValue];
-        NSNumber *key = [NSNumber numberWithInteger:page]; // # key
-        ReaderContentView *newContentView = [contentViews objectForKey:key];
-        [self addDrawView:newContentView];
-        if (noteButton.selected == YES) {
-            [self noteButtonAction:noteButton];
-        }
+//        [self stopDraw];
+//        [self saveDraw];
+//        int page = [document.pageNumber intValue];
+//        NSNumber *key = [NSNumber numberWithInteger:page]; // # key
+//        ReaderContentView *newContentView = [contentViews objectForKey:key];
+//        [self addDrawView:newContentView];
+//        if (noteButton.selected == YES) {
+//            [self noteButtonAction:noteButton];
+//        }
     }
     switch (button.tag) {
         case 1:         //选择颜色

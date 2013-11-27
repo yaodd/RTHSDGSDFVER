@@ -106,11 +106,11 @@
 	{
 		pageThumbView.tag = page; [pageThumbView reuse]; // Reuse the thumb view
 
-		CGSize size = CGSizeMake(THUMB_LARGE_WIDTH, THUMB_LARGE_HEIGHT); // Maximum thumb size
+//		CGSize size = CGSizeMake(THUMB_LARGE_WIDTH, THUMB_LARGE_HEIGHT); // Maximum thumb size
 
-		NSURL *fileURL = document.fileURL; NSString *guid = document.guid; NSString *phrase = document.password;
+//		NSURL *fileURL = document.fileURL; NSString *guid = document.guid; NSString *phrase = document.password;
 
-		ReaderThumbRequest *request = [ReaderThumbRequest newForView:pageThumbView fileURL:fileURL password:phrase guid:guid page:page size:size];
+//		ReaderThumbRequest *request = [ReaderThumbRequest newForView:pageThumbView fileURL:fileURL password:phrase guid:guid page:page size:size];
 
 //		UIImage *image = [[ReaderThumbCache sharedInstance] thumbRequest:request priority:YES]; // Request the thumb
         UIImage *image = [UIImage imageNamed:@"ppt_indicator_purple.png"];
@@ -315,13 +315,13 @@
 
 		if (smallThumbView == nil) // We need to create a new small thumb view for the page number
 		{
-			CGSize size = CGSizeMake(THUMB_SMALL_WIDTH, THUMB_SMALL_HEIGHT); // Maximum thumb size
+//			CGSize size = CGSizeMake(THUMB_SMALL_WIDTH, THUMB_SMALL_HEIGHT); // Maximum thumb size
 
-			NSURL *fileURL = document.fileURL; NSString *guid = document.guid; NSString *phrase = document.password;
+//			NSURL *fileURL = document.fileURL; NSString *guid = document.guid; NSString *phrase = document.password;
 
 			smallThumbView = [[ReaderPagebarThumb alloc] initWithFrame:thumbRect small:YES]; // Create a small thumb view
 
-			ReaderThumbRequest *thumbRequest = [ReaderThumbRequest newForView:smallThumbView fileURL:fileURL password:phrase guid:guid page:page size:size];
+//			ReaderThumbRequest *thumbRequest = [ReaderThumbRequest newForView:smallThumbView fileURL:fileURL password:phrase guid:guid page:page size:size];
 
 //			UIImage *image = [[ReaderThumbCache sharedInstance] thumbRequest:thumbRequest priority:NO]; // Request the thumb
             UIImage *image = [UIImage imageNamed:@"ppt_indicator_grey.png"];
@@ -603,9 +603,9 @@
 {
 	if ((self = [super initWithFrame:frame])) // Superclass init
 	{
-		CGFloat value = (small ? 0.6f : 0.7f); // Size based alpha value
+//		CGFloat value = (small ? 0.6f : 0.7f); // Size based alpha value
 
-		UIColor *background = [UIColor colorWithWhite:0.8f alpha:value];
+//		UIColor *background = [UIColor colorWithWhite:0.8f alpha:value];
 
 		self.backgroundColor = [UIColor clearColor];
         imageView.backgroundColor = [UIColor clearColor];

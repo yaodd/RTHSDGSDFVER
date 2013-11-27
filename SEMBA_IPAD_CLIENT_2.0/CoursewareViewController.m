@@ -165,7 +165,7 @@ NSString *NOTEFolderName3 = @"NOTE";
     MyCourse *myCourse = sysbsModel.myCourse;
     Course *course = [myCourse findCourse:cid];
     
-    [self createDir:PDFCoursePath];
+    [downloadModel createDir:PDFCoursePath];
     for (int i = 0 ; i < [course.fileArr count]; i ++) {
         File *file = [course.fileArr objectAtIndex:i];
         NSString *url = file.filePath;
@@ -183,7 +183,7 @@ NSString *NOTEFolderName3 = @"NOTE";
         if ([fileManager fileExistsAtPath:item.PDFPath]) {
             UIImage *fImage = [firstImageDict objectForKey:item.PDFPath];
             if (fImage == nil) {
-                fImage = [self getFirstPageFromPDF:item.PDFPath];
+                fImage = [downloadModel getFirstPageFromPDF:item.PDFPath];
                 [firstImageDict setObject:fImage forKey:item.PDFPath];
             }
             [item setPDFFirstImage:fImage];
@@ -199,22 +199,6 @@ NSString *NOTEFolderName3 = @"NOTE";
 
 - (void)displayTableView{
     [self.courseTableView reloadData];
-}
-
-
-
-//create a director
-- (void) createDir:(NSString *)dirPath
-{
-
-    BOOL isDir = NO;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL existed = [fileManager fileExistsAtPath:dirPath isDirectory:&isDir];
-    if ( !(isDir == YES && existed == YES) )
-    {
-        [fileManager createDirectoryAtPath:dirPath withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    
 }
 
 
@@ -538,77 +522,6 @@ NSString *NOTEFolderName3 = @"NOTE";
     }
 }
 
-//下载完成
-- (void) requestDone:(ASIHTTPRequest *)request{
-    int index = request.tag;
-    NSDictionary *myDict = request.myDict;
-    CoursewareItem *item = [myDict objectForKey:@"item"];
-    NSString *filePath = item.PDFPath;
-    [request.responseData writeToFile:filePath atomically:YES];
-    UIImage *image = [self getFirstPageFromPDF:filePath];
-    item.PDFFirstImage = image;
-    if (index > [displayArray count]) {
-        return;
-    }
-    
-    UIButton *button = [self.buttonArray objectAtIndex:index % buttonNumber];
-    NSDictionary *dict = button.myDict;
-    index = [(NSNumber *)[dict objectForKey:@"index"] intValue];
-    [button setImage:image forState:UIControlStateNormal];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-    [button removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
-    [button addTarget:self action:@selector(openCourseware:) forControlEvents:UIControlEventTouchUpInside];
-    MRCircularProgressView *progressView = (MRCircularProgressView *)[button viewWithTag:PROGRESS_TAG];
-    [progressView setHidden:YES];
-}
-
-//下载后加载图片
-- (void) loadImageThred:(NSDictionary *)dict{
-    ASIHTTPRequest *request = (ASIHTTPRequest *)[dict objectForKey:@"request"];
-    
-    NSDictionary *myDict = request.myDict;
-    CoursewareItem *item = [myDict objectForKey:@"item"];
-    NSString *filePath = item.PDFPath;
-    [request.responseData writeToFile:filePath atomically:YES];
-    UIImage *image = [self getFirstPageFromPDF:filePath];
-    item.PDFFirstImage = image;
-    NSDictionary *newDict = [NSDictionary dictionaryWithObjectsAndKeys:request,@"request",image,@"image", nil];
-    [self performSelectorOnMainThread:@selector(displayImage:) withObject:newDict waitUntilDone:YES];
-}
-
-//加载完图片显示出来
-- (void) displayImage:(NSDictionary *)dict{
-    ASIHTTPRequest *request = (ASIHTTPRequest *)[dict objectForKey:@"request"];
-    UIImage *image = (UIImage *)[dict objectForKey:@"image"];
-    int index = request.tag;
-    UIButton *button = [self.buttonArray objectAtIndex:index % buttonNumber];
-    NSDictionary *myDict = button.myDict;
-    index = [(NSNumber *)[myDict objectForKey:@"index"] intValue];
-    [button setImage:image forState:UIControlStateNormal];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-    [button removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
-    [button addTarget:self action:@selector(openCourseware:) forControlEvents:UIControlEventTouchUpInside];
-    MRCircularProgressView *progressView = (MRCircularProgressView *)[button viewWithTag:PROGRESS_TAG];
-
-    [progressView setHidden:YES];
-    
-}
-
-
-//下载出错处理
-- (void) requestWentWrong:(ASIHTTPRequest *)request{
-    NSLog(@"download error : %@",request.error );
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"出错啦！" message:@"网络连接出错，请检查网络！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    [alertView show];
-    
-    int index = request.tag;
-    UIButton *button = [self.buttonArray objectAtIndex:index % buttonNumber];
-//    UIProgressView *progressView = (UIProgressView *)[button viewWithTag:PROGRESS_TAG];
-    MRCircularProgressView *progressView = (MRCircularProgressView *)[button viewWithTag:PROGRESS_TAG];
-    [progressView setHidden:YES];
-
-}
-
 - (void)openCourseware:(id)sender
 {
  ////
@@ -630,7 +543,7 @@ NSString *NOTEFolderName3 = @"NOTE";
         NSString *NOTEPath = [contents stringByAppendingPathComponent:NOTEFolderName3];
         NSString *NOTECoursePath = [NOTEPath stringByAppendingPathComponent:courseFolderName];
         NSString *NOTEPDFPath = [NOTECoursePath stringByAppendingPathComponent:[filePath lastPathComponent]];
-        [self createDir:NOTEPDFPath];
+        [downloadModel createDir:NOTEPDFPath];
 		ReaderViewController *readerViewController = [[ReaderViewController alloc] initWithReaderDocument:document];
         
         readerViewController.notePath = NOTEPDFPath;
@@ -653,66 +566,6 @@ NSString *NOTEFolderName3 = @"NOTE";
 	}
 
     
-}
-
-- (UIImage *)getFirstPageFromPDF:(NSString *)aFilePath{
-    //	CFStringRef path;
-    //	CFURLRef url;
-	CGPDFDocumentRef document;
-    
-    NSURL *nsurl = [[NSURL alloc]initFileURLWithPath:aFilePath isDirectory:NO];
-    
-    CFURLRef url = (__bridge CFURLRef)nsurl;
-    //    CFURLRef url = CFRetain((__bridge CFTypeRef)(nsurl));
-    
-    
-	document = CGPDFDocumentCreateWithURL(url);
-    //	CFRelease(url);
-    
-	int count = CGPDFDocumentGetNumberOfPages (document);
-    if (count == 0) {
-		return NULL;
-    }
-    
-    //	return document;
-    
-    CGPDFPageRef page = CGPDFDocumentGetPage(document, 1);
-    
-    CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
-    pageRect.origin = CGPointZero;
-    
-    //开启图片绘制 上下文
-    UIGraphicsBeginImageContext(pageRect.size);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    // 设置白色背景
-    CGContextSetRGBFillColor(context, 1.0,1.0,1.0,1.0);
-    CGContextFillRect(context,pageRect);
-    
-    CGContextSaveGState(context);
-    
-    //进行翻转
-    CGContextTranslateCTM(context, 0.0, pageRect.size.height);
-    CGContextScaleCTM(context, 1.0, -1.0);
-    CGContextConcatCTM(context, CGPDFPageGetDrawingTransform(page, kCGPDFMediaBox, pageRect, 0, true));
-    
-    CGContextDrawPDFPage(context, page);
-    CGContextRestoreGState(context);
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-
-    CGPDFDocumentRelease(document);
-    
-    //CGPDFDocumentRelease(document);
-    //UIImage *image = [self getUIImageFromPDFPage:0 pdfPage:page];
-    //    CGPDFPageRelease(page);
-    //CGPDFDocumentRelease(document);
-    return image;
-    //return image;
-    //    CGPDFDocumentRelease(document), document = NULL;
 }
 
 #pragma serchBar delegate
@@ -784,9 +637,6 @@ NSString *NOTEFolderName3 = @"NOTE";
     CoursewareItem *item = [myDict objectForKey:@"item"];
     
     UIButton *button = [self.buttonArray objectAtIndex:index % buttonNumber];
-    NSDictionary *dict = button.myDict;
-    index = [(NSNumber *)[dict objectForKey:@"index"] intValue];
-//    UIImage *image = [self getFirstPageFromPDF:filePath];
     UIImage *image = [firstImageDict objectForKey:filePath];
     item.PDFFirstImage = image;
     [button setImage:image forState:UIControlStateNormal];
