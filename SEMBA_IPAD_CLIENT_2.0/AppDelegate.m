@@ -20,6 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+//    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     MainPageViewController *mainController = [[MainPageViewController alloc] init];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mainController];
     hostController = [[DDMenuController alloc] initWithRootViewController:navController];
@@ -63,6 +64,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void) uncaughtExceptionHandler: (NSException *)exception{
+    NSLog(@"CRASH: %@", exception);
+    NSLog(@"Stack Trace: %@",[exception callStackSymbols]);
 }
 
 @end

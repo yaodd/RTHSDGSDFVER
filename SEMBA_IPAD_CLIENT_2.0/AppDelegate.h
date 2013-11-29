@@ -13,5 +13,5 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, retain) DDMenuController *hostController;
-
+- (void) uncaughtExceptionHandler: (NSException *)exception;
 @end

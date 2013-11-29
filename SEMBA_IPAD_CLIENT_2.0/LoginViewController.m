@@ -151,7 +151,6 @@
         
         [self performSelectorOnMainThread:@selector(jumpToMainPage) withObject:nil waitUntilDone:YES];
         SysbsModel *model = [SysbsModel getSysbsModel];
-        NSLog(@"%d",model.user.uid);
         //[self jumpToMainPage];
     } else if (loginResult == 0){
         UIAlertView*alertView = [[UIAlertView alloc]initWithTitle:@"出错啦"

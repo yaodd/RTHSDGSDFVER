@@ -175,6 +175,7 @@
     Dao *dao = [Dao sharedDao];
     SysbsModel *sysbsModel = [SysbsModel getSysbsModel];
     User *user = sysbsModel.user;
+    NSLog(@"user id %d",user.uid);
     int myCourseRequest = [dao requestForMyCourse:user.uid];
     
     if (myCourseRequest == 1) {
