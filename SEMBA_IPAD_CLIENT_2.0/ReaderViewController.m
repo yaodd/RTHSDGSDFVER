@@ -46,6 +46,7 @@
 #define kPenAlphaMax            1.0f
 #define kPenAlphaDefault        1.0f
 
+#define kPenColor               [UIColor blackColor]
 #define kMarkAlphaDefault       0.5f
 
 #define SWATCH_VIEW_TAG     111111
@@ -93,6 +94,10 @@
     UITextField *markField;
     
     int appearViewTag;
+    UIColor *curPenColor;
+    CGFloat curPenWidth;
+    CGFloat curPenAlpha;
+    BOOL isFirstVisit;
 }
 
 #pragma mark Constants
@@ -403,17 +408,17 @@
     CGRect rect = newContentView.theContainerView.frame;
     CGRect rect2 = newContentView.bounds;
     
-    NSLog(@"frame %f %f %f %f",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
-    CGPoint point = theScrollView.bounds.origin;
-    CGSize size = theScrollView.bounds.size;
+//    NSLog(@"frame %f %f %f %f",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
+//    CGPoint point = theScrollView.bounds.origin;
+//    CGSize size = theScrollView.bounds.size;
     
-    NSLog(@"theScrollView frame %f %f %f %f",point.x,point.y,size.width,size.height);
+//    NSLog(@"theScrollView frame %f %f %f %f",point.x,point.y,size.width,size.height);
 
     CGSize beforeSize;
     if (drawingView != nil) {
         
         beforeSize = drawingView.image.size;
-        NSLog(@"remove %f %f",beforeSize.width,beforeSize.height);
+//        NSLog(@"remove %f %f",beforeSize.width,beforeSize.height);
         //        NSLog(@"remove %f %f",beforeSize.width,beforeSize.height);
 
 //        NSLog(@"remove %f %f",beforeSize.width,beforeSize.height);
@@ -435,19 +440,23 @@
         scale = nowSize.width / beforeSize.width;
     }
 
-    NSLog(@"scale %f %f %f",scale,nowSize.width,beforeSize.width);
-    NSLog(@"now scale %f maxScale %f",newContentView.zoomScale,newContentView.maximumZoomScale);
 //    NSLog(@"scale %f %f %f",scale,nowSize.width,beforeSize.width);
 //    NSLog(@"now scale %f maxScale %f",newContentView.zoomScale,newContentView.maximumZoomScale);
-    NSLog(@"scale %f %f %f",scale,nowSize.width,beforeSize.width);
-    NSLog(@"now scale %f maxScale %f",newContentView.zoomScale,newContentView.maximumZoomScale);
+//    NSLog(@"scale %f %f %f",scale,nowSize.width,beforeSize.width);
+//    NSLog(@"now scale %f maxScale %f",newContentView.zoomScale,newContentView.maximumZoomScale);
+//    NSLog(@"scale %f %f %f",scale,nowSize.width,beforeSize.width);
+//    NSLog(@"now scale %f maxScale %f",newContentView.zoomScale,newContentView.maximumZoomScale);
 
     UIImage *scaleImage = [self scaleImage:noteImage toScale:scale];
     drawNewView = [[ACEDrawingView alloc]initWithFrame:CGRectMake(theScrollView.contentOffset.x + rect.origin.x + 4.0f - rect2.origin.x - 4.0f, rect.origin.y + 4.0f - rect2.origin.y - 4.0f, rect.size.width, rect.size.height) :scaleImage];
     
     drawNewView.delegate = self;
-    drawNewView.lineWidth = self.lineWidthSlider.value;
-    drawNewView.lineAlpha = self.lineAlphaSlider.value;
+    
+//    drawNewView.lineWidth = self.lineWidthSlider.value;
+    drawNewView.lineWidth = curPenWidth;
+    drawNewView.lineColor = curPenColor;
+    drawNewView.lineAlpha = curPenAlpha;
+//    NSLog(@"newwwwwwwwwww");
     drawNewView.drawTool = currentToolType;
     [theScrollView addSubview:drawNewView];
     
@@ -544,16 +553,10 @@
 	[super viewDidLoad];
     
     //笔记初始化
-    // set the delegate
-    
-//    self.drawingView.delegate = self;
-    
-    // start with a black pen
-    
-    
-    // init the preview image
-//    [self.navigationController.navigationBar setHidden:NO];
-    
+    curPenWidth = kPenWidthDefault;
+    curPenAlpha = kPenAlphaDefault;
+    curPenColor = kPenColor;
+    isFirstVisit = YES;
     
     UIImage *image = [[UIImage alloc]initWithContentsOfFile:@"download_ppt.png"];
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
@@ -669,6 +672,7 @@
         ReaderContentView *newContentView = [contentViews objectForKey:key];
         [self addDrawView:newContentView];
         if (mainPagebar.hidden == YES || mainToolbar.hidden == YES) {
+            NSLog(@"show1");
             [mainToolbar showToolbar];
             [mainPagebar showPagebar];
         }
@@ -837,9 +841,10 @@
 - (void)choColorAction:(id)sender{
     UIButton *button = (UIButton *)sender;
     UIColor *color = button.backgroundColor;
-    UIButton *originalButton = [noteToolDrawerBar.buttonArray objectAtIndex:0];
-    [originalButton setBackgroundColor:color];
+//    UIButton *originalButton = [noteToolDrawerBar.buttonArray objectAtIndex:0];
+//    [originalButton setBackgroundColor:color];
     self.drawNewView.lineColor = color;
+    curPenColor = color;
     [self viewDisappear:swatchView];
 }
 
@@ -948,6 +953,7 @@
 }
 - (void)widthChange:(UISlider *)sender{
     self.drawNewView.lineWidth = sender.value;
+    curPenWidth = sender.value;
 //    NSLog(@"%f",sender.value);
 }
 - (void)alphaChange:(UISlider *)sender{
@@ -1299,6 +1305,7 @@
 					if ((mainToolbar.hidden == YES) || (mainPagebar.hidden == YES)
                         /*|| (noteToolDrawerBar.hidden == YES)*/)
 					{
+                        NSLog(@"show");
 						[mainToolbar showToolbar];
                         [mainPagebar showPagebar]; // Show
 //                        [noteToolDrawerBar showNoteToolDrawerBar];
@@ -1780,8 +1787,10 @@
                 currentToolType = ACEDrawingToolTypePen;
                 drawNewView.drawTool = ACEDrawingToolTypePen;
                 drawNewView.lineAlpha = 1.0f;
+                curPenAlpha = 1.0f;
                 UISlider *penWidthSlider = (UISlider *)[penWidthView viewWithTag:PEN_WIDTH_SLIDER_TAG];
                 drawNewView.lineWidth = penWidthSlider.value;
+                curPenWidth = penWidthSlider.value;
                 [self viewAppear:penWidthView];
             } else{
 
@@ -1793,8 +1802,10 @@
                 currentToolType = ACEDrawingToolTypePen;
                 drawNewView.drawTool = ACEDrawingToolTypePen;
                 drawNewView.lineAlpha = kMarkAlphaDefault;
+                curPenAlpha = kMarkAlphaDefault;
                 UISlider *markWidthSlider = (UISlider *)[markerWidthView viewWithTag:PEN_WIDTH_SLIDER_TAG];
                 drawNewView.lineWidth = markWidthSlider.value;
+                curPenWidth = markWidthSlider.value;
                 [self viewAppear:markerWidthView];
             } else{
                 [self viewDisappear:markerWidthView];
@@ -1815,8 +1826,10 @@
                         UISlider *markWidthSlider = (UISlider *)[markerWidthView viewWithTag:PEN_WIDTH_SLIDER_TAG];
                         [eraserWidthSlider setValue:markWidthSlider.value];
                         if (markWidthSlider.value >= kPenWidthMax / 2) {
+                            drawingView.lineWidth = markWidthSlider.value;
                             [eraserWidthSlider setValue:markWidthSlider.value];
                         } else{
+                            drawingView.lineWidth = kPenWidthMax / 2;
                             [eraserWidthSlider setValue:kPenWidthMax / 2];
                         }
                     }
@@ -1879,13 +1892,14 @@
         appearViewTag = ERASER_VIEW_TAG;
     }
                                */
-    [self viewDisappear:markerWidthView];
-    [self viewDisappear:penWidthView];
-    [self viewDisappear:swatchView];
-    [self viewDisappear:eraserWidthView];
+//    [self viewDisappear:markerWidthView];
+//    [self viewDisappear:penWidthView];
+//    [self viewDisappear:swatchView];
+//    [self viewDisappear:eraserWidthView];
 }
 
 - (void)cancelDrawState:(ACEDrawingView *)view{
+    NSLog(@"show2");
     [noteToolDrawerBar showNoteToolDrawerBar];
     [mainToolbar showToolbar];
     [mainPagebar showPagebar];
