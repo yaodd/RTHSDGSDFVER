@@ -16,9 +16,11 @@
 #define kLongitudeLow 113.384
 #define kRegistered [NSString stringWithFormat:@"registered"]
 #define kSuccess 0
-#define kFailTime 1
+#define kFailOverTime 1
+#define kFailNotTime 5
 #define kFailWifi 2
 #define kFailPlace 3
+#define kFailDate 4
 
 @interface RegisterContentController ()
 
@@ -26,6 +28,7 @@
 
 @implementation RegisterContentController
 {
+    Dao *dao;
     NSThread *request;
 }
 @synthesize historyBtn;
@@ -72,7 +75,8 @@
                                                             registerFrame.size.height)];
     [historyBtn setBackgroundImage:[UIImage imageNamed:@"setting_button"] forState:UIControlStateNormal];
     [historyBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [historyBtn addTarget:self action:@selector(checkBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [historyBtn setTitle:@"查看签到历史" forState:UIControlStateNormal];
+    [historyBtn addTarget:self action:@selector(checkHistoryBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:historyBtn];
     
     activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(120, 200, 50, 50)];
@@ -96,7 +100,7 @@
     //[self startRegister];
 }
 
-- (IBAction)checkBtnPressed:(id)sender
+- (IBAction)checkHistoryBtnPressed:(id)sender
 {
     RegisterHistoryController *controller = [[RegisterHistoryController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
@@ -104,8 +108,57 @@
 
 - (IBAction)registerBtnPressed:(id)sender
 {
+    NSThread *registerThread = [[NSThread alloc] initWithTarget:self selector:@selector(startRegisterThread:) object:nil];
+    
+    [registerThread start];
+}
+
+- (void)startRegisterThread:(NSThread *)thread
+{
+    
+    NSNumber *value;
+    
+    int state = [dao requestForCheckIn:@"69"];
+    
+    if (![self checkInternet]) {
+        
+        value = [NSNumber numberWithInt:kFailWifi];
+        
+    }else if(![self checkDate]){
+        
+        value = [NSNumber numberWithInt:kFailDate];
+        
+    }else if(![self checkPlace]){
+        
+        value = [NSNumber numberWithInt:kFailPlace];
+        
+    }else if(![self checkOverTime]){
+        
+        value = [NSNumber numberWithInt:kFailOverTime];
+        
+    }else if(![self checkNotTime]){
+        
+        value = [NSNumber numberWithInt:kFailNotTime];
+    }else {
+        
+        value = [NSNumber numberWithInt:kSuccess];
+    }
+    
+    [self performSelectorOnMainThread:@selector(pushResutlController:) withObject:value waitUntilDone:YES];
+}
+
+- (void)pushResutlController:(NSNumber *)returnValue
+{
+    RegisterResultController *resultController = [[RegisterResultController alloc] init];
+    
+    int value = returnValue.intValue;
+    
+    [resultController startRegister:value];
+    
+    [self.navigationController pushViewController:resultController animated:YES];
     
 }
+
 
 #pragma Mark - start checking location
 - (void)startRegister
@@ -159,28 +212,67 @@
 
 - (BOOL)checkPlace
 {
+    CLLocation *current = [self getCurrentLocation];
+    
+    if(current.coordinate.latitude <= kLatitudeUp && current.coordinate.latitude >= kLatitudeLow
+       && current.coordinate.longitude <= kLongitudeUp && current.coordinate.longitude > kLongitudeLow)
+        return YES;
+    
     return NO;
 }
 
 - (BOOL)checkInternet
 {
-    
+    Reachability *r = [Reachability reachabilityWithHostname:@"www.baidu.com"];
+    switch ([r currentReachabilityStatus]) {
+        case NotReachable:
+            return NO;
+            
+        default:
+            break;
+    }
+    return YES;
+}
+
+- (BOOL)checkOverTime
+{
     return NO;
 }
 
-- (BOOL)checkTime
+- (BOOL)checkNotTime
 {
     return NO;
+}
+
+- (BOOL)checkDate
+{
+    return NO;
+}
+
+#pragma Mark-LocationManager
+
+- (CLLocation *)getCurrentLocation
+{
+    self.locateManager = [[CLLocationManager alloc] init];
+    self.locateManager.delegate = self;
+    self.locateManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locateManager.distanceFilter = 1.0f;
+    [self.locateManager startUpdatingLocation];
+    
+    CLLocation *current = [[CLLocation alloc] initWithLatitude:self.locateManager.location.coordinate.latitude
+                                                     longitude:self.locateManager.location.coordinate.longitude];
+    
+    return current;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    //[self.activity stopAnimating];
+
     [self.locateManager stopUpdatingLocation];
     [UIView animateWithDuration:10.0 animations:^{
         [self.activity setAlpha:0.1];
     } completion:^(BOOL finished) {
-        [self.activity stopAnimating];
+        
     }];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "RegisterHistoryController.h"
+#import "Dao.h"
 #define tableViewRect CGRectMake(0, 0, 300, 250)
 
 @interface RegisterHistoryController ()

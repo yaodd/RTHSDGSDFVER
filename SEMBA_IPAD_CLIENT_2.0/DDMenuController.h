@@ -70,8 +70,6 @@ typedef enum {
 
 @property (nonatomic, strong) UIView *noticeView;
 
-- (void)handlePanGesture:(UIPanGestureRecognizer *)gesture;
-
 - (void)setRootController:(UIViewController *)controller animated:(BOOL)animated; // used to push a new controller on the stack
 - (void)showRootController:(BOOL)animated; // reset to "home" view controller
 - (void)showRightController:(BOOL)animated;  // show right
