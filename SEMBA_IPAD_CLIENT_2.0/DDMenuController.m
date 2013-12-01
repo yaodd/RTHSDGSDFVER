@@ -40,6 +40,10 @@
 @end
 
 @implementation DDMenuController
+{
+    UISwipeGestureRecognizer *swipeLeft;
+    UISwipeGestureRecognizer *swipeRight;
+}
 
 @synthesize delegate;
 
@@ -86,7 +90,13 @@
         _tap = tap;
     }
     
+    swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
+    [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.view addGestureRecognizer:swipeLeft];
     
+    swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeRightGesture:)];
+    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.view addGestureRecognizer:swipeRight];
     
 }
 
@@ -440,6 +450,7 @@
 
 - (void)showRootController:(BOOL)animated {
     
+    [swipeLeft setEnabled:NO];
     [_tap setEnabled:NO];
     _root.view.userInteractionEnabled = YES;
 
@@ -514,22 +525,27 @@
         _root.view.frame = frame;
     } completion:^(BOOL finished) {
         [_tap setEnabled:YES];
+        [swipeLeft setEnabled:YES];
     }];
     
     if (!animated) {
         [UIView setAnimationsEnabled:_enabled];
     }
     
-    UISwipeGestureRecognizer *gesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-    [gesture setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [self.view addGestureRecognizer:gesture];
 }
 
-- (void)handlePanGesture:(UIPanGestureRecognizer *)gesture{
+- (void)handleSwipeLeftGesture:(UISwipeGestureRecognizer *)gesture{
     if([self.delegate isPresentNoticeView]){
         return;
     }
     [self showRootController:YES];
+}
+
+- (void)handleSwipeRightGesture:(UISwipeGestureRecognizer *)gesture{
+    if([self.delegate isPresentNoticeView]){
+        return;
+    }
+    [self showLeftController:YES];
 }
 
 - (void)showRightController:(BOOL)animated {
@@ -621,7 +637,7 @@
 
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
         pan.delegate = (id<UIGestureRecognizerDelegate>)self;
-        [view addGestureRecognizer:pan];
+        //[view addGestureRecognizer:pan];
         _pan = pan;
         
     } else {
@@ -651,7 +667,7 @@
         __block DDMenuController *selfRef = self;
         __block UIViewController *rootRef = _root;
         CGRect frame = rootRef.view.frame;
-        frame.origin.x = rootRef.view.bounds.size.width;
+        frame.origin.x = kMenuFullWidth;
         
         [UIView animateWithDuration:.1 animations:^{
             

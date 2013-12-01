@@ -47,7 +47,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        titleArray = [[NSMutableArray alloc] initWithObjects:@"课程中心", @"课件", @"评教", @"课程表", @"通知中心", nil];
+        titleArray = [[NSMutableArray alloc] initWithObjects:@"课程中心", @"课件", @"评教", @"课程表",@"选课", @"通知中心", nil];
     }
     return self;
 }
@@ -94,7 +94,7 @@
     [self.view addSubview:nameLabel];
     
     //Menu TableView
-    CGRect listFrame = CGRectMake(0, 255, menuWidth, 210);
+    CGRect listFrame = CGRectMake(0, 255, menuWidth, 252);
     list = [[UITableView alloc] init];
     list.frame = listFrame;
     [list setSectionIndexColor:[UIColor clearColor]];
@@ -106,6 +106,7 @@
     [list setScrollEnabled:NO];
     [self.view addSubview:list];
     
+    /*签到的按钮作废
     //RegisterButton
     CGRect registerFrame = CGRectMake(54, listFrame.origin.y + listFrame.size.height + 63.5, 104, 96);
     registerBtn = [[UIButton alloc] init];
@@ -114,8 +115,10 @@
     [registerBtn addTarget:self action:@selector(showRegisterView) forControlEvents:UIControlEventTouchUpInside];
     [registerBtn setImage:[UIImage imageNamed:@"news center-sign"] forState:UIControlStateNormal];
     [self.view addSubview:registerBtn];
+    */
     
     //RegisterLabel
+    /*签到的label作废
     CGRect registerLabelFrame = CGRectMake(0, registerFrame.origin.y + registerFrame.size.height + 10, menuWidth-20, 40);
     registerLabel = [[UILabel alloc] init];
     registerLabel.frame = registerLabelFrame;
@@ -125,6 +128,7 @@
     registerLabel.font = [UIFont fontWithName:@"Heiti SC" size:18.0f];
     registerLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:registerLabel];
+    */
     
     //Help Button
     CGRect helpFrame = CGRectMake(0, 0, 0, 0);
@@ -134,11 +138,11 @@
     //[self.view addSubview:helpBtn];
     
     //setting Button
-    UIImageView *settingImg = [[UIImageView alloc] initWithFrame:CGRectMake(200, listFrame.origin.y + listFrame.size.height + 270, 26, 26)];
+    UIImageView *settingImg = [[UIImageView alloc] initWithFrame:CGRectMake(200, listFrame.origin.y + listFrame.size.height + 228, 26, 26)];
     settingImg.image = [UIImage imageNamed:@"news center-setting"];
     settingImg.backgroundColor = [UIColor clearColor];
     [self.view addSubview:settingImg];
-    CGRect settingFrame = CGRectMake(188, listFrame.origin.y + listFrame.size.height + 268, 50, 50);
+    CGRect settingFrame = CGRectMake(188, listFrame.origin.y + listFrame.size.height + 226, 50, 50);
     settingBtn = [[UIButton alloc] init];
     settingBtn.frame = settingFrame;
     settingBtn.backgroundColor = [UIColor clearColor];
@@ -257,7 +261,8 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 6;
+    //return 5;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -360,6 +365,27 @@
         }
         
     }else if(indexPath.row == 4){
+        
+        cell.icon.frame = CGRectMake(62, 5, 28, 27);
+        cell.title.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
+        cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 41.5);
+        cell.title.frame = CGRectMake(110, 0, menuWidth - 120, 41);
+        
+        if(currentRow == 4){
+            
+            cell.icon.image = [UIImage imageNamed:@"schedule_pressed"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+            NSLog(@"row3's bgImg frame:%f--%f", cell.backgroundImg.frame.origin.x, cell.backgroundImg.frame.origin.y);
+            cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
+        }else {
+            
+            cell.icon.image = [UIImage imageNamed:@"news center-calender"];
+            cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
+            cell.title.textColor = [UIColor whiteColor];
+        }
+
+    
+    }else if(indexPath.row == 5){
     
         cell.topLine.frame = CGRectMake(0, 0, menuWidth, 1);
         cell.belowLine.frame = CGRectMake(0, 42, menuWidth, 1);
@@ -372,7 +398,7 @@
         cell.title.frame = CGRectMake(0, 0, menuWidth, 41);
         cell.title.textAlignment = NSTextAlignmentCenter;
         
-        if(currentRow == 4){
+        if(currentRow == 5){
             
             cell.icon.image = [UIImage imageNamed:@"news center-mail"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
@@ -391,7 +417,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.row == 0 || indexPath.row == 4){
+    if(indexPath.row == 0 || indexPath.row == 5){
         return 44;
     }
 
@@ -421,7 +447,8 @@
 
     }else if(indexPath.row == 2){
         //implement the views' translate
-        EvaluateController *controller = [[EvaluateController alloc] init];
+        EvaluateController *controller = //[[EvaluateController alloc] init ];
+        [[EvaluateController alloc] initWithNibName:@"EvaluatePage" bundle:nil];
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
         controller.title = [titleArray objectAtIndex:indexPath.row];
         [hostController setRootController:navController animated:YES];
@@ -444,7 +471,10 @@
         }
 
         
-    }else if(indexPath.row == 4){
+    }else if(indexPath.row == 4){//
+        //jump to xuanke page.
+    
+    }else if(indexPath.row == 5){
         //implement the views' translate
         [hostController.rootViewController.view setHidden:YES];
         
@@ -471,7 +501,7 @@
 #pragma Mark - DDMenuController Delegate
 - (BOOL)isPresentNoticeView
 {
-    if(currentRow == 4)
+    if(currentRow == 5)
         return YES;
     return NO;
 }

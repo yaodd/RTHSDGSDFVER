@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HeroSelectView.h"
 @interface EvaluateController : UIViewController<UIScrollViewDelegate>
 
-@property (nonatomic, strong) UIImageView *line;
-@property (nonatomic, strong) UIImageView *lineTop;
-@property (nonatomic, strong) UIScrollView *scrollView;
-
+@property (nonatomic,strong)HeroSelectView *selectView;
+@property (nonatomic,strong)NSMutableArray *scoreArray;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (nonatomic,strong)NSMutableArray *evaluateDataArray;
 @end

@@ -7,15 +7,17 @@
 //
 
 #import "EvaluateController.h"
+#import "ScorePoint.h"
 
 @interface EvaluateController ()
 
 @end
 
 @implementation EvaluateController
-@synthesize line;
-@synthesize lineTop;
-@synthesize scrollView;
+@synthesize selectView = _selectView;
+@synthesize evaluateDataArray = _evaluateDataArray;
+@synthesize scoreArray = _scoreArray;
+@synthesize scrollView = _scrollView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,25 +31,54 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    [self.view setBackgroundColor:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
     
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bar_bg"] forBarMetrics:UIBarMetricsDefault];
+    _selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 196, 44)];
+    [_scrollView addSubview:_selectView];
+    NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:@"10",@"9",@"8",@"7",@"6",@"5",@"4",@"3",@"2",@"1", nil];
+    ScorePoint *point1 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 402, 32, 32)];
+    [point1 setDataArray:array];
+    ScorePoint *point2 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 452, 32, 32)];
+    [point2 setDataArray:array];
+    ScorePoint *point3 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 502, 32, 32)];
+    [point3 setDataArray:array];
+    ScorePoint *point4 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 552, 32, 32)];
+    [point4 setDataArray:array];
+    ScorePoint *point5 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 602, 32, 32)];
+    [point5 setDataArray:array];
+    ScorePoint *point6 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 652, 32, 32)];
+    [point6 setDataArray:array];
+        ScorePoint *point7 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 702, 32, 32)];
+    [point7 setDataArray:array];
+    ScorePoint *point8 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 752, 32, 32)];
+    [point8 setDataArray:array];
+    ScorePoint *point9 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 802, 32, 32)];
+    [point9 setDataArray:array];
+    ScorePoint *point10 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 852, 32, 32)];
+    [point10 setDataArray:array];
+    [_scrollView addSubview:point10];
+    [_scrollView addSubview:point9];
+    [_scrollView addSubview:point8];
+    [_scrollView addSubview:point7];
+    [_scrollView addSubview:point6];
+    [_scrollView addSubview:point5];
+    [_scrollView addSubview:point4];
+    [_scrollView addSubview:point3];
+    [_scrollView addSubview:point2];
+    [_scrollView addSubview:point1];
+
+    _scoreArray = [[NSMutableArray alloc]init];
+    [_scoreArray addObject:point1];
+    [_scoreArray addObject:point2];
+    [_scoreArray addObject:point3];
+    [_scoreArray addObject:point4];
+    [_scoreArray addObject:point5];
+    [_scoreArray addObject:point6];
+    [_scoreArray addObject:point7];
+    [_scoreArray addObject:point8];
+    [_scoreArray addObject:point9];
+    [_scoreArray addObject:point10];
     
-    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.height, self.view.frame.size.width)];
-    scrollView.delegate = self;
-    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.height, 1000)];
-    [self.view addSubview:scrollView];
-    
-    line = [[UIImageView alloc] initWithFrame:CGRectMake(50, 150, 800, 50)];
-    line.backgroundColor = [UIColor blackColor];
-    [self.scrollView addSubview:line];
-    
-    lineTop = [[UIImageView alloc] initWithFrame:CGRectMake(50, 70, 800, 50)];
-    lineTop.backgroundColor = [UIColor blackColor];
-    lineTop.hidden = YES;
-    [self.view addSubview:lineTop];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,17 +87,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma Mark - UIScrollView Delegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if(self.scrollView.contentOffset.y >= line.frame.origin.y){
-        lineTop.hidden = NO;
-        line.hidden = YES;
-    }else {
-        lineTop.hidden = YES;
-        line.hidden = NO;
-    }
-}
 
 @end

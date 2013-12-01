@@ -23,8 +23,10 @@
 
 @property (nonatomic, strong) UIButton *registerBtn;
 
-- (IBAction)checkBtnPressed:(id)sender;
+- (IBAction)checkHistoryBtnPressed:(id)sender;
 
 - (IBAction)registerBtnPressed:(id)sender;
+
+- (void)startRegisterThread:(NSThread *)thread;
 
 @end
