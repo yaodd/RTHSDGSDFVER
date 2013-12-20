@@ -35,7 +35,8 @@ NSString *courseDateUrl = @"getCourseDate.php";
 NSString *newestFile = @"getNewestFile.php";
 NSString *upEvaluationUrl = @"upLoadEvaluation.php";
 NSString * fetchEvaluationUrl = @"fetchEvaluationList.php";
-NSString* requestNameUrl = @"requestForName.php";
+NSString *requestNameUrl = @"requestForName.php";
+NSString *getMessage = @"getMyMessage.php";
 
 +(id)sharedDao{
     static Dao* sharedDaoer;
@@ -301,7 +302,7 @@ filename:(NSString*)filename{
         NSNumber *num = [rs objectForKey:@"uid"];
         int uid = [num intValue];
         user.uid = uid;
-        NSLog(@"uid%d",uid);
+        //NSLog(@"uid%d",uid);
         NSString *name = [rs objectForKey:@"username"];
         user.username = name;
         model.user = user;
@@ -385,6 +386,7 @@ filename:(NSString*)filename{
         [myCourse setCourses:allMyCourse];
         SysbsModel *model = [SysbsModel getSysbsModel];
         [model setCourses:myCourse];
+        NSLog(@"daoallmycourse %d",[allMyCourse count]);
         //获取课程数据
     }else{
         
@@ -448,6 +450,80 @@ filename:(NSString*)filename{
     }
     return ret;
 }
+
+-(int)requestForNotices:(int)uid{
+    int ret = -1;
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    [dict setObject:[NSNumber numberWithInt:uid] forKey:@"uid"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,getMessage];
+    NSDictionary * rs = [self request:urlString dict:dict];
+    ret = [(NSNumber*) [rs objectForKey:@"isSuccess"] integerValue];
+    if (ret == 1){
+        
+        SysbsModel *model = [SysbsModel getSysbsModel];
+        AllNoticeData *allNotice = model.myMessage;
+        if(allNotice == Nil ){
+            allNotice = [[AllNoticeData alloc]init];
+        }
+        NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+        NSArray *arr = [rs objectForKey:@"data"];
+        int l = [arr  count];
+        for (int i = 0 ; i < l; ++i) {
+            NSDictionary *onedict = [arr objectAtIndex:i];
+            NoticeData *one = [[NoticeData alloc]init];
+            one.messageTitle = [onedict objectForKey:@"title"];
+            one.messageContent = [onedict objectForKey:@"content"];
+            one.date = [onedict objectForKey:@"date"];
+            //            NSLog(@"now%d",now.cid);
+            //这里可能还需要重构。
+            [dataArray addObject:one];
+        }
+        [allNotice setMessages:dataArray];
+        model.myMessage = allNotice;
+        NSLog(@"%dnotice",l);
+    }else if( ret == 0 ){
+    
+    }else if( ret == -1){
+    
+    }
+    return ret;
+}
+
+-(int)requestForUpEvaluation:(NSDictionary *)dict{
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,upEvaluationUrl];
+    NSDictionary *rs = [self request:urlString dict:dict];
+    
+    int isSuccess = [(NSNumber *) [rs objectForKey:@"isSuccess"] integerValue];
+    if(isSuccess > 0){
+        return true;
+    }else{
+        return false;
+    }
+    
+    
+}
+
+-(NSMutableArray*)requestForEvaluationList:(int)uid{
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    [dict setObject:[NSNumber numberWithInt:uid] forKey:@"uid"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,
+                           fetchEvaluationUrl ];
+    NSDictionary *ret = [self request:urlString dict:dict ];
+    int isSuccess = [ (NSNumber *)[ret objectForKey:@"isSuccess"] integerValue];
+    if(isSuccess > 0 ){
+        NSMutableArray *retArr = [ret objectForKey:@"data"];
+        //        int l = [retArr count];
+        //        for (int i = 0; i < l ; ++i) {
+        //            //NSDictionary
+        //        }
+        return retArr;
+    }
+    return nil;
+}
+
+
 /*
 -(RecommendBookResult*)requestForRecommend:(int)cid{
     //id ret;
@@ -524,7 +600,6 @@ filename:(NSString*)filename{
 }
 
 
-
 -(NSMutableArray*) requestForNewestFile:(int)uid{
     NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl
                            ,newestFile];
@@ -569,40 +644,8 @@ filename:(NSString*)filename{
     //return true;
 }
 
--(BOOL)requestForUpEvaluation:(NSDictionary *)dict{
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,upEvaluationUrl];
-    NSDictionary *rs = [self request:urlString dict:dict];
-    
-    int isSuccess = [(NSNumber *) [rs objectForKey:@"isSuccess"] integerValue];
-    if(isSuccess > 0){
-        return true;
-    }else{
-        return false;
-    }
-    
-    
-}
 
 
--(NSMutableArray*)requestForEvaluationList:(int)uid{
-    NSMutableArray *arr = [[NSMutableArray alloc] init];
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:[NSNumber numberWithInt:uid] forKey:@"uid"];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,
-                           fetchEvaluationUrl ];
-    NSDictionary *ret = [self request:urlString dict:dict ];
-    int isSuccess = [ (NSNumber *)[ret objectForKey:@"isSuccess"] integerValue];
-    if(isSuccess > 0 ){
-        NSMutableArray *retArr = [ret objectForKey:@"data"];
-        //        int l = [retArr count];
-        //        for (int i = 0; i < l ; ++i) {
-        //            //NSDictionary
-        //        }
-        return retArr;
-    }
-    return nil;
-}
 
 -(NSString*)requestForName:(int)uid{
     NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,requestNameUrl];

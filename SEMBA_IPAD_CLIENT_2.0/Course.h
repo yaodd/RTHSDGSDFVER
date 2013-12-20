@@ -19,7 +19,9 @@
 @property (strong,nonatomic)NSMutableArray *fileArr;
 @property (strong,nonatomic)NSMutableArray *recommendBook;
 @property (strong,nonatomic)NSMutableArray *timeArr;
-
+@property (strong,nonatomic)NSString *startTime;
+@property (strong,nonatomic)NSString *endTime;
+@property (strong,nonatomic)NSString *location;
 +(id)alloc;
 -(id)init;
 

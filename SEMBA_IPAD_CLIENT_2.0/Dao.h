@@ -149,7 +149,15 @@
  * -1  代表服务器出错
  **/
 
--(NSMutableArray*)requestForEvaluationList:(int)uid;
+-(int)requestForEvaluationList:(int)uid;
+/**
+ *返回
+ * 1 代表成功获取消息
+ * 0 代表联网失败
+ * -1 代表服务器出错。
+ */
+-(int)requestForNotices:(int)uid;
+
 //
 //-(NSString *) requestForName:(int)tid;
 -(void)reachabilityChanged:(NSNotification*)note;

@@ -9,11 +9,17 @@
 #import "NoticeController.h"
 #import "NoticeTableCell.h"
 #import "DataItem.h"
+#import "Dao.h"
+#import "SysbsModel.h"
+#import "MRProgressOverlayView.h"
+
 #define kTitleKey @"title"
 #define kContentKey @"content"
 #define kDateKey @"date"
 
-@interface NoticeController ()
+@interface NoticeController (){
+    MRProgressOverlayView *overlayView;
+}
 
 @end
 
@@ -70,15 +76,57 @@
     searchBar.delegate = self;
     [self.view addSubview:searchBar];
     
-    [self setData];
-    
-    [self.noticeTableView setTableViewData:originDataArray];
+    //[self setData];
+    [self performSelector:@selector(setData) withObject:nil afterDelay:0  ];
 }
 
 //Set the data of server to tableView
 
 - (void)setData;
 {
+    Dao *dao = [Dao sharedDao];
+    SysbsModel *model = [SysbsModel getSysbsModel];
+    
+    overlayView = [[MRProgressOverlayView alloc]init];
+    overlayView.mode = MRProgressOverlayViewModeIndeterminate;
+    [self.view addSubview:overlayView];
+    [overlayView show:YES];
+
+    int ret = [dao requestForNotices:model.user.uid];
+    if(ret == 1){
+        self.originDataArray = nil;
+        self.originDataArray = [[NSMutableArray alloc]init];
+        SysbsModel *model = [SysbsModel getSysbsModel];
+        AllNoticeData *noticedatas  = model.myMessage;
+        NSArray *msgArr = [noticedatas getMessages];
+        int msgLen = [noticedatas getMessageNum];
+        for(int i = 0 ; i < msgLen ; ++i){
+            
+            DataItem *item = [[DataItem alloc] init];
+            NoticeData *singleData = [msgArr objectAtIndex:i];
+            item.title = singleData.messageTitle;
+            item.content = singleData.messageContent;
+            item.date = singleData.date;
+            item.isSelected = @"NO";
+            [self.originDataArray addObject:item];
+        }
+        NSLog(@"MSGLEN%d",msgLen);
+        DataItem *item = [[DataItem alloc] init];
+        item.title = @"本地数据";
+        item.content = @"本地数据";
+        item.date = @"2012-10-23 12:00:00";
+        item.isSelected = @"NO";
+        [self.originDataArray addObject:item];
+
+        [self.noticeTableView setTableViewData:originDataArray];
+        [self.noticeTableView reloadData];
+    }else if(ret == 0){
+    
+    }else {
+    
+    }
+    [self performSelector:@selector(endLoading) withObject:nil afterDelay:0];
+    /*
     NSMutableArray *title = [[NSMutableArray alloc] initWithObjects:@"通知1", @"通知2", @"通知3", @"通知4", @"通知5", @"通知1", @"通知2", @"通知3", @"通知4", @"通知5", nil];
     
     NSMutableArray *date = [[NSMutableArray alloc] initWithObjects:@"aaaaaa", @"aaaaaaaa", @"aaaaaaa", @"aaaaaaaa", @"asaaaaaa", @"aaaaaa", @"aaaaaaaa", @"aaaaaaa", @"aaaaaaaa", @"asaaaaaa", nil];
@@ -103,8 +151,12 @@
         item.isSelected = [selected objectAtIndex:i];
         [self.originDataArray addObject:item];
     }
+    */
 }
 
+-(void)endLoading{
+    [overlayView dismiss:YES];
+}
 
 #pragma Mark - SearchBar Delegate
 

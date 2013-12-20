@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B1654461862AFDC00985C54 /* EvaluatePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B1654451862AFDC00985C54 /* EvaluatePage.xib */; };
+		2B1654491862B1EC00985C54 /* EvaluationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1654481862B1EC00985C54 /* EvaluationData.m */; };
+		2B16548C18631D4300985C54 /* HeroSelectVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B16548B18631D4300985C54 /* HeroSelectVIew.m */; };
+		2B165494186322B300985C54 /* scorebox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B16548E186322B300985C54 /* scorebox.png */; };
+		2B165495186322B300985C54 /* scorebox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B16548F186322B300985C54 /* scorebox@2x.png */; };
+		2B165496186322B300985C54 /* submit.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B165490186322B300985C54 /* submit.png */; };
+		2B165497186322B300985C54 /* submit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B165491186322B300985C54 /* submit@2x.png */; };
+		2B165498186322B300985C54 /* xiala.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B165492186322B300985C54 /* xiala.png */; };
+		2B165499186322B300985C54 /* xiala@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B165493186322B300985C54 /* xiala@2x.png */; };
+		2B16549B186322C200985C54 /* table_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B16549A186322C200985C54 /* table_bg@2x.jpg */; };
+		2B16549E1863234D00985C54 /* ScorePoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B16549D1863234D00985C54 /* ScorePoint.m */; };
+		2B1654A1186323B500985C54 /* EvaluateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1654A0186323B500985C54 /* EvaluateCell.m */; };
 		2B5AA8C91830EBFC00CC0DBD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9240B71830D01800415735 /* LoginViewController.m */; };
 		2B5AA8CA1830ECBB00CC0DBD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C9240B81830D01800415735 /* LoginViewController.xib */; };
 		2B98B0FC1839DAD900EBA2E0 /* SetUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B98B0FA1839DAD900EBA2E0 /* SetUpView.m */; };
@@ -17,6 +29,9 @@
 		2BB8154A1830AE0200736512 /* RecommendBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB815421830AE0200736512 /* RecommendBook.m */; };
 		2BB8154B1830AE0200736512 /* SysbsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB815441830AE0200736512 /* SysbsModel.m */; };
 		2BB8154C1830AE0200736512 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB815461830AE0200736512 /* User.m */; };
+		2BEC7C79186810100007972A /* NoticeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C78186810100007972A /* NoticeData.m */; };
+		2BEC7C7C186812170007972A /* AllNoticeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C7B186812170007972A /* AllNoticeData.m */; };
+		2BEC7C7F1868255D0007972A /* EvaluationDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C7E1868255D0007972A /* EvaluationDataModel.m */; };
 		590367B51841E1D000C4D1D0 /* schedule.png in Resources */ = {isa = PBXBuildFile; fileRef = 590367B31841E1D000C4D1D0 /* schedule.png */; };
 		590367B61841E1D000C4D1D0 /* schedule@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 590367B41841E1D000C4D1D0 /* schedule@2x.png */; };
 		591680C01839E8F300381CE4 /* setting_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 591680BF1839E8F300381CE4 /* setting_back.png */; };
@@ -353,6 +368,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B1654451862AFDC00985C54 /* EvaluatePage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EvaluatePage.xib; sourceTree = "<group>"; };
+		2B1654471862B1EB00985C54 /* EvaluationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvaluationData.h; sourceTree = "<group>"; };
+		2B1654481862B1EC00985C54 /* EvaluationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaluationData.m; sourceTree = "<group>"; };
+		2B16548A18631D4300985C54 /* HeroSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeroSelectView.h; sourceTree = "<group>"; };
+		2B16548B18631D4300985C54 /* HeroSelectVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeroSelectVIew.m; sourceTree = "<group>"; };
+		2B16548E186322B300985C54 /* scorebox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scorebox.png; sourceTree = "<group>"; };
+		2B16548F186322B300985C54 /* scorebox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scorebox@2x.png"; sourceTree = "<group>"; };
+		2B165490186322B300985C54 /* submit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = submit.png; sourceTree = "<group>"; };
+		2B165491186322B300985C54 /* submit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "submit@2x.png"; sourceTree = "<group>"; };
+		2B165492186322B300985C54 /* xiala.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiala.png; sourceTree = "<group>"; };
+		2B165493186322B300985C54 /* xiala@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiala@2x.png"; sourceTree = "<group>"; };
+		2B16549A186322C200985C54 /* table_bg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "table_bg@2x.jpg"; sourceTree = "<group>"; };
+		2B16549C1863234D00985C54 /* ScorePoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScorePoint.h; sourceTree = "<group>"; };
+		2B16549D1863234D00985C54 /* ScorePoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScorePoint.m; sourceTree = "<group>"; };
+		2B16549F186323B500985C54 /* EvaluateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvaluateCell.h; sourceTree = "<group>"; };
+		2B1654A0186323B500985C54 /* EvaluateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaluateCell.m; sourceTree = "<group>"; };
 		2B98B0F91839DAD900EBA2E0 /* SetUpView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetUpView.h; sourceTree = "<group>"; };
 		2B98B0FA1839DAD900EBA2E0 /* SetUpView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetUpView.m; sourceTree = "<group>"; };
 		2BB815381830AD7B00736512 /* Dao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dao.h; sourceTree = "<group>"; };
@@ -369,6 +400,12 @@
 		2BB815441830AE0200736512 /* SysbsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SysbsModel.m; sourceTree = "<group>"; };
 		2BB815451830AE0200736512 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		2BB815461830AE0200736512 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		2BEC7C77186810100007972A /* NoticeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeData.h; sourceTree = "<group>"; };
+		2BEC7C78186810100007972A /* NoticeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeData.m; sourceTree = "<group>"; };
+		2BEC7C7A186812170007972A /* AllNoticeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNoticeData.h; sourceTree = "<group>"; };
+		2BEC7C7B186812170007972A /* AllNoticeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNoticeData.m; sourceTree = "<group>"; };
+		2BEC7C7D1868255D0007972A /* EvaluationDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvaluationDataModel.h; sourceTree = "<group>"; };
+		2BEC7C7E1868255D0007972A /* EvaluationDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaluationDataModel.m; sourceTree = "<group>"; };
 		590367B31841E1D000C4D1D0 /* schedule.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = schedule.png; sourceTree = "<group>"; };
 		590367B41841E1D000C4D1D0 /* schedule@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "schedule@2x.png"; sourceTree = "<group>"; };
 		591680BF1839E8F300381CE4 /* setting_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_back.png; sourceTree = "<group>"; };
@@ -816,6 +853,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B16548D1863228F00985C54 /* Evalution */ = {
+			isa = PBXGroup;
+			children = (
+				2B16549A186322C200985C54 /* table_bg@2x.jpg */,
+				2B16548E186322B300985C54 /* scorebox.png */,
+				2B16548F186322B300985C54 /* scorebox@2x.png */,
+				2B165490186322B300985C54 /* submit.png */,
+				2B165491186322B300985C54 /* submit@2x.png */,
+				2B165492186322B300985C54 /* xiala.png */,
+				2B165493186322B300985C54 /* xiala@2x.png */,
+			);
+			name = Evalution;
+			sourceTree = "<group>";
+		};
 		2B98B0F81839DA8100EBA2E0 /* SetUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -848,6 +899,14 @@
 				2BB815461830AE0200736512 /* User.m */,
 				9C77E18A183F5729006737E5 /* DownloadModel.h */,
 				9C77E18B183F5729006737E5 /* DownloadModel.m */,
+				2B1654471862B1EB00985C54 /* EvaluationData.h */,
+				2B1654481862B1EC00985C54 /* EvaluationData.m */,
+				2BEC7C77186810100007972A /* NoticeData.h */,
+				2BEC7C78186810100007972A /* NoticeData.m */,
+				2BEC7C7A186812170007972A /* AllNoticeData.h */,
+				2BEC7C7B186812170007972A /* AllNoticeData.m */,
+				2BEC7C7D1868255D0007972A /* EvaluationDataModel.h */,
+				2BEC7C7E1868255D0007972A /* EvaluationDataModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -952,8 +1011,15 @@
 		599703041835FF2E00EB9DF6 /* Evaluate */ = {
 			isa = PBXGroup;
 			children = (
+				2B16548A18631D4300985C54 /* HeroSelectView.h */,
+				2B16548B18631D4300985C54 /* HeroSelectVIew.m */,
 				59D096D61836004D0097C6AC /* EvaluateController.h */,
 				59D096D71836004D0097C6AC /* EvaluateController.m */,
+				2B1654451862AFDC00985C54 /* EvaluatePage.xib */,
+				2B16549C1863234D00985C54 /* ScorePoint.h */,
+				2B16549D1863234D00985C54 /* ScorePoint.m */,
+				2B16549F186323B500985C54 /* EvaluateCell.h */,
+				2B1654A0186323B500985C54 /* EvaluateCell.m */,
 			);
 			name = Evaluate;
 			sourceTree = "<group>";
@@ -1377,6 +1443,7 @@
 		9CBD15BE181E4FEC00075BDF /* Resourse */ = {
 			isa = PBXGroup;
 			children = (
+				2B16548D1863228F00985C54 /* Evalution */,
 				9C6BAC9D1845DD87008B12A4 /* image01.png */,
 				9C6BAC9E1845DD87008B12A4 /* image01@2x.png */,
 				9C6BACA11845DE7C008B12A4 /* lixinchun.png */,
@@ -1699,6 +1766,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B165499186322B300985C54 /* xiala@2x.png in Resources */,
 				9C52AD75183F327D0017EB07 /* ppt_toolbox_red.png in Resources */,
 				9C52AE32183F39A70017EB07 /* pptsearch_cancle@2x.png in Resources */,
 				9C111B751841D017001E536A /* search@2x.png in Resources */,
@@ -1768,7 +1836,9 @@
 				9C52AD84183F32A30017EB07 /* bookmark_item_bg@2x.png in Resources */,
 				9C52ADDC183F33290017EB07 /* news center-study@2x.png in Resources */,
 				591E5D4A183F6913000B9824 /* schedule_pressed.png in Resources */,
+				2B165498186322B300985C54 /* xiala.png in Resources */,
 				9C52ADD0183F33290017EB07 /* news center-note@2x.png in Resources */,
+				2B165497186322B300985C54 /* submit@2x.png in Resources */,
 				9C52ADFE183F33BA0017EB07 /* setting_item_bg@2x.png in Resources */,
 				9C111BDB18423A21001E536A /* pack_up.png in Resources */,
 				9C52ADDB183F33290017EB07 /* news center-study.png in Resources */,
@@ -1787,6 +1857,7 @@
 				9C111B731841D017001E536A /* button_see_all@2x.png in Resources */,
 				9C52AE01183F33BA0017EB07 /* setting_nav_bar.png in Resources */,
 				9C52ADBF183F33290017EB07 /* news center-blank.png in Resources */,
+				2B16549B186322C200985C54 /* table_bg@2x.jpg in Resources */,
 				9C52AE0B183F33BA0017EB07 /* setting_text_field_big.png in Resources */,
 				9C52ADDD183F33290017EB07 /* news center-white line on the menu.png in Resources */,
 				9C52ADD3183F33290017EB07 /* news center-previous mail.png in Resources */,
@@ -1840,6 +1911,7 @@
 				9C111B9E18420F62001E536A /* ppt_toolbox_colorpicker_bg.png in Resources */,
 				9C0F8ADE1827636200FEFABA /* Reader-Mark-N.png in Resources */,
 				9C111B741841D017001E536A /* search.png in Resources */,
+				2B165494186322B300985C54 /* scorebox.png in Resources */,
 				9C52ADD4183F33290017EB07 /* news center-previous mail@2x.png in Resources */,
 				9C0F8ADE1827636200FEFABA /* Reader-Mark-N.png in Resources */,
 				9C0F8ADE1827636200FEFABA /* Reader-Mark-N.png in Resources */,
@@ -1855,6 +1927,7 @@
 				9C52AD76183F327D0017EB07 /* ppt_toolbox_red@2x.png in Resources */,
 				591E5D1C183F5EEC000B9824 /* course_couyrse.png in Resources */,
 				9C0F8ADC1827636200FEFABA /* Reader-Email.png in Resources */,
+				2B165495186322B300985C54 /* scorebox@2x.png in Resources */,
 				9C52AE0E183F33BA0017EB07 /* setting_text_field_dot@2x.png in Resources */,
 				9C52AD58183F327D0017EB07 /* ppt_toolbox_blue@2x.png in Resources */,
 				9C111B7C1842035C001E536A /* entry@2x.png in Resources */,
@@ -1880,8 +1953,10 @@
 				591E5D21183F5EEC000B9824 /* course_month@2x.png in Resources */,
 				590367B61841E1D000C4D1D0 /* schedule@2x.png in Resources */,
 				9C111BD918423A21001E536A /* entry.png in Resources */,
+				2B165496186322B300985C54 /* submit.png in Resources */,
 				9C111BA618420F62001E536A /* ppt_toolbox_pencil_active.png in Resources */,
 				591E5D49183F6913000B9824 /* ppt_pressed@2x.png in Resources */,
+				2B1654461862AFDC00985C54 /* EvaluatePage.xib in Resources */,
 				9C52AD3D183F327D0017EB07 /* ppt_indicator_bg.png in Resources */,
 				9C111BB11842197C001E536A /* ppt_toolbox_bg@2x.png in Resources */,
 				9C52ADFC183F33BA0017EB07 /* setting_button@2x.png in Resources */,
@@ -1971,10 +2046,14 @@
 				2BB8154A1830AE0200736512 /* RecommendBook.m in Sources */,
 				9C51BF8B182B80BF0071A1D1 /* MarkToolBar.m in Sources */,
 				9CBD1619181E695900075BDF /* ReaderConstants.m in Sources */,
+				2BEC7C7C186812170007972A /* AllNoticeData.m in Sources */,
 				9CB9908A183E00390082BAF5 /* SetupViewController.m in Sources */,
 				591E5D09183F43A4000B9824 /* NoticeTableView.m in Sources */,
+				2BEC7C79186810100007972A /* NoticeData.m in Sources */,
 				591E5D0D183F43B9000B9824 /* MenuCell.m in Sources */,
 				9C51E80B1844472B003F2130 /* MRWeakProxy.m in Sources */,
+				2BEC7C7F1868255D0007972A /* EvaluationDataModel.m in Sources */,
+				2B16549E1863234D00985C54 /* ScorePoint.m in Sources */,
 				9CBD163C181E699D00075BDF /* ASIAuthenticationDialog.m in Sources */,
 				2BB815481830AE0200736512 /* File.m in Sources */,
 				9CBD1622181E695900075BDF /* ThumbsMainToolbar.m in Sources */,
@@ -2022,6 +2101,8 @@
 				9CBD15FB181E692800075BDF /* ReaderThumbCache.m in Sources */,
 				9CBD1601181E692800075BDF /* UIXToolbarView.m in Sources */,
 				9C0F8AB618210C8A00FEFABA /* ASIHTTPRequest+category.m in Sources */,
+				2B16548C18631D4300985C54 /* HeroSelectVIew.m in Sources */,
+				2B1654A1186323B500985C54 /* EvaluateCell.m in Sources */,
 				9CBD15BD181E4E2D00075BDF /* WelcomeViewController.m in Sources */,
 				9CBD1656181E6C6800075BDF /* ASIDataDecompressor.m in Sources */,
 				9C51E7FD1844464A003F2130 /* MRBlurView.m in Sources */,
@@ -2037,6 +2118,7 @@
 				9C51E7FF1844464A003F2130 /* MRActivityIndicatorView.m in Sources */,
 				9CBD163D181E699D00075BDF /* ASIInputStream.m in Sources */,
 				59D096EB183600B00097C6AC /* RegisterContentController.m in Sources */,
+				2B1654491862B1EC00985C54 /* EvaluationData.m in Sources */,
 				2BB8154B1830AE0200736512 /* SysbsModel.m in Sources */,
 				9CBD15D8181E68CA00075BDF /* UIButton+associate.m in Sources */,
 				9C0203B918347CC400060D96 /* ReaderViewController.m in Sources */,

@@ -9,7 +9,9 @@
 #import "EvaluateController.h"
 #import "ScorePoint.h"
 
-@interface EvaluateController ()
+@interface EvaluateController (){
+    MRProgressOverlayView *overlayView;
+}
 
 @end
 
@@ -18,6 +20,7 @@
 @synthesize evaluateDataArray = _evaluateDataArray;
 @synthesize scoreArray = _scoreArray;
 @synthesize scrollView = _scrollView;
+@synthesize suggestTextView = _suggestTextView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -78,7 +81,9 @@
     [_scoreArray addObject:point9];
     [_scoreArray addObject:point10];
     
-
+    _suggestTextView.layer.borderColor = [UIColor grayColor].CGColor;
+    _suggestTextView.layer.borderWidth = 1.0f;
+    _suggestTextView.layer.cornerRadius = 5.0f;
 }
 
 - (void)didReceiveMemoryWarning

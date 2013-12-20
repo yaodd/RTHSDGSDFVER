@@ -14,6 +14,7 @@
 static SysbsModel* sharedModel = nil;
 
 @synthesize user,myCourse;
+@synthesize myMessage = _myMessage;
 
 +(SysbsModel*)getSysbsModel{
     if(sharedModel == nil){

@@ -147,10 +147,12 @@
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:accountTF.text forKey:ACCOUNT_KEY];
         [userDefaults setObject:passwordTF.text forKey:PASSWORD_KEY];
+        [userDefaults synchronize];
         NSLog(@"login success");
         
         [self performSelectorOnMainThread:@selector(jumpToMainPage) withObject:nil waitUntilDone:YES];
         SysbsModel *model = [SysbsModel getSysbsModel];
+        NSLog(@"login user id %d",model.user.uid);
         //[self jumpToMainPage];
     } else if (loginResult == 0){
         UIAlertView*alertView = [[UIAlertView alloc]initWithTitle:@"出错啦"

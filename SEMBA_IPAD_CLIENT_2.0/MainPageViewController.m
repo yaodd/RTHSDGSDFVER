@@ -192,6 +192,7 @@
         Course *course = [courseArray objectAtIndex:i];
         [dao requestForFileList:course.cid];
     }
+    NSLog(@"mycoursenum%d",[courseArray count]);
     [self performSelectorOnMainThread:@selector(initCourse) withObject:nil waitUntilDone:YES];
 //    [self performSelectorOnMainThread:@selector(downloadAll) withObject:nil waitUntilDone:YES];
     
@@ -213,6 +214,8 @@
 
 - (void)initCourse{
     int courseNumber = [courseArray count];
+    NSLog(@"initCourse%d",courseNumber);
+
     NSLog(@"courseNumber %d",courseNumber);
     int rowNum = (courseNumber % 4 == 0) ? (courseNumber / 4) : (courseNumber / 4 + 1);
     [self.scrollView setContentSize:CGSizeMake(1024, START_Y + MAIN_VIEW_HEIGHT + SPACE_OUT + rowNum * (COURSE_ITEM_LENGTH + SPACE_IN))];
@@ -341,7 +344,7 @@
     NSLog(@"dictInfo %@",dict);
     NSDictionary *userDict = [dict objectForKey:@"user"];
 //    User *user = sysbsModel.user;
-    User *user = [[User alloc]init];
+        User *user = [[User alloc]init];
 //    if (user.uid == 0) {
         user.username = [userDict objectForKey:@"userName"];
         user.uid = [(NSNumber *)[userDict objectForKey:@"uid"] intValue];
@@ -350,7 +353,7 @@
         user.headImg = [userDict objectForKey:@"headImg"];
 //    }
     sysbsModel.user = user;
-    NSLog(@"user %@ %d %@",sysbsModel.user.username,sysbsModel.user.uid,sysbsModel.user.company);
+    //NSLog(@"user %@ %d %@",sysbsModel.user.username,sysbsModel.user.uid,sysbsModel.user.company);
     NSDictionary *myCourseDict = [dict objectForKey:@"myCourse"];
     NSMutableArray *courseArrTemp = [myCourseDict objectForKey:@"courseArr"];
     NSMutableArray *courseArr = [[NSMutableArray alloc]init];
@@ -391,7 +394,7 @@
     MyCourse *myCourse = [[MyCourse alloc]init];
     [myCourse setCourses:courseArr];
     sysbsModel.myCourse = myCourse;
-    NSLog(@"getCatch %d %d %d",[courseArr count],[myCourse.courseArr count],[[sysbsModel.myCourse courseArr] count]);
+    //NSLog(@"getCatch %d %d %d",[courseArr count],[myCourse.courseArr count],[[sysbsModel.myCourse courseArr] count]);
 }
 
 

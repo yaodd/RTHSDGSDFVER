@@ -11,7 +11,8 @@
 @implementation Course
 
 @synthesize courseName,courseDescription,teacherName,fileArr,cid,recommendBook,timeArr;
-
+@synthesize startTime = _startTime;
+@synthesize endTime = _endTime;
 +(id)alloc{
     return [super alloc];
 }
@@ -24,6 +25,9 @@
         timeArr = [[NSMutableArray alloc] init];
         courseName = @"";
         courseDescription = @"";
+        _startTime = @"2013-01-01";
+        _endTime = @"2013-01-01";
+        _location = @"单恒堂M101";
         return self;
     }
     return nil;

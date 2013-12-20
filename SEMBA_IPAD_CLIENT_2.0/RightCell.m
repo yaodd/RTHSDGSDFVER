@@ -9,6 +9,7 @@
 #import "RightCell.h"
 
 @implementation RightCell
+
 @synthesize month;
 @synthesize monthBg;
 @synthesize name;
@@ -35,6 +36,7 @@
         [self addSubview:monthBg];
         
         contentBg = [[UIImageView alloc] initWithFrame:CGRectMake(103, 0, 426, 171)];
+        //背景图
         contentBg.image = [UIImage imageNamed:@"course_couyrse"];
         contentBg.backgroundColor = [UIColor clearColor];
         [self addSubview:contentBg];
@@ -43,33 +45,33 @@
         month.backgroundColor = [UIColor clearColor];
         month.font = [UIFont fontWithName:@"Heiti SC" size:30.0];
         month.textColor = [UIColor whiteColor];
-        month.text = @"aaa";
+        month.text = @"月份";
         month.textAlignment = NSTextAlignmentCenter;
         [self addSubview:month];
         
         name = [[UILabel alloc] initWithFrame:CGRectMake(40+103, 20, 200, 40)];
-        name.text = @"aaaa";
+        name.text = @"课程名称";
         name.backgroundColor = [UIColor clearColor];
         name.font = [UIFont fontWithName:@"Heiti SC" size:30];
         name.textColor = titleColor;
         [self addSubview:name];
         
         teacher = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x + name.frame.size.width, 35, 150, 20)];
-        teacher.text = @"bbbbbb";
+        teacher.text = @"教授名";
         teacher.backgroundColor = [UIColor clearColor];
         teacher.font = [UIFont fontWithName:@"Heiti SC" size:18];
         teacher.textColor = textColor;
         [self addSubview:teacher];
         
         date = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x, name.frame.origin.y + name.frame.size.height + 15, 300, 20)];
-        date.text = @"cccccccccc";
+        date.text = @"日期：";
         date.backgroundColor = [UIColor clearColor];
         date.font = [UIFont fontWithName:@"Heiti SC" size:18];
         date.textColor = textColor;
         [self addSubview:date];
         
         place = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x, date.frame.origin.y + date.frame.size.height + 15, 300, 20)];
-        place.text = @"dddddddd";
+        place.text = @"地点";
         place.backgroundColor = [UIColor clearColor];
         place.font = [UIFont fontWithName:@"Heiti SC" size:18];
         place.textColor = textColor;
@@ -78,7 +80,7 @@
         time = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x, place.frame.origin.y + place.frame.size.height + 15, 300, 20)];
         time.backgroundColor = [UIColor clearColor];
         time.font = [UIFont fontWithName:@"Heiti SC" size:18];
-        time.text = @"eeeeeeeeeee";
+        time.text = @"时间：";
         time.textColor = textColor;
         [self addSubview:time];
     

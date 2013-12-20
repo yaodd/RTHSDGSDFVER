@@ -10,6 +10,9 @@
 #import "RightCell.h"
 #import "LeftCell.h"
 #import "CellData.h"
+#include "SysbsModel.h"
+#include "MyCourse.h"
+#include "Course.h"
 
 #define kCellSize CGSizeMake(600, 171)
 #define kDistanceOfCells 135.0f
@@ -27,8 +30,8 @@
     int cellCount;
 }
 
-@synthesize scrollView;
-@synthesize dataArray;
+@synthesize scrollView = _scrollView;
+@synthesize dataArray = _dataArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,27 +62,30 @@
     
     cellCount = 10;
 
+    SysbsModel *model = [SysbsModel getSysbsModel];
+    _dataArray = [[model getCourses] getMyCourse];
+    cellCount = [_dataArray count];
     
-    dataArray = [[NSMutableArray alloc] init];
-    
-    for(int i = 0; i < cellCount; ++i){
-        CellData *data = [[CellData alloc] init];
-        [dataArray addObject:data];
-    }
-    
-    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0,
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0,
                                                                 self.view.frame.size.height,
                                                                 self.view.frame.size.width)];
-    [scrollView setBackgroundColor:[UIColor clearColor]];
-    [self.view addSubview:scrollView];
+    [_scrollView setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:_scrollView];
     
     originY = kOriginYofTopCell - kDistanceOfCells;
     for(int i = 0; i < cellCount; ++i){
         
         originY += kDistanceOfCells;
-        
+        Course *course = ((Course*)[_dataArray objectAtIndex:i]);
+        CellData* celldata = [[CellData alloc] init];
+        celldata.date = course.startTime;
+        celldata.name = course.courseName;
+        celldata.month = @"11月";
+        celldata.place = course.location;
+        celldata.time = @"时间： 9：00AM-12：00AM";
+        celldata.teacher = @"李非";
         //Add a label of year to view
-        if(0){
+        if(0){//目前永远不会执行。
             UILabel *year = [[UILabel alloc] initWithFrame:CGRectMake(410 , originY, kYearLabelSize.width, kYearLabelSize.height)];
             year.textColor = [UIColor colorWithRed:228/255.0 green:64/255.0 blue:91/255.0 alpha:1.0];
             year.font = [UIFont fontWithName:@"Heiti SC" size:30.0];
@@ -92,17 +98,21 @@
             
             RightCell *cell1 = [[RightCell alloc] initWithFrame:CGRectMake(kOriginXOfRightCells, originY, kCellSize.width, kCellSize.height)];
             [self.scrollView addSubview:cell1];
-            //[cell1 setData:[dataArray objectAtIndex:i]];
+            [cell1 setData:celldata];
             
         }else {
             
             LeftCell *cell2 = [[LeftCell alloc] initWithFrame:CGRectMake(26, originY, kCellSize.width, kCellSize.height)];
             [self.scrollView addSubview:cell2];
-            //[cell2 setData:[dataArray objectAtIndex:i]];
+            [cell2 setData:celldata];
         }
     }
     
-    [scrollView setContentSize:CGSizeMake(scrollView.frame.size.width, (cellCount + 1) * kDistanceOfCells + kOriginYofTopCell)];
+    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, (cellCount + 1) * kDistanceOfCells + kOriginYofTopCell)];
+    
+    
+    
+    //NSLog(@"dataArray count %d ",[array count]);
     
 }
 

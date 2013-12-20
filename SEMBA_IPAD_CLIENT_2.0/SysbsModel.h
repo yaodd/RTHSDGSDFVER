@@ -12,6 +12,7 @@
 #import "File.h"
 #import "RecommendBook.h"
 #import "MyCourse.h"
+#import "AllNoticeData.h"
 
 @class SysbsModel;
 
@@ -19,11 +20,12 @@
 
 @property (nonatomic,strong)User *user;
 @property (nonatomic,strong)MyCourse *myCourse;
+@property (nonatomic,strong)AllNoticeData *myMessage;
 
 +(SysbsModel*)getSysbsModel;
 -(User*)getUser;
 -(void)setUser:(User*)tempUser;
--(MyCourse*)getMyCourse;
+-(MyCourse*)getCourses;
 -(void)setCourses:(MyCourse*)tempMyCourse;
 
 @end
