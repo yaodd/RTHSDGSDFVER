@@ -346,13 +346,13 @@
 //    User *user = sysbsModel.user;
         User *user = [[User alloc]init];
 //    if (user.uid == 0) {
-        user.username = [userDict objectForKey:@"userName"];
+       /* user.username = [userDict objectForKey:@"userName"];
         user.uid = [(NSNumber *)[userDict objectForKey:@"uid"] intValue];
         user.company = [userDict objectForKey:@"company"];
         user.rank = [userDict objectForKey:@"rank"];
         user.headImg = [userDict objectForKey:@"headImg"];
 //    }
-    sysbsModel.user = user;
+    sysbsModel.user = user;*/
     //NSLog(@"user %@ %d %@",sysbsModel.user.username,sysbsModel.user.uid,sysbsModel.user.company);
     NSDictionary *myCourseDict = [dict objectForKey:@"myCourse"];
     NSMutableArray *courseArrTemp = [myCourseDict objectForKey:@"courseArr"];

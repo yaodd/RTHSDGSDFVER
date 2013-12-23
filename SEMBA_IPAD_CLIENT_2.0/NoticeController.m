@@ -77,7 +77,9 @@
     [self.view addSubview:searchBar];
     
     //[self setData];
-    [self performSelector:@selector(setData) withObject:nil afterDelay:0  ];
+    NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(setData) object:nil];
+    //[self performSelector:@selector(setData) withObject:nil afterDelay:0  ];
+    [thread start];
 }
 
 //Set the data of server to tableView
@@ -125,7 +127,8 @@
     }else {
     
     }
-    [self performSelector:@selector(endLoading) withObject:nil afterDelay:0];
+    [self endLoading];
+    NSLog(@"endLoadingpre");
     /*
     NSMutableArray *title = [[NSMutableArray alloc] initWithObjects:@"通知1", @"通知2", @"通知3", @"通知4", @"通知5", @"通知1", @"通知2", @"通知3", @"通知4", @"通知5", nil];
     
@@ -155,6 +158,7 @@
 }
 
 -(void)endLoading{
+    NSLog(@"endloading");
     [overlayView dismiss:YES];
 }
 

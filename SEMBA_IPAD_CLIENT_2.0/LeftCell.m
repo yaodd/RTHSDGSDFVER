@@ -50,7 +50,7 @@
         name = [[UILabel alloc] initWithFrame:CGRectMake(40, 20, 200, 40)];
         name.text = @"课程名称：";
         name.backgroundColor = [UIColor clearColor];
-        name.font = [UIFont fontWithName:@"Heiti SC" size:30];
+        name.font = [UIFont fontWithName:@"Heiti SC" size:20];
         name.textColor = titleColor;
         [self addSubview:name];
         

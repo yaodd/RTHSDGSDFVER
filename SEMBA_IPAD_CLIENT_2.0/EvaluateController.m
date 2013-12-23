@@ -8,6 +8,8 @@
 
 #import "EvaluateController.h"
 #import "ScorePoint.h"
+#import "Dao.h"
+#import "SysbsModel.h"
 
 @interface EvaluateController (){
     MRProgressOverlayView *overlayView;
@@ -84,12 +86,49 @@
     _suggestTextView.layer.borderColor = [UIColor grayColor].CGColor;
     _suggestTextView.layer.borderWidth = 1.0f;
     _suggestTextView.layer.cornerRadius = 5.0f;
+    NSThread *thread =[[NSThread alloc]initWithTarget:self selector:@selector(setData) object:nil];
+    [thread start];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)setData{
+    Dao *dao = [Dao sharedDao];
+    
+    SysbsModel *model = [SysbsModel getSysbsModel];
+    overlayView = [[MRProgressOverlayView alloc]init];
+    overlayView.mode = MRProgressOverlayViewModeIndeterminate;
+    [self.view addSubview:overlayView];
+    [overlayView show:YES];
+
+    int ret = [dao requestForEvaluationList:model.user.uid];
+    if ( ret == 1){
+        NSMutableArray *arr = [[NSMutableArray alloc]init];
+        NSArray *data = model.EvaluationList;
+        int l = [data count];
+        for ( int i = 0 ; i < l ; ++ i){
+            EvaluationDataModel *onedata = (EvaluationDataModel *)[data objectAtIndex:i];
+            NSString *oneString = [NSString stringWithFormat:@"%@  %@",onedata.courseName,onedata.teacherName];
+            [arr  addObject:oneString];
+        }
+        [_selectView setDataArray:arr];
+    }else if( ret == 0 ){
+    
+    }else if( ret == -1 ){
+        
+    }
+    NSLog(@"evadismiss");
+    [self Dismiss];
+
+    //_selectView setDataArray:;
+}
+
+-(void)Dismiss{
+    [overlayView dismiss:YES];
 }
 
 

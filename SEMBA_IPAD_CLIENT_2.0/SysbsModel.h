@@ -13,6 +13,7 @@
 #import "RecommendBook.h"
 #import "MyCourse.h"
 #import "AllNoticeData.h"
+#import "EvaluationDataModel.h"
 
 @class SysbsModel;
 
@@ -21,6 +22,7 @@
 @property (nonatomic,strong)User *user;
 @property (nonatomic,strong)MyCourse *myCourse;
 @property (nonatomic,strong)AllNoticeData *myMessage;
+@property (nonatomic,strong)NSMutableArray *EvaluationList;
 
 +(SysbsModel*)getSysbsModel;
 -(User*)getUser;

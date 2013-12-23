@@ -78,12 +78,25 @@
         originY += kDistanceOfCells;
         Course *course = ((Course*)[_dataArray objectAtIndex:i]);
         CellData* celldata = [[CellData alloc] init];
-        celldata.date = course.startTime;
+        NSString *startDate = [course.startTime substringWithRange:NSMakeRange(0, 10)];
+        NSString *endDate = [course.endTime substringWithRange:NSMakeRange(0, 10)];
+        celldata.date =
+        //@"123";
+        [NSString stringWithFormat:@"日期:%@——%@",startDate,endDate];
+        //course.startTime;
         celldata.name = course.courseName;
-        celldata.month = @"11月";
-        celldata.place = course.location;
-        celldata.time = @"时间： 9：00AM-12：00AM";
-        celldata.teacher = @"李非";
+        NSRange range = NSMakeRange(5, 2);
+        NSString *month = [course.startTime substringWithRange:range];
+        celldata.month =
+        [NSString stringWithFormat:@"%@月",month];
+        //@"11月";
+        celldata.place =
+        //@"";
+        //@"地点";//
+        course.location;
+        celldata.time = @"时间 9:00AM-12:00AM 2:00-5:00PM";
+        celldata.teacher = @"";
+        //course.teacherName;
         //Add a label of year to view
         if(0){//目前永远不会执行。
             UILabel *year = [[UILabel alloc] initWithFrame:CGRectMake(410 , originY, kYearLabelSize.width, kYearLabelSize.height)];

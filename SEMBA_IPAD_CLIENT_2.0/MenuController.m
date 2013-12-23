@@ -14,6 +14,8 @@
 #import "NoticeController.h"
 #import "RegisterController.h"
 #import "RegisterContentController.h"
+#import "Dao.h"
+#import "SysbsModel.h"
 
 #define menuWidth 238
 
@@ -338,7 +340,7 @@
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
             cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
         }else {
-            
+
             cell.icon.image = [UIImage imageNamed:@"news center-pen"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
             cell.title.textColor = [UIColor whiteColor];
@@ -452,7 +454,10 @@
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
         controller.title = [titleArray objectAtIndex:indexPath.row];
         [hostController setRootController:navController animated:YES];
-        
+        Dao *dao = [Dao sharedDao];
+        SysbsModel *model = [SysbsModel getSysbsModel];
+        int ret = [dao requestForEvaluationList:model.user.uid];
+        NSLog(@"requestEVA");
         if(noticeController.view.isHidden == NO){
             noticeController.view.alpha = 0.0;
             [noticeController.view setHidden:YES];

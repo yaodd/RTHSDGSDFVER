@@ -379,14 +379,22 @@ filename:(NSString*)filename{
             one.cid = [(NSNumber*)[onedict objectForKey:@"courseid"] integerValue];
             one.courseName = [onedict objectForKey:@"coursename"];
             one.courseDescription = [onedict objectForKey:@"coursedescrition"];
-            one.teacherName = [onedict objectForKey:@"teacher"];
+            one.location = [onedict objectForKey:@"location"];
+            if([one.location  isEqual: @""]){
+                NSLog(@"LOCATIONNULL");
+                one.location = @"慎思园";
+            }else{
+                NSLog(@"LOCATIONNOTNULL%@",one.location);
+            }
+            one.startTime = [onedict objectForKey:@"startdate"];
+            one.endTime = [onedict objectForKey:@"enddate"];
             [allMyCourse addObject:one];
         }
         MyCourse *myCourse = [[MyCourse alloc] init];
         [myCourse setCourses:allMyCourse];
         SysbsModel *model = [SysbsModel getSysbsModel];
         [model setCourses:myCourse];
-        NSLog(@"daoallmycourse %d",[allMyCourse count]);
+        //NSLog(@"daoallmycourse %d",[allMyCourse count]);
         //获取课程数据
     }else{
         
@@ -480,7 +488,7 @@ filename:(NSString*)filename{
         }
         [allNotice setMessages:dataArray];
         model.myMessage = allNotice;
-        NSLog(@"%dnotice",l);
+    
     }else if( ret == 0 ){
     
     }else if( ret == -1){
@@ -489,9 +497,12 @@ filename:(NSString*)filename{
     return ret;
 }
 
--(int)requestForUpEvaluation:(NSDictionary *)dict{
+-(int)requestForUpEvaluation:(int)uid{
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,upEvaluationUrl];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    [dict setObject:[NSNumber numberWithInt:uid] forKey:@"uid"];
+
     NSDictionary *rs = [self request:urlString dict:dict];
     
     int isSuccess = [(NSNumber *) [rs objectForKey:@"isSuccess"] integerValue];
@@ -504,23 +515,44 @@ filename:(NSString*)filename{
     
 }
 
--(NSMutableArray*)requestForEvaluationList:(int)uid{
+-(int)requestForEvaluationList:(int)uid{
+   
+    int ret = -1;
     NSMutableArray *arr = [[NSMutableArray alloc] init];
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    
     [dict setObject:[NSNumber numberWithInt:uid] forKey:@"uid"];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,
                            fetchEvaluationUrl ];
-    NSDictionary *ret = [self request:urlString dict:dict ];
-    int isSuccess = [ (NSNumber *)[ret objectForKey:@"isSuccess"] integerValue];
-    if(isSuccess > 0 ){
-        NSMutableArray *retArr = [ret objectForKey:@"data"];
-        //        int l = [retArr count];
-        //        for (int i = 0; i < l ; ++i) {
-        //            //NSDictionary
-        //        }
-        return retArr;
+    NSDictionary *rs = [self request:urlString dict:dict ];
+    ret = [ (NSNumber *)[rs objectForKey:@"isSuccess"] integerValue];
+    if ( ret == 1 ){
+        
+        SysbsModel *model = [SysbsModel getSysbsModel];
+        NSMutableArray *arr = [[NSMutableArray alloc]init];
+        NSMutableArray *data = [[NSMutableArray alloc] init];
+        
+        NSArray *dataArr = [rs objectForKey:@"data"];
+        int l = [dataArr count];
+        for(int i = 0 ; i < l ; ++ i ){
+            EvaluationDataModel *singledata = [[EvaluationDataModel alloc]init];
+            NSDictionary *onedict = [dataArr objectAtIndex:i];
+            singledata.teacherName = (NSString*)[onedict objectForKey:@"username"];
+            singledata.courseName = (NSString*)[onedict objectForKey:@"coursename"];
+            singledata.tid = [ (NSNumber *)[onedict objectForKey:@"tid"] integerValue];
+            singledata.cid = [ (NSNumber *) [onedict objectForKey:@"cid"] integerValue];
+            singledata.eid = [ (NSNumber *)[onedict objectForKey:@"eid"] integerValue];
+            [arr addObject:singledata];
+        }
+        model.EvaluationList = arr;
+        
+    
+    }else if( ret == 0 ){
+    
+    }else if( ret == -1){
+    
     }
-    return nil;
+    return ret;
 }
 
 

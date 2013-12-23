@@ -28,6 +28,7 @@
         _startTime = @"2013-01-01";
         _endTime = @"2013-01-01";
         _location = @"单恒堂M101";
+        teacherName = @"";
         return self;
     }
     return nil;

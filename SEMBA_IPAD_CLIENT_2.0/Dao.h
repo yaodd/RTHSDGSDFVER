@@ -141,7 +141,7 @@
  * -1  代表服务器出错
  **/
 
--(int)requestForUpEvaluation:(NSDictionary*)dict;
+-(int)requestForUpEvaluation:(int)uid;
 /** 获取评教列表
  *返回
  * 1   代表成功获取 通过getModel可获取
