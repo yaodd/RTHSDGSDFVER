@@ -63,6 +63,7 @@
             UIImage *image = [self getImageFromPDF:document.fileURL :1];
             CGSize size = image.size;
             pageAngle %= 360;
+            //判断长宽比
             if (pageAngle == 90 || pageAngle == 270) {
                 size.height = image.size.width;
                 size.width = image.size.height;
@@ -90,7 +91,7 @@
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]];
-
+    
     isEdit = NO;
     self.edgesForExtendedLayout = UIRectEdgeTop;
     self.extendedLayoutIncludesOpaqueBars = NO;

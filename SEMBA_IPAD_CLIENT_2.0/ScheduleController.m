@@ -90,10 +90,10 @@
         celldata.month =
         [NSString stringWithFormat:@"%@月",month];
         //@"11月";
-        celldata.place =
+        celldata.place = [NSString stringWithFormat:@"地点:%@",course.location];
         //@"";
         //@"地点";//
-        course.location;
+        //course.location;
         celldata.time = @"时间 9:00AM-12:00AM 2:00-5:00PM";
         celldata.teacher = @"";
         //course.teacherName;

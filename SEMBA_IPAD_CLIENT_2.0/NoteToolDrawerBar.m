@@ -156,6 +156,7 @@
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer{
+    NSLog(@"drawtoolhandlepan");
     CGPoint translation = [recognizer translationInView:parentView];
     if (self.center.x + translation.x < closePoint.x) {
         self.center = closePoint;

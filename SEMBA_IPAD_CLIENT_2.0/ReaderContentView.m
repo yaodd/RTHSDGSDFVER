@@ -248,7 +248,7 @@ static inline CGFloat ZoomScaleThatFits(CGSize target, CGSize source)
 - (void)zoomIncrement
 {
 	CGFloat zoomScale = self.zoomScale;
-    NSLog(@"%f",zoomScale);
+    //NSLog(@"%f",zoomScale);
 	if (zoomScale < self.maximumZoomScale)
 	{
 		zoomScale += zoomAmount; // += value
@@ -265,7 +265,7 @@ static inline CGFloat ZoomScaleThatFits(CGSize target, CGSize source)
 - (void)zoomDecrement
 {
 	CGFloat zoomScale = self.zoomScale;
-    NSLog(@"%f",zoomScale);
+    //NSLog(@"%f",zoomScale);
 	if (zoomScale > self.minimumZoomScale)
 	{
 		zoomScale -= zoomAmount; // -= value
@@ -303,22 +303,26 @@ static inline CGFloat ZoomScaleThatFits(CGSize target, CGSize source)
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[super touchesBegan:touches withEvent:event]; // Message superclass
-
+    NSLog(@"reader begin");
 	[message contentView:self touchesBegan:touches]; // Message delegate
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    NSLog(@"reader cancel");
 	[super touchesCancelled:touches withEvent:event]; // Message superclass
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    NSLog(@"reader end");
+
 	[super touchesEnded:touches withEvent:event]; // Message superclass
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    NSLog(@"reader move");
 	[super touchesMoved:touches withEvent:event]; // Message superclass
 }
 

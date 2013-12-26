@@ -60,7 +60,7 @@
 //@synthesize redoImageArr;
 @synthesize testImage;
 @synthesize thread;
-
+//thread 是废了么妈蛋==。。
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -263,11 +263,11 @@
         [self.delegate drawingView:self willBeginDrawUsingTool:self.currentTool];
     }
     [self.delegate intoDrawState:self];
-    
+    /*
     if (!self.thread.isCancelled && !firstTouch) {
         [self.thread cancel];
-        NSLog(@"cancel");
-    }
+        NSLog(@"cancel thread");
+    }*/
     firstTouch = NO;
 }
 
@@ -279,6 +279,8 @@
     previousPoint2 = previousPoint1;
     previousPoint1 = [touch previousLocationInView:self];
     currentPoint = [touch locationInView:self];
+    
+    NSLog(@"DRAWMOVE");
     
     if ([self.currentTool isKindOfClass:[ACEDrawingPenTool class]]) {
         CGRect bounds = [(ACEDrawingPenTool*)self.currentTool addPathPreviousPreviousPoint:previousPoint2 withPreviousPoint:previousPoint1 withCurrentPoint:currentPoint];
@@ -302,6 +304,7 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    NSLog(@"END曼丹。");
     // make sure a point is recorded
     [self touchesMoved:touches withEvent:event];
     
@@ -324,13 +327,16 @@
 //    }
 //    thread = [[NSThread alloc]initWithTarget:self selector:@selector(waiting:) object:nil];
 //    [thread start];
-    NSLog(@"start");
+    //firstTouch = YES;
 }
 
+//目测就是因为无端端调用了这个函数
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    NSLog(@"cancel drawer");
     // make sure a point is recorded
-    [self touchesEnded:touches withEvent:event];
+    NSLog(@"%@",event);
+    [self touchesEnded:touches withEvent:event];//调用触摸结束
     [self.delegate cancelDrawState:self];
 }
 

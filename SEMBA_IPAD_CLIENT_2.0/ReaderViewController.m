@@ -63,39 +63,43 @@
 
 @implementation ReaderViewController
 {
-	ReaderDocument *document;
-
+	//pdf文件
+    ReaderDocument *document;
+    //课件页的容器
 	UIScrollView *theScrollView;
-
+    //上面工具栏
 	ReaderMainToolbar *mainToolbar;
-
+    //下面工具栏
 	ReaderMainPagebar *mainPagebar;
-    
+    //左边笔记的工具栏
     NoteToolbar *noteToolbar;
     
     NoteToolDrawerBar *noteToolDrawerBar;
-
+    //当前在scrollview上的内容view
 	NSMutableDictionary *contentViews;
-
+    //跟打印有关的
 	UIPrintInteractionController *printInteraction;
-
+    
 	NSInteger currentPage;
-
+    //保存出现大小
 	CGSize lastAppearSize;
-
+    //上次隐藏的时间
 	NSDate *lastHideTime;
-
+    //是否可见
 	BOOL isVisible;
-    
+    //笔记的image？
     UIImage *noteImage;
-    
+    //跟书签有关
     UIView *markEditView;
-    
+    //跟书签有关
     UITextField *markField;
-    
+    //出现的view的 tag
     int appearViewTag;
+    //当前笔颜色
     UIColor *curPenColor;
+    //宽度
     CGFloat curPenWidth;
+    //透明度
     CGFloat curPenAlpha;
     BOOL isFirstVisit;
 }
@@ -128,10 +132,12 @@
 @synthesize noteButton;
 #pragma mark Support methods
 
+//根据页数来更新scrollView的大小
 - (void)updateScrollViewContentSize
 {
+    //总页数
 	NSInteger count = [document.pageCount integerValue];
-
+    //限制整个scrollview大小等于其缓存页数的大小。
 	if (count > PAGING_VIEWS) count = PAGING_VIEWS; // Limit
 
 	CGFloat contentHeight = theScrollView.bounds.size.height;
@@ -141,12 +147,13 @@
 	theScrollView.contentSize = CGSizeMake(contentWidth, contentHeight);
 }
 
+//更新整个scrollview的内容（直观视觉上更新呈现在屏幕上的内容）
 - (void)updateScrollViewContentViews
 {
 	[self updateScrollViewContentSize]; // Update the content size
 
 	NSMutableIndexSet *pageSet = [NSMutableIndexSet indexSet]; // Page set
-
+    
 	[contentViews enumerateKeysAndObjectsUsingBlock: // Enumerate content views
 		^(id key, id object, BOOL *stop)
 		{
@@ -168,6 +175,8 @@
 			contentView.frame = viewRect; if (page == number) contentOffset = viewRect.origin;
 
 			viewRect.origin.x += viewRect.size.width; // Next view frame position
+            //迭代更新viewRect
+            //并通过page 和 number的判断来决定最终的contentOffset
 		}
 	];
 
@@ -177,6 +186,7 @@
 	}
 }
 
+//更新是否是书签页的标记
 - (void)updateToolbarBookmarkIcon
 {
 	NSInteger page = [document.pageNumber integerValue];
@@ -186,18 +196,19 @@
 	[mainToolbar setBookmarkState:bookmarked]; // Update
 }
 
+//展示当前页
 - (void)showDocumentPage:(NSInteger)page
 {
-	if (page != currentPage) // Only if different
+	if (page != currentPage) // Only if different will this function effect or change sth
 	{
-        if (drawingView != nil) {
+        if (drawingView != nil) {//remove the drawing view from screen if it isn't nil
             [drawingView removeFromSuperview];
             drawingView = nil;
         }
-        if (noteImage != nil) {
+        if (noteImage != nil) {//
             noteImage = nil;
         }
-        if (drawNewView != nil) {
+        if (drawNewView != nil) {//
             [drawNewView removeFromSuperview];
             drawNewView = nil;
         }
@@ -207,10 +218,10 @@
 		NSInteger maxPage = [document.pageCount integerValue];
 		NSInteger minPage = 1;
 
-		if ((page < minPage) || (page > maxPage)) return;
+		if ((page < minPage) || (page > maxPage)) return;//to judge will the page is out of the range.Prevent the client invoke the function by mistake
 
 		if (maxPage <= PAGING_VIEWS) // Few pages
-		{
+		{//跟缓存有关
 			minValue = minPage;
 			maxValue = maxPage;
 		}
@@ -218,26 +229,26 @@
 		{
 			minValue = (page - 1);
 			maxValue = (page + 1);
-
+            //判断是否越界
 			if (minValue < minPage)
 				{minValue++; maxValue++;}
 			else
 				if (maxValue > maxPage)
 					{minValue--; maxValue--;}
 		}
-
+        
 		NSMutableIndexSet *newPageSet = [NSMutableIndexSet new];
-
+        //拷贝一个contentview 给unusedview？
 		NSMutableDictionary *unusedViews = [contentViews mutableCopy];
-
+        
 		CGRect viewRect = CGRectZero; viewRect.size = theScrollView.bounds.size;
-
+        //对minvalue到maxvalue内view进行迭代
 		for (NSInteger number = minValue; number <= maxValue; number++)
 		{
 			NSNumber *key = [NSNumber numberWithInteger:number]; // # key
 
 			ReaderContentView *contentView = [contentViews objectForKey:key];
-            
+            //需要的时候才将document文件加载进内存。
 			if (contentView == nil) // Create a brand new document content view
 			{
 				NSURL *fileURL = document.fileURL; NSString *phrase = document.password; // Document properties
@@ -257,24 +268,26 @@
 			}
 			else // Reposition the existing content view
 			{
-				contentView.frame = viewRect; [contentView zoomReset];
-
+				contentView.frame = viewRect;
+                //?
+                [contentView zoomReset];
+                //确保unusedview是没用到的。
 				[unusedViews removeObjectForKey:key];
 			}
             viewRect.origin.x += viewRect.size.width;
             //初始化以宽为边界
+            // 创建一个 更小的 rectangle
             CGRect targetRect = CGRectInset(contentView.bounds, 4.0, 4.0);
-            
+            //计算两者的scale比
             float scale = targetRect.size.width / contentView.theContainerView.bounds.size.width;
             [contentView setZoomScale:scale];
-//            NSLog(@"scale %f",scale);
 //            [theScrollView setContentOffset:CGPointZero];
             [contentView setContentOffset:CGPointZero];
 //            CGPoint point = CGPointZero;
 //            point.y += 10.0;
 //            [contentView setContentOffset:point];
 
-			
+			//完成迭代
 		}
 
 		[unusedViews enumerateKeysAndObjectsUsingBlock: // Remove unused views
@@ -283,29 +296,30 @@
 				[contentViews removeObjectForKey:key];
 
 				ReaderContentView *contentView = object;
-
+                
 				[contentView removeFromSuperview];
 			}
 		];
-
+        //
 		unusedViews = nil; // Release unused views
-
+        
 		CGFloat viewWidthX1 = viewRect.size.width;
-		CGFloat viewWidthX2 = (viewWidthX1 * 2.0f);
+		CGFloat viewWidthX2 = (viewWidthX1 * 2.0f);//这个2.0应该是根据缓存页数来的？应该改成PAGING_VIEW - 1 比较好吧？
 
 		CGPoint contentOffset = CGPointZero;
-
+        //处理缓存页数的一些问题。
+        //如果文件页数超过缓存页数
 		if (maxPage >= PAGING_VIEWS)
 		{
 			if (page == maxPage)
-				contentOffset.x = viewWidthX2;
+				contentOffset.x = viewWidthX2; //当前页是最后一页时，
 			else
 				if (page != minPage)
-					contentOffset.x = viewWidthX1;
+					contentOffset.x = viewWidthX1;//当前页不是第一页时，contentoffset为中间那一页的contentoffse。估计也是改一下比较好//PAGEING_VIEWS / 2 * screensize.x
 		}
 		else
 			if (page == (PAGING_VIEWS - 1))
-				contentOffset.x = viewWidthX1;
+				contentOffset.x = viewWidthX1;//如果总页数小于缓存页就设置offset为最后一页
 
 		if (CGPointEqualToPoint(theScrollView.contentOffset, contentOffset) == false)
 		{
@@ -314,9 +328,10 @@
 
 		if ([document.pageNumber integerValue] != page) // Only if different
 		{
+            //更改当前页
 			document.pageNumber = [NSNumber numberWithInteger:page]; // Update page number
 		}
-
+        
 		NSURL *fileURL = document.fileURL; NSString *phrase = document.password; NSString *guid = document.guid;
 
 		if ([newPageSet containsIndex:page] == YES) // Preview visible page first
@@ -324,12 +339,12 @@
 			NSNumber *key = [NSNumber numberWithInteger:page]; // # key
 
 			ReaderContentView *targetView = [contentViews objectForKey:key];
-
+            //获取那一页的view 之前已经预读了缓存
 			[targetView showPageThumb:fileURL page:page password:phrase guid:guid];
-
+            //删除？
 			[newPageSet removeIndex:page]; // Remove visible page from set
 		}
-
+        //上面和下面的代码写的怪怪的。应该是保护机制吧。感觉上面的那段可以删掉。。
 		[newPageSet enumerateIndexesWithOptions:NSEnumerationReverse usingBlock: // Show previews
 			^(NSUInteger number, BOOL *stop)
 			{
@@ -356,11 +371,12 @@
 //        }
         if (noteButton.selected) {
             [self startDraw];
-        }
+        }//是否开始笔记。
 	}
 }
 
 - (void)addDrawView:(ReaderContentView *)readerContentView{
+    //
     if (drawNewView != nil) {
         [drawNewView removeFromSuperview];
         drawNewView = nil;
@@ -369,18 +385,18 @@
         return;
     }
     
-//    NSLog(@"pagenumber %d offset %f",[document.pageNumber intValue],theScrollView.contentOffset.x);
+
+    //笔记的plist文件。
     NSString *fileName = [NSString stringWithFormat:@"%d%@",[document.pageNumber intValue], @".plist"];
     NSString *filePath=[[NSString alloc]initWithString:[self.notePath stringByAppendingPathComponent:fileName]];
 
-    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filePath];//根据文件取内容。
     
     
-    if (dict != nil) {
+    if (dict != nil) {//不为空就取里面的NSData
         NSData *imageData = [[NSData alloc]initWithData:[dict objectForKey:@"imageData"]];
         noteImage = [UIImage imageWithData:imageData scale:[[UIScreen mainScreen] scale]];
-        
-    }
+    }//空了怎么办==不return?
     
     CGRect rect = readerContentView.theContainerView.bounds;
 //    CGRect rect2 = readerContentView.bounds;
@@ -396,38 +412,34 @@
 
 //开始画
 - (void)startDraw{
+    //开始画让scrollview不能滚动
     [theScrollView setScrollEnabled:NO];
-
+    //让新画的东西能够画
     [drawNewView setUserInteractionEnabled:YES];
     int page = [document.pageNumber intValue];
     
     NSNumber *key = [NSNumber numberWithInteger:page]; // # key
+    //当前这页的view。。奇怪的变量名。。
     ReaderContentView *newContentView = [contentViews objectForKey:key];
     newContentView.isNote = YES;
+    //isnote奇怪的耦合==
     //    [newContentView setUserInteractionEnabled:NO];
     CGRect rect = newContentView.theContainerView.frame;
     CGRect rect2 = newContentView.bounds;
     
-//    NSLog(@"frame %f %f %f %f",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
-//    CGPoint point = theScrollView.bounds.origin;
-//    CGSize size = theScrollView.bounds.size;
-    
-//    NSLog(@"theScrollView frame %f %f %f %f",point.x,point.y,size.width,size.height);
 
     CGSize beforeSize;
     if (drawingView != nil) {
-        
+        //获取原来的size
         beforeSize = drawingView.image.size;
-//        NSLog(@"remove %f %f",beforeSize.width,beforeSize.height);
-        //        NSLog(@"remove %f %f",beforeSize.width,beforeSize.height);
-
-//        NSLog(@"remove %f %f",beforeSize.width,beforeSize.height);
         [drawingView removeFromSuperview];
+        //开始画移除掉加载的drawingview？
         drawingView = nil;
     }
     else
         beforeSize = CGSizeZero;
     if (drawNewView != nil) {
+        //目前不知道是干啥的。。
         drawNewView.drawTool = currentToolType;
         return;
     }
@@ -436,18 +448,14 @@
 //    drawNewView = [[ACEDrawingView alloc]initWithFrame:CGRectMake(theScrollView.contentOffset.x + rect.origin.x + 4.0f, rect.origin.y + 4.0f, rect.size.width, rect.size.height) :noteImage];
     CGSize nowSize =rect.size;
     CGFloat scale = 1;
-    if (beforeSize.width != CGSizeZero.width) {
+    if (beforeSize.width != CGSizeZero.width) {//预防等于0吧。
         scale = nowSize.width / beforeSize.width;
     }
 
-//    NSLog(@"scale %f %f %f",scale,nowSize.width,beforeSize.width);
-//    NSLog(@"now scale %f maxScale %f",newContentView.zoomScale,newContentView.maximumZoomScale);
-//    NSLog(@"scale %f %f %f",scale,nowSize.width,beforeSize.width);
-//    NSLog(@"now scale %f maxScale %f",newContentView.zoomScale,newContentView.maximumZoomScale);
-//    NSLog(@"scale %f %f %f",scale,nowSize.width,beforeSize.width);
-//    NSLog(@"now scale %f maxScale %f",newContentView.zoomScale,newContentView.maximumZoomScale);
 
+    //对image进行缩放？
     UIImage *scaleImage = [self scaleImage:noteImage toScale:scale];
+    //这个公式瞬间没有了可读性==。。妈蛋。
     drawNewView = [[ACEDrawingView alloc]initWithFrame:CGRectMake(theScrollView.contentOffset.x + rect.origin.x + 4.0f - rect2.origin.x - 4.0f, rect.origin.y + 4.0f - rect2.origin.y - 4.0f, rect.size.width, rect.size.height) :scaleImage];
     
     drawNewView.delegate = self;
@@ -456,17 +464,16 @@
     drawNewView.lineWidth = curPenWidth;
     drawNewView.lineColor = curPenColor;
     drawNewView.lineAlpha = curPenAlpha;
-//    NSLog(@"newwwwwwwwwww");
+
     drawNewView.drawTool = currentToolType;
     [theScrollView addSubview:drawNewView];
     
-
 }
 
 - (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
 
 {
-    
+    //draw image高效还是imageview高效呢？iOS初学者我不太了解
     UIGraphicsBeginImageContext(CGSizeMake(image.size.width * scaleSize, image.size.height * scaleSize));
     [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height * scaleSize)];
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -481,6 +488,7 @@
     NSNumber *key = [NSNumber numberWithInteger:page]; // # key
     ReaderContentView *newContentView = [contentViews objectForKey:key];
     newContentView.isNote = NO;
+    //注释不yes？
 //    [newContentView setUserInteractionEnabled:YES];
     
     [theScrollView setScrollEnabled:YES];
@@ -488,12 +496,12 @@
     [drawNewView setUserInteractionEnabled:NO];
 }
 
-//保存笔记
+//保存笔记 convert the image to nsdata then write into a plist file
 - (void)saveDraw{
 
     NSLog(@"save");
     UIImage *image = drawNewView.image;
-    
+    //高端的函数。。
     NSData *imageData = UIImagePNGRepresentation(image);
     
     
@@ -540,7 +548,7 @@
 			[object updateProperties]; document = object; // Retain the supplied ReaderDocument object for our use
 
 			[ReaderThumbCache touchThumbCacheWithGUID:object.guid]; // Touch the document thumb cache directory
-
+            //创建缓存。
 			reader = self; // Return an initialized ReaderViewController object
 		}
 	}
@@ -556,21 +564,22 @@
     curPenWidth = kPenWidthDefault;
     curPenAlpha = kPenAlphaDefault;
     curPenColor = kPenColor;
+    //第一次visit还要标记出来？
     isFirstVisit = YES;
     
     UIImage *image = [[UIImage alloc]initWithContentsOfFile:@"download_ppt.png"];
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-
+    
 	assert(document != nil); // Must have a valid ReaderDocument
-
+    
 	self.view.backgroundColor = [UIColor grayColor]; // Neutral gray
-
+    
 	CGRect viewRect = self.view.bounds; // View controller's view bounds
-
+    
 	if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
 	{
 		if ([self prefersStatusBarHidden] == NO) // Visible status bar
-		{
+		{//判断状态栏是否隐藏
 			viewRect.origin.y += STATUS_HEIGHT;
 		}
 	}
@@ -579,10 +588,12 @@
 
 	theScrollView.scrollsToTop = NO;
 	theScrollView.pagingEnabled = YES;
+    //高端的delayscontenttouches
 	theScrollView.delaysContentTouches = NO;
 	theScrollView.showsVerticalScrollIndicator = NO;
 	theScrollView.showsHorizontalScrollIndicator = NO;
 	theScrollView.contentMode = UIViewContentModeRedraw;
+    //不能旋转resize好像就没用了？
 	theScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	theScrollView.backgroundColor = [UIColor clearColor];
 	theScrollView.userInteractionEnabled = YES;
@@ -595,7 +606,7 @@
 	toolbarRect.size.height = TOOLBAR_HEIGHT;
 //    toolbarRect.origin.y += 20;
 	mainToolbar = [[ReaderMainToolbar alloc] initWithFrame:toolbarRect document:document]; // At top
-
+    //上工具栏
 	mainToolbar.delegate = self;
 
 	[self.view addSubview:mainToolbar];
@@ -606,7 +617,7 @@
 
     
 	mainPagebar = [[ReaderMainPagebar alloc] initWithFrame:pagebarRect document:document]; // At bottom
-
+    //下工具栏
 	mainPagebar.delegate = self;
 
 	[self.view addSubview:mainPagebar];
@@ -614,65 +625,76 @@
     CGRect noteRect = viewRect;
     noteRect.size.height = NOTE_HEIGHT;
     noteRect.origin.y = (viewRect.size.height - NOTE_HEIGHT);
-
-//    NSLog(@"%f %f %f %f",noteRect.origin.x,noteRect.origin.y,noteRect.size.width,noteRect.size.height);
+    //笔记rect，总觉得有点问题。。
 //    noteToolbar = [[NoteToolbar alloc] initWithFrame:CGRectMake(0, 648, 1024, 100)];
 //    noteToolbar.delegate = self;
 //    [self.view addSubview:noteToolbar];
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 768 / 2 - 40, 41, 80)];
-    [imageView setImage:[UIImage imageNamed:@"entry"]];
+    [imageView setImage:[UIImage imageNamed:@"entry"]];//这个图片的命名真的是想给人看懂的么。。左边的箭头图标。
     [self.view addSubview:imageView];
+    //左边的工具栏
     
-    noteToolDrawerBar = [[NoteToolDrawerBar alloc]initWithFrame:CGRectMake(0, 0, 174, 539) parentView:self.view];
-    noteToolDrawerBar.delegate = self;
-    [self.view addSubview:noteToolDrawerBar];
+   // noteToolDrawerBar = [[NoteToolDrawerBar alloc]initWithFrame:CGRectMake(0, 0, 174, 539) parentView:self.view];
+   // noteToolDrawerBar.delegate = self;
+    //[self.view addSubview:noteToolDrawerBar];
     
     UIImage *noteButtonImage = [UIImage imageNamed:@"edit_off"];
     noteButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 653, noteButtonImage.size.width, noteButtonImage.size.height)];
+    //图片的坐标。。
     [noteButton setImage:noteButtonImage forState:UIControlStateNormal];
     [self.view addSubview:noteButton];
+    
     [noteButton addTarget:self action:@selector(noteButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    //pangetsture？那个编辑图标移动的监听。
+    /*
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dragButtonGesture:)];
     [noteButton addGestureRecognizer:panGesture];
     
+    //点击手势。。开始可能有冲突的地方咯。。。
 	UITapGestureRecognizer *singleTapOne = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
 	singleTapOne.numberOfTouchesRequired = 1; singleTapOne.numberOfTapsRequired = 1; singleTapOne.delegate = self;
 	[self.view addGestureRecognizer:singleTapOne];
-
+    //双击手势。。。妈蛋真多手势。。
 	UITapGestureRecognizer *doubleTapOne = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
 	doubleTapOne.numberOfTouchesRequired = 1; doubleTapOne.numberOfTapsRequired = 2; doubleTapOne.delegate = self;
 	[self.view addGestureRecognizer:doubleTapOne];
-
+    //两个手指双击？
 	UITapGestureRecognizer *doubleTapTwo = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
 	doubleTapTwo.numberOfTouchesRequired = 2; doubleTapTwo.numberOfTapsRequired = 2; doubleTapTwo.delegate = self;
 	[self.view addGestureRecognizer:doubleTapTwo];
 
 	[singleTapOne requireGestureRecognizerToFail:doubleTapOne]; // Single tap requires double tap to fail
-
+    */
+     //目测这样两个手指的双击就废掉了喔。。
 	contentViews = [NSMutableDictionary new]; lastHideTime = [NSDate date];
-    
+    //slider？
     [self initSlider];
-    
+    //初始化书签
     [self initMarkEditView];
-    
+    //初始化工具栏
     [self initToolView];
     
 }
+//点击
+//不知道iOS有没有togglebutton之类的这种东西呢
+//可以根据它的state直接设置对应image吧。
 - (void)noteButtonAction:(UIButton *)button{
     if (button.selected) {
         [button setImage:[UIImage imageNamed:@"edit_off"] forState:UIControlStateNormal];
         button.selected = NO;
         if (noteToolDrawerBar.isOpen == YES) {
             [noteToolDrawerBar openOrCloseToolBar];
-        }
+        }//似乎没有用的样子。。
+        //停止编辑的时候stopdraw然后自动保存
         [self stopDraw];
         [self saveDraw];
         int page = [document.pageNumber intValue];
         NSNumber *key = [NSNumber numberWithInteger:page]; // # key
         ReaderContentView *newContentView = [contentViews objectForKey:key];
         [self addDrawView:newContentView];
+        //然后又加载到newcontentview上面去。。奇怪的操作。。
         if (mainPagebar.hidden == YES || mainToolbar.hidden == YES) {
-            NSLog(@"show1");
+            //为什么停止编辑的时候要展示工具栏。。这是在逗我？
             [mainToolbar showToolbar];
             [mainPagebar showPagebar];
         }
@@ -684,23 +706,27 @@
 
     }
 }
+//这个才是飞
 - (void)dragButtonGesture:(UIPanGestureRecognizer *)recognizer{
-    
+    NSLog(@"pan手势");
     CGPoint translation = [recognizer translationInView:self.view];
     CGPoint resultPoint = CGPointMake(noteButton.center.x + translation.x, noteButton.center.y + translation.y);
     if (resultPoint.x >= 0 && resultPoint.x <= 1024 && resultPoint.y >= 0 && resultPoint.y <= 768) {
         noteButton.center = CGPointMake(noteButton.center.x + translation.x, noteButton.center.y + translation.y);
 
     }
-        [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
+    //设置reconizer
+    [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
 }
-
+//笔记的工具栏
+//清空全部要改。
 - (void)initToolView{
     int colorNum = 6;
     CGFloat buttonWidth = 60.0f;
     CGFloat buttonHeight = 60.0f;
     CGFloat viewY = 100.0f + 40.0f;
     CGFloat viewX = 160.0f;
+    //奇怪的变量名
     //colorNum * buttonWidth + 4 * 10  + 40
     swatchView = [[UIView alloc]initWithFrame:CGRectMake(0, viewY, colorNum * buttonWidth + 4 * 10  + 40, buttonHeight)];
     [swatchView setBackgroundColor:[UIColor grayColor]];
@@ -775,7 +801,7 @@
     UIButton *clearButton = [[UIButton alloc]initWithFrame:CGRectMake(210, 12, 81, 34)];
     [clearButton setBackgroundImage:[UIImage imageNamed:@"ppt_toolbox_eraser_delete_all"] forState:UIControlStateNormal];
     [clearButton setTitle:@"清空全部" forState:UIControlStateNormal];
-//    [clearButton setTintColor:[UIColor redColor]];
+//    [clearButton setTintColor:[UI Color redColor]];
     [clearButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [clearButton addTarget:self action:@selector(clearAction:) forControlEvents:UIControlEventTouchUpInside];
     [eraserWidthView addSubview:clearButton];
@@ -783,6 +809,7 @@
     
 }
 
+//左边工具栏消失吧。。为啥不用uianimation的block。。
 - (void)swatchDisappear:(UIView *)view{
     CGRect rect = view.frame;
     
@@ -792,6 +819,8 @@
     view.frame = rect;
     [UIView commitAnimations];
 }
+
+//基本同上
 - (void)swatchAppear:(UIView *)view{
     CGRect rect = view.frame;
     
@@ -801,10 +830,11 @@
     view.frame = rect;
     [UIView commitAnimations];
 }
+
+//于是这里又用了block。。。目测是原来的？
 - (void)viewDisappear:(UIView *)view{
     if (view.hidden == NO)
 	{
-//        NSLog(@"hide");
 		[UIView animateWithDuration:0.25 delay:0.0
                             options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowUserInteraction
                          animations:^(void)
@@ -818,6 +848,8 @@
          ];
 	}
 }
+
+//
 - (void)viewAppear:(UIView *)view{
     if (view.hidden == YES)
 	{
@@ -834,10 +866,11 @@
 	}
 
 }
+//清除画过的东西。包括以前画过的。
 - (void)clearAction:(id)button{
     [self.drawNewView clear];
 }
-
+//奇怪的函数命名。。选取颜色
 - (void)choColorAction:(id)sender{
     UIButton *button = (UIButton *)sender;
     UIColor *color = button.backgroundColor;
@@ -894,7 +927,6 @@
     [self showMarkEditView:markEditView];
     NSString *text = markField.text;
     int page = [document.pageNumber intValue];
-//    NSLog(@"")
     if (text == nil || [text isEqualToString:@""]) {
         text = [NSString stringWithFormat:@"Page %d",page];
     }
@@ -911,7 +943,7 @@
 
 }
 
-//初始化滑动条
+//初始化滑动条 。。笔触宽度==妈蛋想半天。。
 -(void)initSlider{
     //Init Fader slider UI, set listener method and Transform it to vertical
     
@@ -930,7 +962,7 @@
     [lineWidthSlider setMinimumTrackImage:stetchTrack forState:UIControlStateNormal];
     [lineWidthSlider setMaximumTrackImage:stetchTrack forState:UIControlStateNormal];
      */
-    
+    //居然用到了矩阵变换？为啥要旋转呢？应该是因为横竖屏吧。
     CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * -0.5);
     self.lineWidthSlider.transform = trans;
     self.lineWidthSlider.value = kPenWidthDefault;
@@ -951,11 +983,14 @@
     [self.view addSubview:self.lineAlphaSlider];
     
 }
+
+//
 - (void)widthChange:(UISlider *)sender{
     self.drawNewView.lineWidth = sender.value;
     curPenWidth = sender.value;
-//    NSLog(@"%f",sender.value);
+
 }
+//
 - (void)alphaChange:(UISlider *)sender{
     self.drawNewView.lineAlpha = sender.value;
 }
@@ -963,7 +998,7 @@
 
 
 #pragma Notebar delegate
-
+//这个函数是废了么？
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar choiceColor:(UIButton *)button{
     /*UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Selet a color"
                                                              delegate:self
@@ -975,12 +1010,15 @@
     [actionSheet showInView:self.view];
      */
 }
+
+//
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar choiceWidth:(UIButton *)button{
     self.lineWidthSlider.hidden = !self.lineWidthSlider.hidden;
     [self.navigationController.navigationBar setHidden:NO];
 }
+//这些回调函数的名字真的能简单读懂么。。
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar choicePen:(UIButton *)button{
-    
+    //于是无端端就保存了。。好吧我不懂。。
     [self stopDraw];
     [self saveDraw];
     int page = [document.pageNumber intValue];
@@ -988,32 +1026,39 @@
     ReaderContentView *newContentView = [contentViews objectForKey:key];
     [self addDrawView:newContentView];
 }
+//选择刷子。。为毛总要取反值？
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar choiceBrush:(UIButton *)button{
     self.lineAlphaSlider.hidden = !self.lineAlphaSlider.hidden;
 }
 
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar choiceErase:(UIButton *)button{
-//    NSLog(@"eraser");
+    //高端。。。居然引入了一个新的Eraser
     currentToolType = ACEDrawingToolTypeEraser;
     [self startDraw];
+    //擦完了又startDraw。stopdraw 和save 在哪里呢？
 }
+//特别想知道undolateststep在界面上的哪里有？
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar undoAction:(UIButton *)button{
     [self.drawNewView undoLatestStep];
 }
+//同上。。
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar redoAction:(UIButton *)button{
     [self.drawNewView redoLatestStep];
 }
+//清除全部
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar clearAction:(UIButton *)button{
     [self.drawNewView clear];
 }
+
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-
+    //上次有打开过
 	if (CGSizeEqualToSize(lastAppearSize, CGSizeZero) == false)
 	{
 		if (CGSizeEqualToSize(lastAppearSize, self.view.bounds.size) == false)
 		{
+            //更新？lastAppearsize作用似乎不大？
 			[self updateScrollViewContentViews]; // Update content views
 		}
 
@@ -1029,7 +1074,7 @@
 	{
 		[self performSelector:@selector(showDocument:) withObject:nil afterDelay:0.02];
 	}
-
+//我猜是常亮屏幕吧？
 #if (READER_DISABLE_IDLE == TRUE) // Option
 
 	[UIApplication sharedApplication].idleTimerDisabled = YES;
@@ -1054,7 +1099,7 @@
 {
 	[super viewDidDisappear:animated];
 }
-
+//iOS7appear和disappear函数好像废了yeah。
 - (void)viewDidUnload
 {
 #ifdef DEBUG
@@ -1078,8 +1123,6 @@
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
 	return UIStatusBarStyleDefault;
-    
-    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -1088,12 +1131,12 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
+{   //高端
 	if (isVisible == NO) return; // iOS present modal bodge
 
 	if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
 	{
-		if (printInteraction != nil) [printInteraction dismissAnimated:NO];
+		if (printInteraction != nil) [printInteraction dismissAnimated:NO];//跟print有啥关系
 	}
 }
 
@@ -1124,6 +1167,7 @@
 	[super didReceiveMemoryWarning];
 }
 
+
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -1131,12 +1175,13 @@
 
 #pragma mark UIScrollViewDelegate methods
 
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [mainPagebar updatePagebar];
     if (markEditView.alpha == 1) {
         [self showMarkEditView:markEditView];
-    }
+    }//?
 
 	__block NSInteger page = 0;
     
@@ -1154,25 +1199,28 @@
 			}
 		}
 	];
-
+    //获取当前页数，并展示。（page 相同等保护机制在showDocumentPage函数内）
 	if (page != 0) [self showDocumentPage:page]; // Show the page
 }
 
+//
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
 	[self showDocumentPage:theScrollView.tag]; // Show page
-
+    //调用了两次啊总感觉==
 	theScrollView.tag = 0; // Clear page number tag
     [mainPagebar updatePagebar];
-    if (markEditView.alpha == 1) {
+    if (markEditView.alpha == 1) { //妈蛋又是这句。。
         [self showMarkEditView:markEditView];
     }
 }
 
 #pragma mark UIGestureRecognizerDelegate methods
 
+//是否继续回调下去。。。有可能这里么？
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)recognizer shouldReceiveTouch:(UITouch *)touch
 {
+    NSLog(@"what the fuck");
 	if ([touch.view isKindOfClass:[UIScrollView class]]) return YES;
 
 	return NO;
@@ -1191,10 +1239,10 @@
 
 		if ((maxPage > minPage) && (page != minPage))
 		{
-            
+            //看到下面被注释掉的这两货。。
 //            [self saveDraw];
 //            [self stopDraw];
-            if (noteToolDrawerBar.center.x == noteToolDrawerBar.openPoint.x) {
+            if (noteToolDrawerBar.center.x == noteToolDrawerBar.openPoint.x) {//奇怪的判断语句。。
                 [noteToolDrawerBar openOrCloseToolBar];
             }
 			CGPoint contentOffset = theScrollView.contentOffset;
@@ -1204,7 +1252,7 @@
 			[theScrollView setContentOffset:contentOffset animated:YES];
 
 			theScrollView.tag = (page - 1); // Decrement page number
-		}
+		}//
 	}
     
 }
@@ -1240,10 +1288,12 @@
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
 {
+    NSLog(@"%s",__FUNCTION__);
 	if (recognizer.state == UIGestureRecognizerStateRecognized)
 	{
         if (markEditView.alpha == 1) {
             [self showMarkEditView:markEditView];
+            //不懂。。
         }
 		CGRect viewRect = recognizer.view.bounds; // View bounds
 
@@ -1253,15 +1303,14 @@
 
 		if (CGRectContainsPoint(areaRect, point)) // Single tap is inside the area
 		{
-//            NSLog(@"in");
-			NSInteger page = [document.pageNumber integerValue]; // Current page #
+            NSInteger page = [document.pageNumber integerValue]; // Current page #
 
 			NSNumber *key = [NSNumber numberWithInteger:page]; // Page number key
 
 			ReaderContentView *targetView = [contentViews objectForKey:key];
 
 			id target = [targetView processSingleTap:recognizer]; // Target
-
+            //这居然还有url？妈蛋这是在逗我？这太强大了吧。。==。。
 			if (target != nil) // Handle the returned target object
 			{
 				if ([target isKindOfClass:[NSURL class]]) // Open a URL
@@ -1305,7 +1354,8 @@
 					if ((mainToolbar.hidden == YES) || (mainPagebar.hidden == YES)
                         /*|| (noteToolDrawerBar.hidden == YES)*/)
 					{
-                        NSLog(@"show");
+                        NSLog(@"冲突");
+                        //不是这里。
 						[mainToolbar showToolbar];
                         [mainPagebar showPagebar]; // Show
 //                        [noteToolDrawerBar showNoteToolDrawerBar];
@@ -1320,14 +1370,13 @@
 
 			return;
 		}
-
+        //宏定义得略恶心。。
 		CGRect nextPageRect = viewRect;
 		nextPageRect.size.width = TAP_AREA_SIZE;
 		nextPageRect.origin.x = (viewRect.size.width - TAP_AREA_SIZE);
        
 		if (CGRectContainsPoint(nextPageRect, point)) // page++ area
 		{
-//             NSLog(@"out");
 			[self incrementPageNumber]; return;
 		}
 
@@ -1336,7 +1385,7 @@
 
 		if (CGRectContainsPoint(prevPageRect, point)) // page-- area
 		{
-//             NSLog(@"out");
+
 			[self decrementPageNumber]; return;
 		}
         
@@ -1345,9 +1394,9 @@
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)recognizer
 {
+    NSLog(@"%s",__FUNCTION__);
 	if (recognizer.state == UIGestureRecognizerStateRecognized)
 	{
-//        NSLog(@"two");
 		CGRect viewRect = recognizer.view.bounds; // View bounds
 
 		CGPoint point = [recognizer locationInView:recognizer.view];
@@ -1361,7 +1410,7 @@
 			NSNumber *key = [NSNumber numberWithInteger:page]; // Page number key
 
 			ReaderContentView *targetView = [contentViews objectForKey:key];
-
+            //妈蛋这个手势真是玩死人。。
 			switch (recognizer.numberOfTouchesRequired) // Touches count
 			{
 				case 1: // One finger double tap: zoom ++
@@ -1399,8 +1448,10 @@
 
 #pragma mark ReaderContentViewDelegate methods
 
+//妈蛋终于开始touchbegan的函数了。。好吧我是真看不懂==
 - (void)contentView:(ReaderContentView *)contentView touchesBegan:(NSSet *)touches
 {
+    NSLog(@"content touch begin");
 	if ((mainToolbar.hidden == NO) || (mainPagebar.hidden == NO)
         /*|| (noteToolDrawerBar.hidden == NO)*/)
 	{
@@ -1457,7 +1508,7 @@
 
 #endif // end of READER_STANDALONE Option
 }
-
+//跳转到书签页。。
 - (void)tappedInToolbar:(ReaderMainToolbar *)toolbar thumbsButton:(UIButton *)button
 {
     
@@ -1466,7 +1517,7 @@
     
     [self presentViewController:courseMarkViewController animated:YES completion:nil];
 }
-
+//打印的函数吧。可以忽略的。
 - (void)tappedInToolbar:(ReaderMainToolbar *)toolbar printButton:(UIButton *)button
 {
 #if (READER_ENABLE_PRINT == TRUE) // Option
@@ -1518,7 +1569,7 @@
 
 #endif // end of READER_ENABLE_PRINT Option
 }
-
+//发email。。也可以忽略。
 - (void)tappedInToolbar:(ReaderMainToolbar *)toolbar emailButton:(UIButton *)button
 {
 #if (READER_ENABLE_MAIL == TRUE) // Option
@@ -1554,7 +1605,7 @@
 
 #endif // end of READER_ENABLE_MAIL Option
 }
-
+//设置笔记
 - (void)tappedInToolbar:(ReaderMainToolbar *)toolbar markButton:(UIButton *)button
 {
     
@@ -1579,6 +1630,7 @@
 	}
     
 }
+//奇怪的设计。。
 - (void)showMarkEditView:(UIView *)view
 {
     if (view.alpha == 0) {
@@ -1606,7 +1658,7 @@
 
 
 #pragma mark MFMailComposeViewControllerDelegate methods
-
+//发邮件可以不管
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
 	#ifdef DEBUG
@@ -1615,7 +1667,7 @@
 
 	[self dismissViewControllerAnimated:YES completion:NULL]; // Dismiss
 }
-
+//似乎都没调用
 #pragma mark ThumbsViewControllerDelegate methods
 
 - (void)dismissThumbsViewController:(ThumbsViewController *)viewController
@@ -1624,6 +1676,7 @@
 
 	[self dismissViewControllerAnimated:YES completion:NULL]; // Dismiss
 }
+//似乎都没调用
 
 - (void)thumbsViewController:(ThumbsViewController *)viewController gotoPage:(NSInteger)page
 {
@@ -1631,7 +1684,7 @@
 }
 
 #pragma mark ReaderMainPagebarDelegate methods
-
+//下面的跳转
 - (void)pagebar:(ReaderMainPagebar *)pagebar gotoPage:(NSInteger)page
 {
     if (noteToolDrawerBar.center.x == noteToolDrawerBar.openPoint.x) {
@@ -1647,7 +1700,7 @@
 }
 
 #pragma mark UIApplication notification methods
-
+//保存改动文档。。由于我们根本没改动==所以。。。
 - (void)applicationWill:(NSNotification *)notification
 {
 	[document saveReaderDocument]; // Save any ReaderDocument object changes
@@ -1727,6 +1780,7 @@
 }
 */
 #pragma CourseMarkView delegate
+//抄得刚才的代码。。可以考虑删掉原来的吧。
 - (void) courseMarkViewController:(CourseMarkViewController *)viewController gotoPage:(NSInteger)page
 {
     [self showDocumentPage:page];
@@ -1739,8 +1793,9 @@
 }
 
 #pragma NoteToolDrawerBar delegate
+//怎么又来了== 应该按到其中一个按钮。。
 - (void)tappedInNoteToolDrawerBar:(NoteToolDrawerBar *)toolDrawerBar toolAction:(UIButton *)button{
-//    NSLog(@"tag %d",button.tag);
+    NSLog(@"drawerbutton");
 //    swatchView.hidden = YES;
 //    penWidthView.hidden = YES;
 //    eraserWidthView.hidden = YES;
@@ -1793,7 +1848,6 @@
                 curPenWidth = penWidthSlider.value;
                 [self viewAppear:penWidthView];
             } else{
-
                 [self viewDisappear:penWidthView];
             }
             break;
@@ -1853,12 +1907,14 @@
             break;
     }
 }
-//打开drawer
+//打开drawer 。。。没被调用啊妈蛋==
 - (void)drawerOpen:(NoteToolDrawerBar *)toolDrawerBar{
     currentToolType = ACEDrawingToolTypePen;
     [self startDraw];
+    NSLog(@"%s", __FUNCTION__);
+
 }
-//关闭drawer
+//关闭drawer。。。没被调用啊妈蛋==
 -(void)drawerClose:(NoteToolDrawerBar *)toolDrawerBar{
     [self viewDisappear:markerWidthView];
     [self viewDisappear:penWidthView];
@@ -1871,13 +1927,16 @@
     NSNumber *key = [NSNumber numberWithInteger:page]; // # key
     ReaderContentView *newContentView = [contentViews objectForKey:key];
     [self addDrawView:newContentView];
+    NSLog(@"%s", __FUNCTION__);
 }
 #pragma ACEDrawView delegate
+//没被调用。。
 - (void)intoDrawState:(ACEDrawingView *)view{
 //    [noteToolDrawerBar hideNoteToolDrawerBar];
     [mainPagebar hidePagebar];
     [mainToolbar hideToolbar];
     
+    NSLog(@"妈蛋");
     /*
     if (!swatchView.hidden) {
         appearViewTag = SWATCH_VIEW_TAG;
@@ -1899,7 +1958,8 @@
 }
 
 - (void)cancelDrawState:(ACEDrawingView *)view{
-    NSLog(@"show2");
+    NSLog(@"cancelDraw");
+    /*
     [noteToolDrawerBar showNoteToolDrawerBar];
     [mainToolbar showToolbar];
     [mainPagebar showPagebar];
@@ -1914,7 +1974,7 @@
     }
     if (appearViewTag ==ERASER_VIEW_TAG) {
         [self viewAppear:eraserWidthView];
-    }
+    }*/
 }
 #pragma Mark UITextFieldDelegate
 // 下面两个方法是为了防止TextView让键盘挡住的方法
