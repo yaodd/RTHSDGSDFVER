@@ -242,7 +242,8 @@ static inline CGFloat ZoomScaleThatFits(CGSize target, CGSize source)
 
 - (id)processSingleTap:(UITapGestureRecognizer *)recognizer
 {
-	return [theContentView processSingleTap:recognizer];
+	NSLog(@"contentview tap");
+    return [theContentView processSingleTap:recognizer];
 }
 
 - (void)zoomIncrement

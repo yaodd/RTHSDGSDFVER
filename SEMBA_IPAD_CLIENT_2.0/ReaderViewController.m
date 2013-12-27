@@ -57,7 +57,9 @@
 #define PEN_WIDTH_SLIDER_TAG  111111
 
 
-@interface ReaderViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate,
+@interface ReaderViewController () <UIScrollViewDelegate
+, UIGestureRecognizerDelegate
+, MFMailComposeViewControllerDelegate,
 									ReaderMainToolbarDelegate, ReaderMainPagebarDelegate, ReaderContentViewDelegate, ThumbsViewControllerDelegate,NoteToolbarDelegate>
 @end
 
@@ -634,9 +636,9 @@
     [self.view addSubview:imageView];
     //左边的工具栏
     
-   // noteToolDrawerBar = [[NoteToolDrawerBar alloc]initWithFrame:CGRectMake(0, 0, 174, 539) parentView:self.view];
-   // noteToolDrawerBar.delegate = self;
-    //[self.view addSubview:noteToolDrawerBar];
+    noteToolDrawerBar = [[NoteToolDrawerBar alloc]initWithFrame:CGRectMake(0, 0, 174, 539) parentView:self.view];
+    noteToolDrawerBar.delegate = self;
+    [self.view addSubview:noteToolDrawerBar];
     
     UIImage *noteButtonImage = [UIImage imageNamed:@"edit_off"];
     noteButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 653, noteButtonImage.size.width, noteButtonImage.size.height)];
@@ -646,7 +648,7 @@
     
     [noteButton addTarget:self action:@selector(noteButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     //pangetsture？那个编辑图标移动的监听。
-    /*
+    
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dragButtonGesture:)];
     [noteButton addGestureRecognizer:panGesture];
     
@@ -664,7 +666,7 @@
 	[self.view addGestureRecognizer:doubleTapTwo];
 
 	[singleTapOne requireGestureRecognizerToFail:doubleTapOne]; // Single tap requires double tap to fail
-    */
+    
      //目测这样两个手指的双击就废掉了喔。。
 	contentViews = [NSMutableDictionary new]; lastHideTime = [NSDate date];
     //slider？
@@ -1220,9 +1222,11 @@
 //是否继续回调下去。。。有可能这里么？
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)recognizer shouldReceiveTouch:(UITouch *)touch
 {
-    NSLog(@"what the fuck");
-	if ([touch.view isKindOfClass:[UIScrollView class]]) return YES;
-
+    //if ([touch.view isKindOfClass:[UIScrollView class]]) {
+        
+        return YES;
+    //}
+    NSLog(@"no huidiao");
 	return NO;
 }
 
@@ -1933,6 +1937,7 @@
 //没被调用。。
 - (void)intoDrawState:(ACEDrawingView *)view{
 //    [noteToolDrawerBar hideNoteToolDrawerBar];
+   
     [mainPagebar hidePagebar];
     [mainToolbar hideToolbar];
     
@@ -2003,6 +2008,24 @@
     markEditView.frame = CGRectMake(curFrame.origin.x, curFrame.origin.y + 200, curFrame.size.width, curFrame.size.height);
     [UIView commitAnimations];
 }
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+//    NSLog(@"CANPASS手势给别人么？");
+    return NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    NSLog(@"CANPASS手势给别人么？");
+    NSNumber *key = [NSNumber numberWithInteger:currentPage]; // # key
+    //当前这页的view。。奇怪的变量名。。
+    ReaderContentView *newContentView = [contentViews objectForKey:key];
+    //newContentView.isNote = YES;
+    if(newContentView.isNote == YES)
+        return YES;
+    else
+        return NO;
+}
+
+
 
 
 @end

@@ -347,7 +347,7 @@
 }
 
 - (void)tap:(UITapGestureRecognizer*)gesture {
-    
+    NSLog(@"DDMENUTAP");
     [gesture setEnabled:NO];
     [self showRootController:YES];
     
@@ -357,7 +357,7 @@
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-
+    
     // Check for horizontal pan gesture
     if (gestureRecognizer == _pan) {
 
@@ -387,8 +387,9 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if (gestureRecognizer==_tap) {
+    NSLog(@"whethercanmoregesture");
         return YES;
-    }     
+    }
     return NO;
 }
 
@@ -503,12 +504,12 @@
     }
     _menuFlags.showingLeftView = YES;
     [self showShadow:NO];
-
+    NSLog(@"showleft");
     UIView *leftView = self.leftViewController.view;
 	CGRect frame = self.view.bounds;
 	frame.size.width = kMenuFullWidth;
     leftView.frame = frame;
-    NSLog(@"2");
+    //NSLog(@"2");
     [self.view insertSubview:leftView atIndex:0];
     [self.leftViewController viewWillAppear:animated];
     
@@ -519,13 +520,17 @@
     if (!animated) {
         [UIView setAnimationsEnabled:NO];
     }
-    
+    //这里冲突了吧？
+    NSLog(@"bac");
     _root.view.userInteractionEnabled = NO;
+    NSLog(@"abc");
+
     [UIView animateWithDuration:.3 animations:^{
         _root.view.frame = frame;
     } completion:^(BOOL finished) {
         [_tap setEnabled:YES];
         [swipeLeft setEnabled:YES];
+        NSLog(@"tapsetenable");
     }];
     
     if (!animated) {

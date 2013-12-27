@@ -206,7 +206,7 @@
     MenuController *menuController = [[MenuController alloc] init];
     hostController.leftViewController = menuController;
     menuController.hostController = hostController;
-
+    //[self presentViewController:navController animated:YES completion:nil];
     [self presentViewController:hostController animated:YES completion:nil];
     
 }
