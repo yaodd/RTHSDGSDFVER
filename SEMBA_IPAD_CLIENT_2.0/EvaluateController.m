@@ -37,8 +37,8 @@
 {
     [super viewDidLoad];
     
-    _selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 196, 44)];
-    [_scrollView addSubview:_selectView];
+    //_selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 196, 44)];
+    //[_scrollView addSubview:_selectView];
     NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:@"10",@"9",@"8",@"7",@"6",@"5",@"4",@"3",@"2",@"1", nil];
     ScorePoint *point1 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 402, 32, 32)];
     [point1 setDataArray:array];
@@ -83,6 +83,9 @@
     [_scoreArray addObject:point9];
     [_scoreArray addObject:point10];
     
+    _selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 240, 44)];
+    [_scrollView addSubview:_selectView];
+    
     _suggestTextView.layer.borderColor = [UIColor grayColor].CGColor;
     _suggestTextView.layer.borderWidth = 1.0f;
     _suggestTextView.layer.cornerRadius = 5.0f;
@@ -103,26 +106,28 @@
     overlayView = [[MRProgressOverlayView alloc]init];
     overlayView.mode = MRProgressOverlayViewModeIndeterminate;
     [self.view addSubview:overlayView];
-    [overlayView show:YES];
+    //[overlayView show:YES];
 
     int ret = [dao requestForEvaluationList:model.user.uid];
     if ( ret == 1){
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         NSArray *data = model.EvaluationList;
         int l = [data count];
+        NSLog(@"evaluationlist%d",l);
         for ( int i = 0 ; i < l ; ++ i){
             EvaluationDataModel *onedata = (EvaluationDataModel *)[data objectAtIndex:i];
-            NSString *oneString = [NSString stringWithFormat:@"%@  %@",onedata.courseName,onedata.teacherName];
+            NSString *oneString = [NSString stringWithFormat:@" %@ %@",onedata.courseName,onedata.teacherName];
             [arr  addObject:oneString];
+            NSLog(@"pingjiaoxiang%@",oneString);
         }
-        [_selectView setDataArray:arr];
+        
+        [_selectView setData:arr];
     }else if( ret == 0 ){
     
     }else if( ret == -1 ){
         
     }
-    NSLog(@"evadismiss");
-    [self Dismiss];
+    //[self Dismiss];
 
     //_selectView setDataArray:;
 }

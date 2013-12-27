@@ -24,9 +24,11 @@
         //[self setBackgroundColor:[UIColor yellowColor]];
         _selectedLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 196, 35)];
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 35, 196, 105) style:UITableViewStylePlain];
+        _selectedLabel.font = [UIFont fontWithName:@"Heiti SC" size:15];
+        
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        
+        _selectedLabel.text = @"请选择评教项";
         UIImage *arrowImage = [UIImage imageNamed:@"xiala"];
         _arrow = [[UIImageView alloc ]initWithImage:arrowImage];
         _arrow.frame = CGRectMake(196, 0, 44, 35);
@@ -40,6 +42,7 @@
         UIButton *button = [[UIButton alloc] initWithFrame:_arrow.frame];
         [button addTarget:self action:@selector(dropDownTableView:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
+        NSLog(@"button%f %f %f %f",button.frame.origin.x,button.frame.origin.y,button.frame.size.width,button.frame.size.height);
         
     }
     return self;
@@ -48,14 +51,19 @@
 -(void)dropDownTableView:(id)sender{
     if(_tableView.hidden == YES){
         _tableView.hidden = NO;
+        self.frame = CGRectMake(self.frame.origin.x,self.frame.origin.y, self.frame.size.width, self.frame.size.height *4);
         [_tableView reloadData];
+        NSLog(@"dropvisble");
     }
     else{
         _tableView.hidden = YES;
+        self.frame = CGRectMake(self.frame.origin.x,self.frame.origin.y, self.frame.size.width, self.frame.size.height / 4);
+        NSLog(@"dropinvisble");
     }
 }
 
 -(void)setData:(NSMutableArray *)array{
+    NSLog(@"listsetdata");
     _dataArray = array;
     [_tableView reloadData];
 }
@@ -67,7 +75,7 @@
         cell = [[EvaluateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifiler];
     }
     cell.label.text = (NSString* )[_dataArray objectAtIndex:indexPath.row];
-    
+    cell.label.font = [UIFont fontWithName:@"Heiti SC" size:15];
     return cell;
 }
 

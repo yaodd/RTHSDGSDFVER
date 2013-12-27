@@ -376,13 +376,9 @@
         if (_root && (_menuFlags.showingRightView || _menuFlags.showingLeftView)) {
             return CGRectContainsPoint(_root.view.frame, [gestureRecognizer locationInView:self.view]);
         }
-        
         return NO;
-        
     }
-
     return YES;
-   
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {

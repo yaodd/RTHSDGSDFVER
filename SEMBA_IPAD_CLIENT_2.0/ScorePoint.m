@@ -62,6 +62,7 @@
 }
 
 -(void)setData:(NSMutableArray *)array{
+    NSLog(@"setdata");
     _dataArray = array;
     [_tableView reloadData];
 }

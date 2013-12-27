@@ -15,5 +15,6 @@
 @property (nonatomic,strong)NSMutableArray *dataArray;
 @property (nonatomic,strong)UIImageView *arrow;
 
+-(void)setData:(NSMutableArray *)dataArray;
 
 @end
