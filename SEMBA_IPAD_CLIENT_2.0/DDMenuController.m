@@ -500,7 +500,6 @@
     }
     _menuFlags.showingLeftView = YES;
     [self showShadow:NO];
-    NSLog(@"showleft");
     UIView *leftView = self.leftViewController.view;
 	CGRect frame = self.view.bounds;
 	frame.size.width = kMenuFullWidth;
@@ -517,16 +516,15 @@
         [UIView setAnimationsEnabled:NO];
     }
     //这里冲突了吧？
-    NSLog(@"bac");
     _root.view.userInteractionEnabled = NO;
-    NSLog(@"abc");
+    //NSLog(@"abc");
 
     [UIView animateWithDuration:.3 animations:^{
         _root.view.frame = frame;
     } completion:^(BOOL finished) {
         [_tap setEnabled:YES];
         [swipeLeft setEnabled:YES];
-        NSLog(@"tapsetenable");
+        //NSLog(@"tapsetenable");
     }];
     
     if (!animated) {

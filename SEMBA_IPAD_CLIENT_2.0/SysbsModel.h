@@ -14,6 +14,8 @@
 #import "MyCourse.h"
 #import "AllNoticeData.h"
 #import "EvaluationDataModel.h"
+#import "ChooseCourseListResult.h"
+#import "SingleChooseCourseDataObject.h"
 
 @class SysbsModel;
 
@@ -23,7 +25,7 @@
 @property (nonatomic,strong)MyCourse *myCourse;
 @property (nonatomic,strong)AllNoticeData *myMessage;
 @property (nonatomic,strong)NSMutableArray *EvaluationList;
-
+@property (nonatomic,strong)ChooseCourseListResult *chooseCourseListResult;
 +(SysbsModel*)getSysbsModel;
 -(User*)getUser;
 -(void)setUser:(User*)tempUser;

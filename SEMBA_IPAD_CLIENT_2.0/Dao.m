@@ -21,24 +21,37 @@
 //NSString *baseUrl = @"http://localhost/EMBAWEB/" ;
 
 //NSString *baseUrl = @"http://222.200.177.14/EMBAWEBDEVELOP/";
-NSString *baseUrl = @"http://115.28.56.86/EMBAWEBDEVELOP/";
+//NSString *baseUrl = @"http://115.28.18.130/EMBAWEBDEVELOP/";
+NSString *baseUrl = @"http://115.28.18.130/EMBAWEBDEVELOP/api/";
 NSString *Url = @"http://localhost/test.php";
 NSString *checkInUrl = @"checkin.php";
 NSString *checkInHistory = @"checkinhistory.php";
+//登陆接口地址
 NSString *loginUrl = @"login.php";
+//注册接口地址（废弃）
 NSString *registerUrl = @"register.php";
 NSString *welcomeUrl = @"getWelcomePage.php";
+//获取课程接口地址
 NSString *courseUrl = @"getCourse.php";
+//更改密码地址
 NSString *changePasswdUrl = @"changePasswd.php";
+//获取文件地址
 NSString *filedirUrl = @"getCourseFile.php";
 NSString *afileUrl = @"getCourseFile.php";
 NSString *recommendUrl = @"getRecommand.php";
 NSString *courseDateUrl = @"getCourseDate.php";
 NSString *newestFile = @"getNewestFile.php";
+//上传评教接口
 NSString *upEvaluationUrl = @"upLoadEvaluation.php";
+//获取评教列表接口
 NSString * fetchEvaluationUrl = @"fetchEvaluationList.php";
 NSString *requestNameUrl = @"requestForName.php";
+//获取通知中心信息地址
 NSString *getMessage = @"getMyMessage.php";
+//选课接口地址
+NSString *chooseCourse = @"choosesinglecourse.php";
+//获取选课列表地址
+NSString *fetchChooseCourseList = @"fetchchoosecourselist.php";
 
 +(id)sharedDao{
     static Dao* sharedDaoer;
@@ -306,9 +319,11 @@ filename:(NSString*)filename{
         user.uid = uid;
         //NSLog(@"uid%d",uid);
         NSString *name = [rs objectForKey:@"username"];
+        NSNumber *class_num = [rs objectForKey:@"class_num"];
+        user.class_num = [class_num integerValue];
         user.username = name;
         model.user = user;
-        NSLog(@"modeluid%d",model.user.uid);
+        
     }
     //ret.isSuccess = [NSnum integerValue];
     return ret;
@@ -557,6 +572,79 @@ filename:(NSString*)filename{
     return ret;
 }
 
+-(int)requestForChooseCourse:(int)cid userid:(int)uid{
+    int ret = -1;
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    
+    [dict setObject:[NSNumber numberWithInt:uid] forKey:@"uid"];
+    [dict setObject:[NSNumber numberWithInt:cid] forKey:@"courseid"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,
+                           chooseCourse ];
+    NSDictionary *rs = [self request:urlString dict:dict ];
+    ret = [ (NSNumber *)[rs objectForKey:@"isSuccess"] integerValue];
+    
+    return ret;
+}
+
+-(int)requestForChooseCourseList:(int)class_num userid:(int)uid{
+    int ret = -1 ;
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    
+    [dict setObject:[NSNumber numberWithInt:class_num] forKey:@"class_num"];
+    [dict setObject:[NSNumber numberWithInt:uid] forKey:@"uid"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,
+                           fetchChooseCourseList ];
+    NSDictionary *rs = [self request:urlString dict:dict ];
+    ret = [ (NSNumber *)[rs objectForKey:@"isSuccess"] integerValue];
+    if(ret == 1){
+        SysbsModel *model = [SysbsModel getSysbsModel];
+        ChooseCourseListResult *chooseResult = [[ChooseCourseListResult alloc]init];
+        NSMutableArray *resultArr = [[NSMutableArray alloc]init];
+        NSArray *data = [rs objectForKey:@"data"];
+        int len = [data count];
+        
+        for (int i = 0 ; i < len; ++i) {
+            SingleChooseCourseDataObject *dataobj = [[SingleChooseCourseDataObject alloc]init];
+            NSDictionary *single_data = [data objectAtIndex:i];
+            NSDictionary *course_data = [single_data objectForKey:@"course"];
+            int now_num = [(NSNumber*) [single_data objectForKey:@"now_num"] integerValue];
+            int max_num = [(NSNumber*) [single_data objectForKey:@"max_num"] integerValue];
+            dataobj.nowChooseNum = now_num;
+            dataobj.maxChooseNum = max_num;
+            
+            NSString *coursename = [course_data objectForKey:@"coursename"];
+            dataobj.courseTitle = coursename;
+            dataobj.contentShortView = [course_data objectForKey:@"coursedescription"];
+            dataobj.cid = [(NSNumber *) [course_data objectForKey:@"courseid"]integerValue];
+            dataobj.startdate = [course_data objectForKey:@"startdate"];
+            dataobj.enddate = [course_data objectForKey:@"enddate"];
+            
+            int temp = [(NSNumber*)[single_data objectForKey:@"have_selected"] integerValue];
+            if(temp == 1){
+                dataobj.haveselected = YES;
+            }else{
+                dataobj.haveselected = NO;
+            }
+            
+            NSMutableArray *tArr = [[NSMutableArray alloc]init];
+            NSArray *tdArr = [course_data objectForKey:@"teacher"];
+            int tLen = [tdArr count];
+            for (int i = 0 ; i < tLen; ++i) {
+                NSDictionary *singleTeacher = [tdArr objectAtIndex:i];
+                NSString *name = [singleTeacher objectForKey:@"username"];
+                [tArr addObject:name];
+            }
+            dataobj.teacherArr = tArr;
+            [resultArr addObject:dataobj];
+        }
+        chooseResult.arr = resultArr;
+        model.chooseCourseListResult = chooseResult;
+    }
+    
+    return ret;
+}
 
 /*
 -(RecommendBookResult*)requestForRecommend:(int)cid{

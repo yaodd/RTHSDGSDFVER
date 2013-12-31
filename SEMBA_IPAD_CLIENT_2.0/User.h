@@ -18,9 +18,11 @@
 //+(void)setUser:(User*)user;
 
 @property (nonatomic)int uid;
+@property (nonatomic)int class_num;
 @property (strong,nonatomic)NSString *username;
 @property (strong,nonatomic)NSString *company;
 @property (strong,nonatomic)NSString *rank;
 @property (strong,nonatomic)UIImage *headImg;
 @property (strong,nonatomic)NSString *cellNum;
+
 @end

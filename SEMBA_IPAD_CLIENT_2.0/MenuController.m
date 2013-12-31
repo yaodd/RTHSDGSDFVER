@@ -14,6 +14,8 @@
 #import "NoticeController.h"
 #import "RegisterController.h"
 #import "RegisterContentController.h"
+#import "CourseDetailViewController.h"
+#import "CourseLIstViewController.h"
 #import "Dao.h"
 #import "SysbsModel.h"
 
@@ -61,7 +63,7 @@
 //    hostController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).hostController;
     hostController.delegate = self;
     
-    NSLog(@"MenuView did load");
+    //NSLog(@"MenuView did load");
     currentRow = 0;
     
     float originY = 20;
@@ -269,7 +271,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Cell for section:%d row:%d",[indexPath section],[indexPath row]);
+    //NSLog(@"Cell for section:%d row:%d",[indexPath section],[indexPath row]);
     NSString *contentIdentifier = [NSString stringWithFormat:@"Cell%d%d",[indexPath section],[indexPath row]]; //以indexPath来唯一确定cell,不使用完全重用机制
     
     MenuCell *cell =[list dequeueReusableCellWithIdentifier:contentIdentifier];
@@ -281,7 +283,7 @@
     
     cell.title.text = [titleArray objectAtIndex:indexPath.row];
     
-    NSLog(@"currentRow:%d", currentRow);
+    //NSLog(@"currentRow:%d", currentRow);
     if(indexPath.row == 0){
         
         cell.topLine.frame = CGRectMake(0, 0, menuWidth, 1);
@@ -357,7 +359,7 @@
             
             cell.icon.image = [UIImage imageNamed:@"schedule_pressed"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
-            NSLog(@"row3's bgImg frame:%f--%f", cell.backgroundImg.frame.origin.x, cell.backgroundImg.frame.origin.y);
+            //NSLog(@"row3's bgImg frame:%f--%f", cell.backgroundImg.frame.origin.x, cell.backgroundImg.frame.origin.y);
             cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
         }else {
             
@@ -377,7 +379,7 @@
             
             cell.icon.image = [UIImage imageNamed:@"schedule_pressed"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
-            NSLog(@"row3's bgImg frame:%f--%f", cell.backgroundImg.frame.origin.x, cell.backgroundImg.frame.origin.y);
+            //NSLog(@"row3's bgImg frame:%f--%f", cell.backgroundImg.frame.origin.x, cell.backgroundImg.frame.origin.y);
             cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
         }else {
             
@@ -454,10 +456,7 @@
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
         controller.title = [titleArray objectAtIndex:indexPath.row];
         [hostController setRootController:navController animated:YES];
-        Dao *dao = [Dao sharedDao];
-        SysbsModel *model = [SysbsModel getSysbsModel];
-        int ret = [dao requestForEvaluationList:model.user.uid];
-        NSLog(@"requestEVA");
+
         if(noticeController.view.isHidden == NO){
             noticeController.view.alpha = 0.0;
             [noticeController.view setHidden:YES];
@@ -478,7 +477,21 @@
         
     }else if(indexPath.row == 4){//
         //jump to xuanke page.
-    
+        
+        //test dao.
+        Dao *dao = [Dao sharedDao];
+        SysbsModel * model = [SysbsModel getSysbsModel];
+        [dao requestForChooseCourseList:model.user.class_num userid:model.user.uid];
+        CourseLIstViewController *controller = [[CourseLIstViewController alloc]initWithNibName:@"CourseList" bundle:nil];
+        
+        //CourseDetailViewController *cotroller = [[CourseDetailViewController alloc]init];
+        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:controller];
+        [hostController setRootController:navController animated:YES];
+        if(noticeController.view.isHidden == NO){
+            noticeController.view.alpha = 0.0;
+            [noticeController.view setHidden:YES];
+        }
+
     }else if(indexPath.row == 5){
         //implement the views' translate
         [hostController.rootViewController.view setHidden:YES];

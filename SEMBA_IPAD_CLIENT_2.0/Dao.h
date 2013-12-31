@@ -158,6 +158,22 @@
  */
 -(int)requestForNotices:(int)uid;
 
+/**
+  *返回
+  *1 代表成功返回消息
+  *0 代表联网失败
+  *-1 代表服务器出错
+*/
+-(int)requestForChooseCourseList:(int)class_num userid:(int)uid;
+/*
+ *返回
+ *1 代表成功选课
+ *0 代表联网失败
+ *-1 服务器失败
+ *-2 超出人数限制
+ *-3 已经选了该课。
+*/
+-(int)requestForChooseCourse:(int)cid userid:(int)uid;
 //
 //-(NSString *) requestForName:(int)tid;
 -(void)reachabilityChanged:(NSNotification*)note;

@@ -21,6 +21,8 @@
 		2B1654A1186323B500985C54 /* EvaluateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1654A0186323B500985C54 /* EvaluateCell.m */; };
 		2B5AA8C91830EBFC00CC0DBD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9240B71830D01800415735 /* LoginViewController.m */; };
 		2B5AA8CA1830ECBB00CC0DBD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C9240B81830D01800415735 /* LoginViewController.xib */; };
+		2B7D6E3A18759A7900836899 /* ChooseCourseListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D6E3918759A7900836899 /* ChooseCourseListResult.m */; };
+		2B7D6E3D18759AAC00836899 /* SingleChooseCourseDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D6E3C18759AAC00836899 /* SingleChooseCourseDataObject.m */; };
 		2B98B0FC1839DAD900EBA2E0 /* SetUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B98B0FA1839DAD900EBA2E0 /* SetUpView.m */; };
 		2BB8153A1830AD7C00736512 /* Dao.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB815391830AD7B00736512 /* Dao.m */; };
 		2BB815471830AE0200736512 /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB8153C1830AE0200736512 /* Course.m */; };
@@ -29,9 +31,24 @@
 		2BB8154A1830AE0200736512 /* RecommendBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB815421830AE0200736512 /* RecommendBook.m */; };
 		2BB8154B1830AE0200736512 /* SysbsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB815441830AE0200736512 /* SysbsModel.m */; };
 		2BB8154C1830AE0200736512 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB815461830AE0200736512 /* User.m */; };
+		2BBA3F6F1876DA5400AC25B3 /* SingleCourseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA3F6E1876DA5400AC25B3 /* SingleCourseCell.m */; };
+		2BBA3F7A1876DDCE00AC25B3 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F701876DDCE00AC25B3 /* bg.jpg */; };
+		2BBA3F7B1876DDCE00AC25B3 /* button_choose.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F711876DDCE00AC25B3 /* button_choose.png */; };
+		2BBA3F7C1876DDCE00AC25B3 /* button_chosen.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F721876DDCE00AC25B3 /* button_chosen.png */; };
+		2BBA3F7D1876DDCE00AC25B3 /* button_outdate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F731876DDCE00AC25B3 /* button_outdate.png */; };
+		2BBA3F7E1876DDCE00AC25B3 /* head.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F741876DDCE00AC25B3 /* head.jpg */; };
+		2BBA3F7F1876DDCE00AC25B3 /* time.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F751876DDCE00AC25B3 /* time.png */; };
+		2BBA3F801876DDCE00AC25B3 /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F761876DDCE00AC25B3 /* title.png */; };
+		2BBA3F811876DDCE00AC25B3 /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F771876DDCE00AC25B3 /* triangle.png */; };
+		2BBA3F821876DDCE00AC25B3 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F781876DDCE00AC25B3 /* user.png */; };
+		2BBA3F831876DDCE00AC25B3 /* yixuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F791876DDCE00AC25B3 /* yixuan.png */; };
+		2BBA3F851878017F00AC25B3 /* tanchuang.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F841878017F00AC25B3 /* tanchuang.png */; };
 		2BEC7C79186810100007972A /* NoticeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C78186810100007972A /* NoticeData.m */; };
 		2BEC7C7C186812170007972A /* AllNoticeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C7B186812170007972A /* AllNoticeData.m */; };
 		2BEC7C7F1868255D0007972A /* EvaluationDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C7E1868255D0007972A /* EvaluationDataModel.m */; };
+		2BF802BA1872523F0085D148 /* CourseLIstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF802B91872523F0085D148 /* CourseLIstViewController.m */; };
+		2BF802BD187252500085D148 /* CourseDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF802BC187252500085D148 /* CourseDetailViewController.m */; };
+		2BF802BF187255370085D148 /* CourseList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BF802BE187255370085D148 /* CourseList.xib */; };
 		590367B51841E1D000C4D1D0 /* schedule.png in Resources */ = {isa = PBXBuildFile; fileRef = 590367B31841E1D000C4D1D0 /* schedule.png */; };
 		590367B61841E1D000C4D1D0 /* schedule@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 590367B41841E1D000C4D1D0 /* schedule@2x.png */; };
 		591680C01839E8F300381CE4 /* setting_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 591680BF1839E8F300381CE4 /* setting_back.png */; };
@@ -384,6 +401,10 @@
 		2B16549D1863234D00985C54 /* ScorePoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScorePoint.m; sourceTree = "<group>"; };
 		2B16549F186323B500985C54 /* EvaluateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvaluateCell.h; sourceTree = "<group>"; };
 		2B1654A0186323B500985C54 /* EvaluateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaluateCell.m; sourceTree = "<group>"; };
+		2B7D6E3818759A7900836899 /* ChooseCourseListResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCourseListResult.h; sourceTree = "<group>"; };
+		2B7D6E3918759A7900836899 /* ChooseCourseListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCourseListResult.m; sourceTree = "<group>"; };
+		2B7D6E3B18759AAC00836899 /* SingleChooseCourseDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleChooseCourseDataObject.h; sourceTree = "<group>"; };
+		2B7D6E3C18759AAC00836899 /* SingleChooseCourseDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleChooseCourseDataObject.m; sourceTree = "<group>"; };
 		2B98B0F91839DAD900EBA2E0 /* SetUpView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetUpView.h; sourceTree = "<group>"; };
 		2B98B0FA1839DAD900EBA2E0 /* SetUpView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetUpView.m; sourceTree = "<group>"; };
 		2BB815381830AD7B00736512 /* Dao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dao.h; sourceTree = "<group>"; };
@@ -400,12 +421,30 @@
 		2BB815441830AE0200736512 /* SysbsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SysbsModel.m; sourceTree = "<group>"; };
 		2BB815451830AE0200736512 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		2BB815461830AE0200736512 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		2BBA3F6D1876DA5400AC25B3 /* SingleCourseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleCourseCell.h; sourceTree = "<group>"; };
+		2BBA3F6E1876DA5400AC25B3 /* SingleCourseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleCourseCell.m; sourceTree = "<group>"; };
+		2BBA3F701876DDCE00AC25B3 /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
+		2BBA3F711876DDCE00AC25B3 /* button_choose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_choose.png; sourceTree = "<group>"; };
+		2BBA3F721876DDCE00AC25B3 /* button_chosen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_chosen.png; sourceTree = "<group>"; };
+		2BBA3F731876DDCE00AC25B3 /* button_outdate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_outdate.png; sourceTree = "<group>"; };
+		2BBA3F741876DDCE00AC25B3 /* head.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = head.jpg; sourceTree = "<group>"; };
+		2BBA3F751876DDCE00AC25B3 /* time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = time.png; sourceTree = "<group>"; };
+		2BBA3F761876DDCE00AC25B3 /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
+		2BBA3F771876DDCE00AC25B3 /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = triangle.png; sourceTree = "<group>"; };
+		2BBA3F781876DDCE00AC25B3 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
+		2BBA3F791876DDCE00AC25B3 /* yixuan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yixuan.png; sourceTree = "<group>"; };
+		2BBA3F841878017F00AC25B3 /* tanchuang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tanchuang.png; sourceTree = "<group>"; };
 		2BEC7C77186810100007972A /* NoticeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeData.h; sourceTree = "<group>"; };
 		2BEC7C78186810100007972A /* NoticeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeData.m; sourceTree = "<group>"; };
 		2BEC7C7A186812170007972A /* AllNoticeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNoticeData.h; sourceTree = "<group>"; };
 		2BEC7C7B186812170007972A /* AllNoticeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNoticeData.m; sourceTree = "<group>"; };
 		2BEC7C7D1868255D0007972A /* EvaluationDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvaluationDataModel.h; sourceTree = "<group>"; };
 		2BEC7C7E1868255D0007972A /* EvaluationDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaluationDataModel.m; sourceTree = "<group>"; };
+		2BF802B81872523F0085D148 /* CourseLIstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseLIstViewController.h; sourceTree = "<group>"; };
+		2BF802B91872523F0085D148 /* CourseLIstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseLIstViewController.m; sourceTree = "<group>"; };
+		2BF802BB187252500085D148 /* CourseDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseDetailViewController.h; sourceTree = "<group>"; };
+		2BF802BC187252500085D148 /* CourseDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseDetailViewController.m; sourceTree = "<group>"; };
+		2BF802BE187255370085D148 /* CourseList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseList.xib; sourceTree = "<group>"; };
 		590367B31841E1D000C4D1D0 /* schedule.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = schedule.png; sourceTree = "<group>"; };
 		590367B41841E1D000C4D1D0 /* schedule@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "schedule@2x.png"; sourceTree = "<group>"; };
 		591680BF1839E8F300381CE4 /* setting_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_back.png; sourceTree = "<group>"; };
@@ -907,6 +946,10 @@
 				2BEC7C7B186812170007972A /* AllNoticeData.m */,
 				2BEC7C7D1868255D0007972A /* EvaluationDataModel.h */,
 				2BEC7C7E1868255D0007972A /* EvaluationDataModel.m */,
+				2B7D6E3818759A7900836899 /* ChooseCourseListResult.h */,
+				2B7D6E3B18759AAC00836899 /* SingleChooseCourseDataObject.h */,
+				2B7D6E3C18759AAC00836899 /* SingleChooseCourseDataObject.m */,
+				2B7D6E3918759A7900836899 /* ChooseCourseListResult.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -918,6 +961,31 @@
 				2BB815391830AD7B00736512 /* Dao.m */,
 			);
 			name = Net;
+			sourceTree = "<group>";
+		};
+		2BF802B71872521D0085D148 /* ChooseCourse */ = {
+			isa = PBXGroup;
+			children = (
+				2BBA3F841878017F00AC25B3 /* tanchuang.png */,
+				2BBA3F701876DDCE00AC25B3 /* bg.jpg */,
+				2BBA3F711876DDCE00AC25B3 /* button_choose.png */,
+				2BBA3F721876DDCE00AC25B3 /* button_chosen.png */,
+				2BBA3F731876DDCE00AC25B3 /* button_outdate.png */,
+				2BBA3F741876DDCE00AC25B3 /* head.jpg */,
+				2BBA3F751876DDCE00AC25B3 /* time.png */,
+				2BBA3F761876DDCE00AC25B3 /* title.png */,
+				2BBA3F771876DDCE00AC25B3 /* triangle.png */,
+				2BBA3F781876DDCE00AC25B3 /* user.png */,
+				2BBA3F791876DDCE00AC25B3 /* yixuan.png */,
+				2BF802B81872523F0085D148 /* CourseLIstViewController.h */,
+				2BF802B91872523F0085D148 /* CourseLIstViewController.m */,
+				2BF802BB187252500085D148 /* CourseDetailViewController.h */,
+				2BF802BC187252500085D148 /* CourseDetailViewController.m */,
+				2BF802BE187255370085D148 /* CourseList.xib */,
+				2BBA3F6D1876DA5400AC25B3 /* SingleCourseCell.h */,
+				2BBA3F6E1876DA5400AC25B3 /* SingleCourseCell.m */,
+			);
+			name = ChooseCourse;
 			sourceTree = "<group>";
 		};
 		59082C09183B3A810005BF6C /* notice&menu */ = {
@@ -1618,6 +1686,7 @@
 		9CBD164F181E69D000075BDF /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2BF802B71872521D0085D148 /* ChooseCourse */,
 				9CF2D6581839FF580026502F /* Search */,
 				2B98B0F81839DA8100EBA2E0 /* SetUp */,
 				599703071835FF4800EB9DF6 /* NoticeCenter */,
@@ -1778,6 +1847,7 @@
 				9C52ADCD183F33290017EB07 /* news center-next mail.png in Resources */,
 				9C52AE27183F353D0017EB07 /* ppt_toolbox_eraser_delete_all@2x.png in Resources */,
 				9C111B7D1842035C001E536A /* pack_up@2x.png in Resources */,
+				2BBA3F7C1876DDCE00AC25B3 /* button_chosen.png in Resources */,
 				2B5AA8CA1830ECBB00CC0DBD /* LoginViewController.xib in Resources */,
 				9C0F8AE11827636200FEFABA /* Reader-Mark-Y@2x.png in Resources */,
 				9C52AD42183F327D0017EB07 /* ppt_indicator_left_arrow@2x.png in Resources */,
@@ -1789,6 +1859,8 @@
 				9C111B9718420F62001E536A /* ppt_toolbox_brush_active@2x.png in Resources */,
 				9C52AD51183F327D0017EB07 /* ppt_popup_bg.png in Resources */,
 				591E5D54183F6921000B9824 /* line_head.png in Resources */,
+				2BBA3F7D1876DDCE00AC25B3 /* button_outdate.png in Resources */,
+				2BBA3F851878017F00AC25B3 /* tanchuang.png in Resources */,
 				9C52AD41183F327D0017EB07 /* ppt_indicator_left_arrow.png in Resources */,
 				9C52AE1B183F35280017EB07 /* ppt_toolbox_eraser_delete_all.png in Resources */,
 				9C111BC4184235B9001E536A /* button_log_in@2x.png in Resources */,
@@ -1806,6 +1878,7 @@
 				9C52AD4A183F327D0017EB07 /* ppt_nav_bar@2x.png in Resources */,
 				591680C01839E8F300381CE4 /* setting_back.png in Resources */,
 				9C52AD4D183F327D0017EB07 /* ppt_nav_bookmark.png in Resources */,
+				2BBA3F7F1876DDCE00AC25B3 /* time.png in Resources */,
 				9C52ADD2183F33290017EB07 /* news center-pen@2x.png in Resources */,
 				9C0F8ADA1827636200FEFABA /* Reader-Button-N.png in Resources */,
 				591E5D4E183F691A000B9824 /* background_drawer.png in Resources */,
@@ -1900,6 +1973,7 @@
 				9C52AD9C183F32AC0017EB07 /* bookmark_edit_nav_bar@2x.png in Resources */,
 				9C111BB718422855001E536A /* background@2x.png in Resources */,
 				9C52AD46183F327D0017EB07 /* ppt_indicator_right_arrow@2x.png in Resources */,
+				2BBA3F821876DDCE00AC25B3 /* user.png in Resources */,
 				591E5D1A183F5EEC000B9824 /* course_back.png in Resources */,
 				9C111B7A1842035C001E536A /* edit_off@2x.png in Resources */,
 				591E5D46183F6913000B9824 /* pingjiao_pressed.png in Resources */,
@@ -1918,6 +1992,7 @@
 				9C0F8ADE1827636200FEFABA /* Reader-Mark-N.png in Resources */,
 				9C0F8AE51827636200FEFABA /* Reader-Thumbs@2x.png in Resources */,
 				9C52ADC2183F33290017EB07 /* news center-calender@2x.png in Resources */,
+				2BBA3F7B1876DDCE00AC25B3 /* button_choose.png in Resources */,
 				9C52AD47183F327D0017EB07 /* ppt_nav_back.png in Resources */,
 				9C111BB818422855001E536A /* text_field@2x.png in Resources */,
 				9C52AD40183F327D0017EB07 /* ppt_indicator_grey@2x.png in Resources */,
@@ -1955,6 +2030,7 @@
 				9C111BD918423A21001E536A /* entry.png in Resources */,
 				2B165496186322B300985C54 /* submit.png in Resources */,
 				9C111BA618420F62001E536A /* ppt_toolbox_pencil_active.png in Resources */,
+				2BBA3F801876DDCE00AC25B3 /* title.png in Resources */,
 				591E5D49183F6913000B9824 /* ppt_pressed@2x.png in Resources */,
 				2B1654461862AFDC00985C54 /* EvaluatePage.xib in Resources */,
 				9C52AD3D183F327D0017EB07 /* ppt_indicator_bg.png in Resources */,
@@ -1974,6 +2050,7 @@
 				9C52ADCE183F33290017EB07 /* news center-next mail@2x.png in Resources */,
 				9C111BA518420F62001E536A /* ppt_toolbox_eraser@2x.png in Resources */,
 				9C111BC6184235B9001E536A /* check_box_yes@2x.png in Resources */,
+				2BF802BF187255370085D148 /* CourseList.xib in Resources */,
 				9C111BDE18423A21001E536A /* ppt_toolbox_bg@2x.png in Resources */,
 				9C52AD64183F327D0017EB07 /* ppt_toolbox_colorpicker_unfold@2x.png in Resources */,
 				9C0F8AE61827636200FEFABA /* Reader-Button-H.png in Resources */,
@@ -1988,12 +2065,16 @@
 				9C52AD83183F32A30017EB07 /* bookmark_item_bg.png in Resources */,
 				591E5D57183F6921000B9824 /* line_news@2x.png in Resources */,
 				9C111BA218420F62001E536A /* ppt_toolbox_eraser_active.png in Resources */,
+				2BBA3F7E1876DDCE00AC25B3 /* head.jpg in Resources */,
 				9C52AE0A183F33BA0017EB07 /* setting_switch_on@2x.png in Resources */,
+				2BBA3F831876DDCE00AC25B3 /* yixuan.png in Resources */,
 				591E5D4F183F691A000B9824 /* background_drawer@2x.png in Resources */,
 				9C52AD55183F327D0017EB07 /* ppt_toolbox_black.png in Resources */,
 				9C111BB41842237A001E536A /* logo@2x.png in Resources */,
 				9CBD164A181E69B900075BDF /* download_ppt.png in Resources */,
 				9C111BC2184235B9001E536A /* background.png in Resources */,
+				2BBA3F811876DDCE00AC25B3 /* triangle.png in Resources */,
+				2BBA3F7A1876DDCE00AC25B3 /* bg.jpg in Resources */,
 				9C52AE04183F33BA0017EB07 /* setting_right_arrow@2x.png in Resources */,
 				9CBD164B181E69B900075BDF /* download_ppt@2x.png in Resources */,
 				9C111BAA18420F62001E536A /* ppt_toolbox_recorder_active.png in Resources */,
@@ -2033,16 +2114,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B7D6E3A18759A7900836899 /* ChooseCourseListResult.m in Sources */,
 				2B98B0FC1839DAD900EBA2E0 /* SetUpView.m in Sources */,
 				9CF2D65B1839FF810026502F /* SearchViewController.m in Sources */,
 				59D096D81836004D0097C6AC /* EvaluateController.m in Sources */,
 				9C51E8031844464A003F2130 /* MRProgressOverlayView.m in Sources */,
+				2BBA3F6F1876DA5400AC25B3 /* SingleCourseCell.m in Sources */,
 				2B5AA8C91830EBFC00CC0DBD /* LoginViewController.m in Sources */,
+				2B7D6E3D18759AAC00836899 /* SingleChooseCourseDataObject.m in Sources */,
 				591E5D07183F43A4000B9824 /* NoticeController.m in Sources */,
 				5931752C181F8E4B000BBC4F /* DDMenuController.m in Sources */,
 				9C0F8AB0181F5BC100FEFABA /* CoursewareItem.m in Sources */,
 				9C0F8AB3181FB88C00FEFABA /* CoursewareViewController.m in Sources */,
 				2BB8153A1830AD7C00736512 /* Dao.m in Sources */,
+				2BF802BD187252500085D148 /* CourseDetailViewController.m in Sources */,
 				2BB8154A1830AE0200736512 /* RecommendBook.m in Sources */,
 				9C51BF8B182B80BF0071A1D1 /* MarkToolBar.m in Sources */,
 				9CBD1619181E695900075BDF /* ReaderConstants.m in Sources */,
@@ -2127,6 +2212,7 @@
 				9C51BF8E182C97DB0071A1D1 /* NoteToolDrawerBar.m in Sources */,
 				9CBD163F181E699D00075BDF /* ASIHTTPRequest.m in Sources */,
 				9CBD1593181E4DFB00075BDF /* main.m in Sources */,
+				2BF802BA1872523F0085D148 /* CourseLIstViewController.m in Sources */,
 				9CBD161D181E695900075BDF /* ReaderMainPagebar.m in Sources */,
 				9CB9908D183E386E0082BAF5 /* ChangePswViewController.m in Sources */,
 			);
