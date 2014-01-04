@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CourseLIstViewController">
             <connections>
+                <outlet property="alreadyChoose" destination="oh0-Pb-3vL" id="KC6-i7-GAU"/>
                 <outlet property="tableView" destination="vfR-5c-uhB" id="dXe-BJ-ddM"/>
                 <outlet property="view" destination="Rbc-Ve-ZRX" id="7Hy-HU-MpV"/>
             </connections>
@@ -18,6 +19,12 @@
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="467-rF-qFS" userLabel="left">
                     <rect key="frame" x="0.0" y="60" width="200" height="708"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oh0-Pb-3vL">
+                            <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        </scrollView>
+                    </subviews>
                     <color key="backgroundColor" red="0.11293373915424723" green="0.16097337372448983" blue="0.063420228161129327" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="vfR-5c-uhB">

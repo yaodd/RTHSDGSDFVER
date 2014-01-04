@@ -397,12 +397,6 @@ filename:(NSString*)filename{
             one.courseName = [onedict objectForKey:@"coursename"];
             one.courseDescription = [onedict objectForKey:@"coursedescrition"];
             one.location = [onedict objectForKey:@"location"];
-            if([one.location  isEqual: @""]){
-                NSLog(@"LOCATIONNULL");
-                one.location = @"慎思园";
-            }else{
-                NSLog(@"LOCATIONNOTNULL%@",one.location);
-            }
             one.startTime = [onedict objectForKey:@"startdate"];
             one.endTime = [onedict objectForKey:@"enddate"];
             [allMyCourse addObject:one];

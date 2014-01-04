@@ -88,7 +88,9 @@
     [self.scrollView addSubview:mainView];
     
     mainImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, MAIN_VIEW_IMAGE_WIDTH, MAIN_VIEW_HEIGHT)];
+    //妈蛋这命名。。。
     [mainImageView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"image01"]]];
+    
     UIBezierPath *maskPath1 = [UIBezierPath bezierPathWithRoundedRect:mainImageView.bounds byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerTopLeft) cornerRadii:CGSizeMake(20, 20)];
     CAShapeLayer *maskLayer1 = [[CAShapeLayer alloc]init];
     maskLayer1.frame = mainImageView.bounds;
@@ -111,7 +113,7 @@
     
     courseLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelStartX, labelTopY, 200, 40)];
     UIColor *redColor = [UIColor colorWithRed:198.0/255 green:56.0/255 blue:91.0/255 alpha:1.0];
-    [courseLabel setText:@"战略管理"];
+    //[courseLabel setText:@"战略管理"];
     UIFont *font = [UIFont systemFontOfSize:36];
     [courseLabel setFont:font];
     [courseLabel setBackgroundColor:[UIColor clearColor]];
@@ -120,7 +122,7 @@
     [self.courseImageView addSubview:courseLabel];
     
     teachLabel = [[UILabel alloc]initWithFrame:CGRectMake(courseImageView.frame.size.width - 41 - 200, labelTopY + 13, 200, 20)];
-    [teachLabel setText:@"李飞教授"];
+    //[teachLabel setText:@"李飞教授"];
     [teachLabel setFont:[UIFont systemFontOfSize:18]];
     [teachLabel setTextAlignment:NSTextAlignmentRight];
     [teachLabel setTextColor:redColor];
@@ -128,14 +130,15 @@
     
     labelTopY += (40 + 19);
     classRoomLabel= [[UILabel alloc]initWithFrame:CGRectMake(labelStartX, labelTopY, 200, 20)];
-    [classRoomLabel setText:@"善衡堂M101"];
+    //[classRoomLabel setText:@"善衡堂M101"];
     [classRoomLabel setFont:[UIFont systemFontOfSize:18]];
     [classRoomLabel setTextColor:redColor];
     [classRoomLabel setTextAlignment:NSTextAlignmentLeft];
     [self.courseImageView addSubview:classRoomLabel];
     
     dateLabel= [[UILabel alloc]initWithFrame:CGRectMake(courseImageView.frame.size.width - 41 - 300, labelTopY, 300, 20)];
-    [dateLabel setText:@"9月1日----10月1日"];
+    
+    //[dateLabel setText:@"9月1日----10月1日"];
     [dateLabel setFont:[UIFont systemFontOfSize:18]];
     [dateLabel setTextAlignment:NSTextAlignmentRight];
     [dateLabel setTextColor:redColor];
@@ -214,16 +217,21 @@
 
 - (void)initCourse{
     int courseNumber = [courseArray count];
-    NSLog(@"initCourse%d",courseNumber);
 
     NSLog(@"courseNumber %d",courseNumber);
     int rowNum = (courseNumber % 4 == 0) ? (courseNumber / 4) : (courseNumber / 4 + 1);
     [self.scrollView setContentSize:CGSizeMake(1024, START_Y + MAIN_VIEW_HEIGHT + SPACE_OUT + rowNum * (COURSE_ITEM_LENGTH + SPACE_IN))];
+    //你真强。。。
     NSArray *array = [NSArray arrayWithObjects:@"lixinchun",@"lutaihong",@"maoyunshi", nil];
+    
     for (int i = 0;  i < courseNumber; i ++) {
         Course *course = [courseArray objectAtIndex:i];
-        UIImage *image = [UIImage imageNamed:[array objectAtIndex:i]];
+        NSLog(@"这是崩了吧？%d",i);
+        //妈蛋 。。arr 你妹啊。。死数据还这样写。。。真是给跪了。。
+        UIImage *image = [UIImage imageNamed:[array objectAtIndex:(i%3)]];
+        //妈蛋加死数据也不是你这样加的啊我草。。
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",@"2013/11/11",@"date",image,@"courseImage",course.teacherName,@"teachName", nil];
+        
         CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(START_X + (i % 4) * (COURSE_ITEM_LENGTH + SPACE_IN),START_Y + MAIN_VIEW_HEIGHT + SPACE_OUT + (i / 4) * (COURSE_ITEM_LENGTH + SPACE_IN), COURSE_ITEM_LENGTH, COURSE_ITEM_LENGTH) :dict];
         UITapGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
         NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:course.cid],@"tag", nil];
@@ -231,6 +239,7 @@
         [courseItem addGestureRecognizer:singleTapGesture];
         [self.scrollView addSubview:courseItem];
     }
+    NSLog(@"WHAT THE FUCK...");
     [self saveCatchToFile];
     [self downloadAll];
 }
@@ -243,6 +252,8 @@
 //跳转到课件页面
 - (void)jumpToCourseware:(id)sender
 {
+    
+    NSLog(@"tiaozhuandaokejian");
     UITapGestureRecognizer *gesture = (UITapGestureRecognizer *)sender;
     NSDictionary *myDict = gesture.myDict;
     int index = [(NSNumber *)[myDict objectForKey:@"tag"] integerValue];
@@ -395,6 +406,8 @@
     [myCourse setCourses:courseArr];
     sysbsModel.myCourse = myCourse;
     //NSLog(@"getCatch %d %d %d",[courseArr count],[myCourse.courseArr count],[[sysbsModel.myCourse courseArr] count]);
+    SysbsModel *model = [SysbsModel getSysbsModel];
+    NSLog(@"userid!%d",model.user.uid);
 }
 
 

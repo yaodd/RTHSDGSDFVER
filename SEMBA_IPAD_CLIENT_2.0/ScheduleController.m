@@ -87,8 +87,12 @@
         celldata.name = course.courseName;
         NSRange range = NSMakeRange(5, 2);
         NSString *month = [course.startTime substringWithRange:range];
+        NSString *first = [month substringWithRange:NSMakeRange(0, 1)];
+        if([first compare:@"0"] == NSOrderedSame){
+            month = [month substringWithRange:NSMakeRange(1, 1)];
+        }
         celldata.month =
-        [NSString stringWithFormat:@"%@月",month];
+            [NSString stringWithFormat:@"%@月",month];
         //@"11月";
         celldata.place = [NSString stringWithFormat:@"地点:%@",course.location];
         //@"";

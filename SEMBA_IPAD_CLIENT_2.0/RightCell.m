@@ -37,7 +37,7 @@
         
         contentBg = [[UIImageView alloc] initWithFrame:CGRectMake(103, 0, 426, 171)];
         //背景图
-        contentBg.image = [UIImage imageNamed:@"course_couyrse"];
+        contentBg.image = [UIImage imageNamed:@"bubble_schedule_right"];
         contentBg.backgroundColor = [UIColor clearColor];
         [self addSubview:contentBg];
         
