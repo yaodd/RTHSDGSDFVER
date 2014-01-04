@@ -14,7 +14,7 @@
 #import "MRProgressOverlayView.h"
 
 @interface CourseLIstViewController (){
-    NSMutableArray *dataArr;
+    NSArray *dataArr;
     MRProgressOverlayView *overlayView;
 }
 
@@ -40,14 +40,14 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
-    dataArr = [[NSMutableArray alloc]init];
+    dataArr = [[NSArray alloc]init];
+    [self fetchAndLoadData];
+    /*
     NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(fetchAndLoadData) object:nil];
-    [thread start];
+    [thread start];*/
 }
 
--(void)LoadingData{
-    
-}
+
 
 -(void)fetchAndLoadData{
     
@@ -78,9 +78,9 @@
 -(void)updateContent{
     SysbsModel *model = [SysbsModel getSysbsModel];
     ChooseCourseListResult *result = model.chooseCourseListResult;
-    NSMutableArray *arr = result.arr;
+    NSArray *arr = result.arr;
     //int l = [arr count];
-    dataArr = arr;
+    dataArr = [NSArray arrayWithArray:arr];
     [_tableView reloadData];
 }
 
@@ -122,7 +122,6 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"selected %d",indexPath.row);
     CourseDetailViewController *controller = [[CourseDetailViewController alloc]initWithNibName:Nil bundle:nil courseid:indexPath.row];
     [self.navigationController pushViewController:controller animated:NO];
 }

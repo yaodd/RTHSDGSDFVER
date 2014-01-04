@@ -13,6 +13,7 @@
 
 @interface EvaluateController (){
     MRProgressOverlayView *overlayView;
+    int current_index ;
 }
 
 @end
@@ -23,6 +24,11 @@
 @synthesize scoreArray = _scoreArray;
 @synthesize scrollView = _scrollView;
 @synthesize suggestTextView = _suggestTextView;
+@synthesize courseDescription = _courseDescription;
+@synthesize courseAndTeacherName = _courseAndTeacherName;
+@synthesize teacherHead = _teacherHead;
+@synthesize classDateLabel = _classDateLabel;
+@synthesize classNumLabel = _classNumLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,9 +42,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    current_index = -1;
     //_selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 196, 44)];
     //[_scrollView addSubview:_selectView];
+    
     NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:@"10",@"9",@"8",@"7",@"6",@"5",@"4",@"3",@"2",@"1", nil];
     ScorePoint *point1 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 402, 32, 32)];
     [point1 setDataArray:array];
@@ -84,11 +91,18 @@
     [_scoreArray addObject:point10];
     
     _selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 240, 44)];
+    _selectView.delegate = self;
+    
     [_scrollView addSubview:_selectView];
     
     _suggestTextView.layer.borderColor = [UIColor grayColor].CGColor;
     _suggestTextView.layer.borderWidth = 1.0f;
     _suggestTextView.layer.cornerRadius = 5.0f;
+    
+    [_upEvaluationButton addTarget:self action:@selector(upEvaluation:) forControlEvents:UIControlEventTouchUpInside];
+    SysbsModel *model = [SysbsModel getSysbsModel];
+    NSString *class_num = [NSString stringWithFormat:@"班级：黄埔%d期",model.user.class_num];
+    _classNumLabel.text = class_num;
     NSThread *thread =[[NSThread alloc]initWithTarget:self selector:@selector(setData) object:nil];
     [thread start];
 }
@@ -113,17 +127,15 @@
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         NSArray *data = model.EvaluationList;
         int l = [data count];
-        NSLog(@"evaluationlist%d",l);
-        for ( int i = 0 ; i < l ; ++ i){
+                for ( int i = 0 ; i < l ; ++ i){
             EvaluationDataModel *onedata = (EvaluationDataModel *)[data objectAtIndex:i];
             NSString *oneString = [NSString stringWithFormat:@" %@ %@",onedata.courseName,onedata.teacherName];
             [arr  addObject:oneString];
-            NSLog(@"pingjiaoxiang%@",oneString);
         }
         
         [_selectView setData:arr];
     }else if( ret == 0 ){
-    
+        
     }else if( ret == -1 ){
         
     }
@@ -134,6 +146,76 @@
 
 -(void)Dismiss{
     [overlayView dismiss:YES];
+    if(overlayView.superview != nil)
+        [overlayView removeFromSuperview];
+}
+
+-(void)uploadEvaluation{
+    overlayView = [[MRProgressOverlayView alloc]init];
+    overlayView.mode = MRProgressOverlayViewModeIndeterminate;
+    [self.view addSubview:overlayView];
+    
+    Dao *dao =[Dao sharedDao ];
+    SysbsModel *model = [SysbsModel getSysbsModel];
+    NSArray *arr = model.EvaluationList;
+    EvaluationDataModel *onedata = [arr objectAtIndex:current_index];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"正在评教" message:@"正在发送网络请求请耐心等待，完成后将有提示。" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+    [alertView show];
+    int rs = [dao requestForUpEvaluation:model.user.uid eid:onedata.eid one:[((ScorePoint*)[_scoreArray objectAtIndex:0]).selectedLabel.text intValue] two:[((ScorePoint*)[_scoreArray objectAtIndex:1]).selectedLabel.text intValue] three:[((ScorePoint*)[_scoreArray objectAtIndex:2]).selectedLabel.text intValue] four:[((ScorePoint*)[_scoreArray objectAtIndex:3]).selectedLabel.text intValue] five:[((ScorePoint*)[_scoreArray objectAtIndex:4]).selectedLabel.text intValue] six:[((ScorePoint*)[_scoreArray objectAtIndex:5]).selectedLabel.text intValue] seven:[((ScorePoint*)[_scoreArray objectAtIndex:6]).selectedLabel.text intValue] eight:[((ScorePoint*)[_scoreArray objectAtIndex:7]).selectedLabel.text intValue] nine:[((ScorePoint*)[_scoreArray objectAtIndex:8]).selectedLabel.text intValue] ten:[((ScorePoint*)[_scoreArray objectAtIndex:9]).selectedLabel.text intValue] suggestText:_suggestTextView.text];
+    if(rs == 1){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"评教已经成功" message:@"评教已经成功返回可继续其他评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
+                for (int i = 0 ; i <[_scoreArray count];++i){
+            ScorePoint *point = [_scoreArray objectAtIndex:i];
+            point.selectedLabel.text = @"10";
+            _selectView.selectedLabel.text = @"无";
+        }
+        [self setData];
+
+        _suggestTextView.text = @"";
+    }else if(rs == -1){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"评教失败" message:@"服务器故障" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
+    }else if(rs == -2){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"评教失败" message:@"你已经评教过了" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"评教失败" message:@"网络或者服务器故障了" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
+
+    }
+    [overlayView dismiss:YES];
+    if(overlayView.superview != nil)
+        [overlayView removeFromSuperview];
+    NSLog(@"uploadfinish %d" ,rs);
+}
+
+-(void)upEvaluation:(id)sender{
+    if(current_index < 0){
+        NSLog(@"current_index < 0");
+        return ;
+    }
+    //NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(uploadEvaluation) object:nil];
+    //[thread start];
+    [self uploadEvaluation];
+}
+
+-(void)selectSomeItem:(int)index{
+    SysbsModel *model = [SysbsModel getSysbsModel];
+    NSArray *arr = model.EvaluationList;
+    EvaluationDataModel *onedata = [arr objectAtIndex:index];
+    NSString *string = [NSString stringWithFormat:@"%@ %@",onedata.courseName,onedata.teacherName];
+    _courseAndTeacherName.text = string;
+    MyCourse *myCourse = model.myCourse;
+    Course *course = [myCourse findCourse:onedata.cid];
+    _courseDescription.text  = course.courseDescription;
+    if([course.startTime length]>=10 && [course.endTime length]>=10){
+        NSString *startdate = [course.startTime substringWithRange:NSMakeRange(5, 5)];
+        NSString *enddate  = [course.endTime substringWithRange:NSMakeRange(5, 5)];
+        NSString* showdate = [NSString stringWithFormat:@"%@到%@",startdate,enddate];
+        _classDateLabel.text = showdate;
+    }
+    current_index = index;
 }
 
 

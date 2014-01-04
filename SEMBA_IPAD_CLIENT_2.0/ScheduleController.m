@@ -78,12 +78,17 @@
         originY += kDistanceOfCells;
         Course *course = ((Course*)[_dataArray objectAtIndex:i]);
         CellData* celldata = [[CellData alloc] init];
-        NSString *startDate = [course.startTime substringWithRange:NSMakeRange(0, 10)];
-        NSString *endDate = [course.endTime substringWithRange:NSMakeRange(0, 10)];
-        celldata.date =
+        if([course.startTime length]>=10 && [course.endTime length] >=10 ){
+            NSString *startDate = [course.startTime substringWithRange:NSMakeRange(0, 10)];
+            NSString *endDate = [course.endTime substringWithRange:NSMakeRange(0, 10)];
+        
+            celldata.date =
         //@"123";
-        [NSString stringWithFormat:@"日期:%@——%@",startDate,endDate];
+            [NSString stringWithFormat:@"日期:%@——%@",startDate,endDate];
         //course.startTime;
+        }else{
+            celldata.date = @"系统数据错误";
+        }
         celldata.name = course.courseName;
         NSRange range = NSMakeRange(5, 2);
         NSString *month = [course.startTime substringWithRange:range];

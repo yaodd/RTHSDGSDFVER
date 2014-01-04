@@ -141,7 +141,10 @@
  * -1  代表服务器出错
  **/
 
--(int)requestForUpEvaluation:(int)uid;
+-(int)requestForUpEvaluation:(int)uid eid:(int)cid one:(int)one two:(int)two
+                       three:(int)three four:(int)four five:(int)five six:(int)six
+                       seven:(int)seven eight:(int)eight nine:(int)nine ten:(int)ten
+                 suggestText:(NSString*)text;
 /** 获取评教列表
  *返回
  * 1   代表成功获取 通过getModel可获取

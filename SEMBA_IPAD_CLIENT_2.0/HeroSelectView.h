@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HeroSelectView : UIView <UITableViewDataSource,UITableViewDelegate>
+@protocol HeroSelectDelegate <NSObject>
+@optional
+-(void)selectSomeItem:(int)index;
+@end
 
+@interface HeroSelectView : UIView <UITableViewDataSource,UITableViewDelegate>
+@property id<HeroSelectDelegate> delegate;
 @property (nonatomic,strong)UILabel *selectedLabel;
 @property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray *dataArray;

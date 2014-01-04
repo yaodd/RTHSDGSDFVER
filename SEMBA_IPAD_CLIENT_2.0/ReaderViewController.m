@@ -2009,7 +2009,6 @@
     [UIView commitAnimations];
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-//    NSLog(@"CANPASS手势给别人么？");
     return NO;
 }
 

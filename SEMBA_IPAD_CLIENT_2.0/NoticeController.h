@@ -18,4 +18,6 @@
 @property (nonatomic, retain) NSMutableArray *dataArray;
 @property (nonatomic, retain) NSMutableArray *originDataArray;
 
+- (void)setData;
+
 @end

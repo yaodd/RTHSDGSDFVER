@@ -6,8 +6,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EvaluateController">
             <connections>
+                <outlet property="classDateLabel" destination="Z9M-HX-zCZ" id="Q2N-WP-By8"/>
+                <outlet property="classNumLabel" destination="hgv-vy-xWT" id="k2d-UU-spr"/>
+                <outlet property="courseAndTeacherName" destination="NtM-fp-zWy" id="4qL-2z-7dU"/>
+                <outlet property="courseDescription" destination="O2p-x5-cyE" id="3Az-T5-xHt"/>
                 <outlet property="scrollView" destination="e4z-e2-FT7" id="9DO-ji-Udr"/>
                 <outlet property="suggestTextView" destination="N4v-Xn-lgV" id="w1q-b9-Ong"/>
+                <outlet property="teacherHead" destination="sBX-ay-zHT" id="3VH-QV-JAa"/>
+                <outlet property="upEvaluationButton" destination="sHo-V5-0n6" id="zDv-Bg-RpO"/>
                 <outlet property="view" destination="tUh-fl-zPU" id="aeh-3h-sCQ"/>
             </connections>
         </placeholder>
@@ -31,7 +37,7 @@
                             <color key="textColor" red="1" green="0.070676347978522513" blue="0.39132564422382765" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="班级： 黄埔 35 期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hgv-vy-xWT">
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="班级： 黄埔 x 期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hgv-vy-xWT">
                             <rect key="frame" x="80" y="145" width="159" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -67,7 +73,6 @@
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" showsHorizontalScrollIndicator="NO" id="O2p-x5-cyE">
                                     <rect key="frame" x="408" y="40" width="475" height="124"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

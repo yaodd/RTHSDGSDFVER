@@ -10,6 +10,6 @@
 
 @interface ChooseCourseListResult : NSObject
 
-@property (nonatomic)NSMutableArray *arr;
+@property (nonatomic)NSArray *arr;
 
 @end

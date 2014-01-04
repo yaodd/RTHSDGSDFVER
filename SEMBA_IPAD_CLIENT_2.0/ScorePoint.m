@@ -48,7 +48,7 @@
 -(void)dropDownTable:(id)sender{
     if(_tableView.hidden == YES){
         _tableView.hidden = NO;
-        self.frame = CGRectMake(self.frame.origin.x,self.frame.origin.y, self.frame.size.width, self.frame.size.height *4);
+        self.frame = CGRectMake(self.frame.origin.x,self.frame.origin.y, self.frame.size.width, self.frame.size.height * 4);
         [_tableView reloadData];
     }
     else{
@@ -62,7 +62,7 @@
 }
 
 -(void)setData:(NSMutableArray *)array{
-    NSLog(@"setdata");
+    
     _dataArray = array;
     [_tableView reloadData];
 }
@@ -94,6 +94,7 @@
     NSLog(@"choose%d",indexPath.row);
     _selectedLabel.text = (NSString *)[_dataArray objectAtIndex:indexPath.row];
     _tableView.hidden = YES;
+    self.frame = CGRectMake(self.frame.origin.x,self.frame.origin.y, self.frame.size.width, self.frame.size.height / 4);
 }
 
 

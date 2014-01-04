@@ -85,12 +85,13 @@
     headImg.backgroundColor = [UIColor blackColor];
     [headImg setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"news center-circle on the menu"]]];
     [self.view addSubview:headImg];
-    
+    SysbsModel *model = [SysbsModel getSysbsModel];
     //UserNameLabel
     CGRect nameFrame = CGRectMake(0, 210, menuWidth, 35);
     nameLabel = [[UILabel alloc] init];
     nameLabel.frame = nameFrame;
-    nameLabel.text = @"李开花";
+    nameLabel.text = model.user.username;
+    //nameLabel.text = @"李开花";
     nameLabel.textColor = [UIColor whiteColor];
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.font = [UIFont fontWithName:@"Heiti SC" size:24.0f];
@@ -493,6 +494,8 @@
         }
 
     }else if(indexPath.row == 5){
+        //加载数据
+        [noticeController setData];
         //implement the views' translate
         [hostController.rootViewController.view setHidden:YES];
         

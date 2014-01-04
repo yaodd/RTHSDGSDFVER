@@ -25,9 +25,9 @@
         timeArr = [[NSMutableArray alloc] init];
         courseName = @"";
         courseDescription = @"";
-        _startTime = @"2013-01-01";
-        _endTime = @"2013-01-01";
-        _location = @"单恒堂M101";
+        _startTime = @"";
+        _endTime = @"";
+        _location = @"";
         teacherName = @"";
         return self;
     }

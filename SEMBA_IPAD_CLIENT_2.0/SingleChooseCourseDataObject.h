@@ -12,7 +12,7 @@
 
 @property BOOL haveselected;//yes 代表已选，反之未选。
 @property int cid;
-@property (nonatomic,strong)NSMutableArray *teacherArr;
+@property (nonatomic,strong)NSArray *teacherArr;
 @property (nonatomic,strong)NSString *courseTitle;
 //@property (nonatomic,strong)NSString *courseContent;
 @property (nonatomic,strong)NSString *startdate;

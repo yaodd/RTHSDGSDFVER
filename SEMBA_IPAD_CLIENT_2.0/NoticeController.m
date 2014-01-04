@@ -93,8 +93,10 @@
     overlayView.mode = MRProgressOverlayViewModeIndeterminate;
     [self.view addSubview:overlayView];
     [overlayView show:YES];
-
+    
+    
     int ret = [dao requestForNotices:model.user.uid];
+    
     if(ret == 1){
         self.originDataArray = nil;
         self.originDataArray = [[NSMutableArray alloc]init];
@@ -113,13 +115,14 @@
             [self.originDataArray addObject:item];
         }
         NSLog(@"MSGLEN%d",msgLen);
+        /*
         DataItem *item = [[DataItem alloc] init];
         item.title = @"本地数据";
         item.content = @"本地数据";
         item.date = @"2012-10-23 12:00:00";
         item.isSelected = @"NO";
         [self.originDataArray addObject:item];
-
+         */
         [self.noticeTableView setTableViewData:originDataArray];
         [self.noticeTableView reloadData];
     }else if(ret == 0){

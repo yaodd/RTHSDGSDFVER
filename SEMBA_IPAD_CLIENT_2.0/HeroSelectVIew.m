@@ -15,6 +15,7 @@
 @synthesize selectedLabel = _selectedLabel;
 @synthesize arrow = _arrow;
 @synthesize dataArray = _dataArray;
+@synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -53,12 +54,10 @@
         _tableView.hidden = NO;
         self.frame = CGRectMake(self.frame.origin.x,self.frame.origin.y, self.frame.size.width, self.frame.size.height *4);
         [_tableView reloadData];
-        NSLog(@"dropvisble");
     }
     else{
         _tableView.hidden = YES;
         self.frame = CGRectMake(self.frame.origin.x,self.frame.origin.y, self.frame.size.width, self.frame.size.height / 4);
-        NSLog(@"dropinvisble");
     }
 }
 
@@ -95,6 +94,10 @@
     NSLog(@"choose%d",indexPath.row);
     _selectedLabel.text = (NSString *)[_dataArray objectAtIndex:indexPath.row];
     _tableView.hidden = YES;
+    self.frame = CGRectMake(self.frame.origin.x,self.frame.origin.y, self.frame.size.width, self.frame.size.height / 4);
+    if([_delegate respondsToSelector:@selector(selectSomeItem:)]){
+        [_delegate selectSomeItem:indexPath.row];
+    }
 }
 
 

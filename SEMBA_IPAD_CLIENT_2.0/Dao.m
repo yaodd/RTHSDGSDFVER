@@ -397,6 +397,7 @@ filename:(NSString*)filename{
             one.courseName = [onedict objectForKey:@"coursename"];
             one.courseDescription = [onedict objectForKey:@"coursedescrition"];
             one.location = [onedict objectForKey:@"location"];
+            //NSLog(@"FUCK%@",one.location);
             one.startTime = [onedict objectForKey:@"startdate"];
             one.endTime = [onedict objectForKey:@"enddate"];
             [allMyCourse addObject:one];
@@ -508,22 +509,38 @@ filename:(NSString*)filename{
     return ret;
 }
 
--(int)requestForUpEvaluation:(int)uid{
+-(int)requestForUpEvaluation:(int)uid eid:(int)eid one:(int)one two:(int)two
+                       three:(int)three four:(int)four five:(int)five six:(int)six
+                       seven:(int)seven eight:(int)eight nine:(int)nine ten:(int)ten
+                 suggestText:(NSString*)text;
+{
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,upEvaluationUrl];
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     [dict setObject:[NSNumber numberWithInt:uid] forKey:@"uid"];
-
+    [dict setObject:[NSNumber numberWithInt:eid] forKey:@"eid"];
+    [dict setObject:[NSNumber numberWithInt:one] forKey:@"one"];
+    [dict setObject:[NSNumber numberWithInt:two] forKey:@"two"];
+    [dict setObject:[NSNumber numberWithInt:three] forKey:@"three"];
+    [dict setObject:[NSNumber numberWithInt:four] forKey:@"four"];
+    [dict setObject:[NSNumber numberWithInt:five] forKey:@"five"];
+    [dict setObject:[NSNumber numberWithInt:six] forKey:@"six"];
+    [dict setObject:[NSNumber numberWithInt:seven] forKey:@"seven"];
+    [dict setObject:[NSNumber numberWithInt:eight] forKey:@"eight"];
+    [dict setObject:[NSNumber numberWithInt:nine] forKey:@"nine"];
+    [dict setObject:[NSNumber numberWithInt:ten] forKey:@"ten"];
+    [dict setObject:text forKey:@"comment"];
+    
     NSDictionary *rs = [self request:urlString dict:dict];
     
     int isSuccess = [(NSNumber *) [rs objectForKey:@"isSuccess"] integerValue];
     if(isSuccess > 0){
-        return true;
+        
     }else{
-        return false;
+        
     }
     
-    
+    return isSuccess;
 }
 
 -(int)requestForEvaluationList:(int)uid{
@@ -552,7 +569,8 @@ filename:(NSString*)filename{
             singledata.courseName = (NSString*)[onedict objectForKey:@"coursename"];
             singledata.tid = [ (NSNumber *)[onedict objectForKey:@"tid"] integerValue];
             singledata.cid = [ (NSNumber *) [onedict objectForKey:@"cid"] integerValue];
-            singledata.eid = [ (NSNumber *)[onedict objectForKey:@"eid"] integerValue];
+            singledata.eid = [ (NSNumber *)[onedict objectForKey:@"id"] integerValue];
+            NSLog(@"fuckingeid %d",singledata.eid);
             [arr addObject:singledata];
         }
         model.EvaluationList = arr;

@@ -30,7 +30,9 @@
 #define COURSE_ITEM_LENGTH  238
 
 #define HISTORY_PLIST_KEY   @"history_plist_key"
-@interface MainPageViewController ()
+@interface MainPageViewController (){
+    UILabel *infoLabel;
+}
 
 @end
 
@@ -72,7 +74,7 @@
     [titleLabel setTextColor:[UIColor redColor]];
     [titleLabel setText:@"课程"];
     self.navigationItem.titleView = titleLabel;
-
+    
     UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"search"] style:UIBarButtonItemStyleBordered target:self action:@selector(searchButtonAction:)];
     self.navigationItem.rightBarButtonItem = searchButton;
     
@@ -110,9 +112,9 @@
     CGFloat labelStartX = 41.0f;
     CGFloat labelTopY   = 71.0f;
     
-    
     courseLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelStartX, labelTopY, 200, 40)];
     UIColor *redColor = [UIColor colorWithRed:198.0/255 green:56.0/255 blue:91.0/255 alpha:1.0];
+    
     //[courseLabel setText:@"战略管理"];
     UIFont *font = [UIFont systemFontOfSize:36];
     [courseLabel setFont:font];
@@ -122,6 +124,7 @@
     [self.courseImageView addSubview:courseLabel];
     
     teachLabel = [[UILabel alloc]initWithFrame:CGRectMake(courseImageView.frame.size.width - 41 - 200, labelTopY + 13, 200, 20)];
+    
     //[teachLabel setText:@"李飞教授"];
     [teachLabel setFont:[UIFont systemFontOfSize:18]];
     [teachLabel setTextAlignment:NSTextAlignmentRight];
@@ -130,24 +133,23 @@
     
     labelTopY += (40 + 19);
     classRoomLabel= [[UILabel alloc]initWithFrame:CGRectMake(labelStartX, labelTopY, 200, 20)];
-    //[classRoomLabel setText:@"善衡堂M101"];
+        //[classRoomLabel setText:@"善衡堂M101"];
     [classRoomLabel setFont:[UIFont systemFontOfSize:18]];
     [classRoomLabel setTextColor:redColor];
     [classRoomLabel setTextAlignment:NSTextAlignmentLeft];
     [self.courseImageView addSubview:classRoomLabel];
     
     dateLabel= [[UILabel alloc]initWithFrame:CGRectMake(courseImageView.frame.size.width - 41 - 300, labelTopY, 300, 20)];
-    
-    //[dateLabel setText:@"9月1日----10月1日"];
-    [dateLabel setFont:[UIFont systemFontOfSize:18]];
+        [dateLabel setFont:[UIFont systemFontOfSize:18]];
     [dateLabel setTextAlignment:NSTextAlignmentRight];
     [dateLabel setTextColor:redColor];
     [self.courseImageView addSubview:dateLabel];
     
     labelTopY += (20 + 22);
-    UILabel *infoLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelStartX, labelTopY, courseImageView.frame.size.width - (labelStartX * 2),70)];
-    [infoLabel setText:@"速度速度速度放松放松方式方法是对方未按时大范围阿斯顿发违法斯蒂芬阿瑟发文阿斯顿发违法瑟尔"];
+    infoLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelStartX, labelTopY, courseImageView.frame.size.width - (labelStartX * 2),70)];
+    //[infoLabel setText:@"速度速度速度放松放松方式方法是对方未按时大范围阿斯顿发违法斯蒂芬阿瑟发文阿斯顿发违法瑟尔"];
     [infoLabel setNumberOfLines:0];
+    //......
 //    [infoLabel setTextAlignment:NSTextAlignmentLeft];
     [infoLabel setBackgroundColor:[UIColor clearColor]];
     [infoLabel setTextColor:[UIColor colorWithRed:127.0/255 green:118.0/255 blue:120.0/255 alpha:1.0]];
@@ -159,12 +161,13 @@
     [courseButton setTintColor:[UIColor whiteColor]];
 //    SysbsModel *sysbsModel = [SysbsModel getSysbsModel];
 //    MyCourse *myCourse = sysbsModel.myCourse;
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2],@"cid", nil];
-    [tapGesture setMyDict:dict];
-    [courseButton addGestureRecognizer:tapGesture];
+    //UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
+   //妈蛋又硬编码。。。
+    //NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2],@"cid", nil];
+    //[tapGesture setMyDict:dict];
+    //[courseButton addGestureRecognizer:tapGesture];
     [courseButton setTitle:@"查看相关课件" forState:UIControlStateNormal];
-    [self.courseImageView addSubview:courseButton];
+    //[self.courseImageView addSubview:courseButton];
     
 	// Do any additional setup after loading the view.
 }
@@ -223,26 +226,61 @@
     [self.scrollView setContentSize:CGSizeMake(1024, START_Y + MAIN_VIEW_HEIGHT + SPACE_OUT + rowNum * (COURSE_ITEM_LENGTH + SPACE_IN))];
     //你真强。。。
     NSArray *array = [NSArray arrayWithObjects:@"lixinchun",@"lutaihong",@"maoyunshi", nil];
-    
+    UITapGestureRecognizer * singleTapGesture;
     for (int i = 0;  i < courseNumber; i ++) {
         Course *course = [courseArray objectAtIndex:i];
-        NSLog(@"这是崩了吧？%d",i);
         //妈蛋 。。arr 你妹啊。。死数据还这样写。。。真是给跪了。。
         UIImage *image = [UIImage imageNamed:[array objectAtIndex:(i%3)]];
         //妈蛋加死数据也不是你这样加的啊我草。。
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",@"2013/11/11",@"date",image,@"courseImage",course.teacherName,@"teachName", nil];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",course.startTime,@"date",image,@"courseImage",course.teacherName,@"teachName", nil];
         
         CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(START_X + (i % 4) * (COURSE_ITEM_LENGTH + SPACE_IN),START_Y + MAIN_VIEW_HEIGHT + SPACE_OUT + (i / 4) * (COURSE_ITEM_LENGTH + SPACE_IN), COURSE_ITEM_LENGTH, COURSE_ITEM_LENGTH) :dict];
-        UITapGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
+        singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
         NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:course.cid],@"tag", nil];
         [singleTapGesture setMyDict:myDict];
         [courseItem addGestureRecognizer:singleTapGesture];
         [self.scrollView addSubview:courseItem];
     }
-    NSLog(@"WHAT THE FUCK...");
+    UITapGestureRecognizer *TapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
+    if([courseArray count]>0){
+        Course *course = [courseArray objectAtIndex:0];
+        [TapGesture setMyDict:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:course.cid],@"tag", nil]];
+        courseImageView.userInteractionEnabled = YES;
+        [courseImageView addGestureRecognizer:TapGesture];
+        courseButton.userInteractionEnabled = YES;
+        [courseButton addGestureRecognizer:TapGesture];
+    }
+    NSLog(@"image frame %f %f %f %f ",courseImageView.frame.origin.x,courseImageView.frame.origin.y,courseImageView.frame.size.width,courseImageView.frame.size.height);
+    NSLog(@"fucking frame %f %f %f %f ",courseButton.frame.origin.x,courseButton.frame.origin.y,courseButton.frame.size.width,courseButton.frame.size.height);
+        //手贱。
+    [courseImageView addSubview:courseButton];
+    //[courseButton addGestureRecognizer:singleTapGesture];
     [self saveCatchToFile];
     [self downloadAll];
+    
+    //取出最新的课程。
+    SysbsModel *model = [SysbsModel getSysbsModel];
+    MyCourse *mycourse = model.myCourse;
+    
+    Course *course;
+    if([mycourse.courseArr count] > 0)
+        course = [mycourse.courseArr objectAtIndex:0];
+    if([course.startTime length] >= 10 && [course.endTime length]>=10){
+        NSString *startdate = [course.startTime substringWithRange:NSMakeRange(5, 5)];
+        NSString *enddate = [course.endTime substringWithRange:NSMakeRange(5, 5)];
+        NSString *showdate = [NSString stringWithFormat:@"%@到%@",startdate,enddate];
+        [dateLabel setText:showdate];
+    }
+    [infoLabel setText:course.courseDescription];
+    [courseLabel setText:course.courseName];
+    [classRoomLabel setText:course.location];
+    [courseButton addTarget:self action:@selector(jumpToCourseware:) forControlEvents:UIControlEventTouchUpInside];
 }
+
+-(void)jumpToNewestCourseware:(id)sender{
+    NSLog(@"妈蛋");
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -357,7 +357,7 @@
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    
+    NSLog(@"whethercanmoregesture");
     // Check for horizontal pan gesture
     if (gestureRecognizer == _pan) {
 
@@ -382,8 +382,8 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if (gestureRecognizer==_tap) {
     NSLog(@"whethercanmoregesture");
+    if (gestureRecognizer==_tap) {
         return YES;
     }
     return NO;

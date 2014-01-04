@@ -44,6 +44,7 @@
 		2BBA3F831876DDCE00AC25B3 /* yixuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F791876DDCE00AC25B3 /* yixuan.png */; };
 		2BBA3F851878017F00AC25B3 /* tanchuang.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F841878017F00AC25B3 /* tanchuang.png */; };
 		2BBA3F87187828FE00AC25B3 /* bubble_schedule_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F86187828FE00AC25B3 /* bubble_schedule_right@2x.png */; };
+		2BBA3F891878EFE800AC25B3 /* bubble_schedule_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F881878EFE800AC25B3 /* bubble_schedule_right.png */; };
 		2BEC7C79186810100007972A /* NoticeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C78186810100007972A /* NoticeData.m */; };
 		2BEC7C7C186812170007972A /* AllNoticeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C7B186812170007972A /* AllNoticeData.m */; };
 		2BEC7C7F1868255D0007972A /* EvaluationDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C7E1868255D0007972A /* EvaluationDataModel.m */; };
@@ -436,6 +437,7 @@
 		2BBA3F791876DDCE00AC25B3 /* yixuan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yixuan.png; sourceTree = "<group>"; };
 		2BBA3F841878017F00AC25B3 /* tanchuang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tanchuang.png; sourceTree = "<group>"; };
 		2BBA3F86187828FE00AC25B3 /* bubble_schedule_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_schedule_right@2x.png"; sourceTree = "<group>"; };
+		2BBA3F881878EFE800AC25B3 /* bubble_schedule_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble_schedule_right.png; sourceTree = "<group>"; };
 		2BEC7C77186810100007972A /* NoticeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeData.h; sourceTree = "<group>"; };
 		2BEC7C78186810100007972A /* NoticeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeData.m; sourceTree = "<group>"; };
 		2BEC7C7A186812170007972A /* AllNoticeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNoticeData.h; sourceTree = "<group>"; };
@@ -1097,6 +1099,7 @@
 		599703051835FF3700EB9DF6 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				2BBA3F881878EFE800AC25B3 /* bubble_schedule_right.png */,
 				2BBA3F86187828FE00AC25B3 /* bubble_schedule_right@2x.png */,
 				59D096D9183600690097C6AC /* ScheduleController.h */,
 				59D096DA183600690097C6AC /* ScheduleController.m */,
@@ -2100,6 +2103,7 @@
 				9C111BD518423A21001E536A /* edit_off.png in Resources */,
 				9C52AE2B183F37BA0017EB07 /* nav_bar_bg.png in Resources */,
 				9C52AD9B183F32AC0017EB07 /* bookmark_edit_nav_bar.png in Resources */,
+				2BBA3F891878EFE800AC25B3 /* bubble_schedule_right.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
