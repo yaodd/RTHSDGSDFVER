@@ -90,15 +90,19 @@
             celldata.date = @"系统数据错误";
         }
         celldata.name = course.courseName;
-        NSRange range = NSMakeRange(5, 2);
-        NSString *month = [course.startTime substringWithRange:range];
-        NSString *first = [month substringWithRange:NSMakeRange(0, 1)];
-        if([first compare:@"0"] == NSOrderedSame){
-            month = [month substringWithRange:NSMakeRange(1, 1)];
-        }
-        celldata.month =
+        if([course.startTime length] >= 7){
+            NSRange range = NSMakeRange(5, 2);
+            NSString *month = [course.startTime substringWithRange:range];
+            NSString *first = [month substringWithRange:NSMakeRange(0, 1)];
+            if([first compare:@"0"] == NSOrderedSame){
+                month = [month substringWithRange:NSMakeRange(1, 1)];
+            }
+            celldata.month =
             [NSString stringWithFormat:@"%@月",month];
-        //@"11月";
+        }else{
+            celldata.month = [NSString stringWithFormat:@"%d月",0];
+        }
+            //@"11月";
         celldata.place = [NSString stringWithFormat:@"地点:%@",course.location];
         //@"";
         //@"地点";//

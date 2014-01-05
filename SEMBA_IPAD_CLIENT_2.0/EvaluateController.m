@@ -149,10 +149,10 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有评教" message:@"当前没有评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
         [alertView show];
     }else if( ret == -1 ){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"服务器故障" message:@"服务器或者网络可能出错了哦" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"服务器故障" message:@"当前没有评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
         [alertView show];
     }
-    //[self Dismiss];
+    [self Dismiss];
 
     //_selectView setDataArray:;
 }
