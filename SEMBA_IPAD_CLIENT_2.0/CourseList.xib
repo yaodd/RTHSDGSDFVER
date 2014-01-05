@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CourseLIstViewController">
             <connections>
                 <outlet property="alreadyChoose" destination="oh0-Pb-3vL" id="KC6-i7-GAU"/>
+                <outlet property="alreadyChooseTextView" destination="3xn-Gn-k2W" id="uaq-Bm-NCS"/>
                 <outlet property="tableView" destination="vfR-5c-uhB" id="dXe-BJ-ddM"/>
                 <outlet property="view" destination="Rbc-Ve-ZRX" id="7Hy-HU-MpV"/>
             </connections>
@@ -21,7 +22,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oh0-Pb-3vL">
-                            <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
+                            <rect key="frame" x="0.0" y="0.0" width="200" height="708"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="已选课程：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FsU-ot-8KY">
@@ -31,7 +32,7 @@
                                     <color key="textColor" red="0.9692512808" green="0.97622859480000002" blue="0.97425495490000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" text="1、" translatesAutoresizingMaskIntoConstraints="NO" id="3xn-Gn-k2W">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3xn-Gn-k2W">
                                     <rect key="frame" x="20" y="60" width="170" height="100"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="textColor" red="0.99607849120000003" green="0.99607849120000003" blue="0.99215692280000001" alpha="1" colorSpace="deviceRGB"/>

@@ -23,10 +23,10 @@
     if (self) {
         // Initialization code
         //标注图给得太烂。。自己发挥想象力好了。。
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(165, 48, 140, 30)];
-        _nameLabel.text = @"测试人名";
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(165, 48, 140, 20)];
+        _nameLabel.text = @"";
         [self addSubview:_nameLabel];
-        _dateLabel = [[UILabel alloc]  initWithFrame:CGRectMake(310, 48, 140, 30)];
+        _dateLabel = [[UILabel alloc]  initWithFrame:CGRectMake(310, 48, 140, 20)];
         _dateLabel.text = @"测试时间";
         [self addSubview:_dateLabel];
         
@@ -54,6 +54,9 @@
         [self setBackgroundColor:[UIColor whiteColor]];
         
         _contentTextView.userInteractionEnabled = NO;
+        
+        _imageView = [[UIImageView alloc]   initWithFrame:CGRectMake(20, 20, 106, 126)];
+        [self addSubview:_imageView];
     }
     return self;
 }

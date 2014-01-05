@@ -16,13 +16,15 @@
 @interface CourseLIstViewController (){
     NSArray *dataArr;
     MRProgressOverlayView *overlayView;
+    NSArray *imageArray;
 }
 
 @end
 
 @implementation CourseLIstViewController
-
+@synthesize alreadyChooseTextView = _alreadyChooseTextView;
 @synthesize tableView  = _tableView;
+@synthesize alreadyChoose = _alreadyChoose;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,11 +38,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.navigationBar.tintColor = [UIColor redColor];
 	// Do any additional setup after loading the view.
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    
+    imageArray = [NSArray arrayWithObjects:@"lixinchun",@"lutaihong",@"maoyunshi", nil];
     dataArr = [[NSArray alloc]init];
+    
     [self fetchAndLoadData];
     /*
     NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(fetchAndLoadData) object:nil];
@@ -82,6 +86,28 @@
     //int l = [arr count];
     dataArr = [NSArray arrayWithArray:arr];
     [_tableView reloadData];
+    int len = [dataArr count];
+    int now_index = 0;
+    NSString *showtext = @"";
+    for (int i = 0 ; i < len ; ++i){
+        SingleChooseCourseDataObject *singeDataObj = [dataArr objectAtIndex:i];
+        if(singeDataObj.haveselected == YES){
+            NSString *dateshow;
+            if( [singeDataObj.startdate length]>=10 && [singeDataObj.enddate length] >=10 ){
+                NSString *datestarttext = [singeDataObj.startdate substringWithRange:NSMakeRange(5, 5)];
+                NSString *dateendtext = [singeDataObj.enddate substringWithRange:NSMakeRange(5, 5)];
+                dateshow = [NSString stringWithFormat:@"%@到%@",datestarttext,dateendtext];
+            }else{
+                dateshow = @"";
+            }
+            showtext = [showtext stringByAppendingString:[NSString stringWithFormat:@"\n%d %@ %@",(now_index+1),singeDataObj.courseTitle , dateshow] ];
+            now_index++;
+        }
+    }
+    CGRect rect = _alreadyChooseTextView.frame;
+    rect.size.height = [self heightForTextView:_alreadyChooseTextView WithText:showtext];
+    _alreadyChooseTextView.text = showtext;
+    _alreadyChooseTextView.frame = rect;
 }
 
 - (void)didReceiveMemoryWarning
@@ -116,7 +142,7 @@
      */
     
     cell.contentTextView.text = singeDataObj.contentShortView;
-    
+    cell.imageView.image = [UIImage imageNamed:[imageArray objectAtIndex:indexPath.row % 3]];
     return cell;
 }
 
@@ -138,6 +164,17 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 155;
+}
+
+-(float) heightForTextView: (UITextView *)textView WithText: (NSString *) strText{
+    float fPadding = 16.0; // 8.0px x 2
+    CGSize constraint = CGSizeMake(textView.contentSize.width - fPadding, CGFLOAT_MAX);
+    
+    CGSize size = [strText sizeWithFont: textView.font constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    
+    float fHeight = size.height + 16.0;
+    
+    return fHeight;
 }
 
 @end

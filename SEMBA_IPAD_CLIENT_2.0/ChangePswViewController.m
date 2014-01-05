@@ -7,6 +7,9 @@
 //
 
 #import "ChangePswViewController.h"
+#import "Dao.h";
+#import "SysbsModel.h"
+
 #define START_X     41.0f
 #define START_Y     29.0f
 #define LABEL_WIDTH 200.0f
@@ -25,6 +28,9 @@ NSString *buttonImageName = @"setting_button";
 @interface ChangePswViewController ()
 {
     UIView *parentView;
+    UITextField *newFirstPswTF;
+    UITextField *originalPswTF;
+    UITextField *newSecondPswTF;
 }
 @end
 
@@ -64,7 +70,7 @@ NSString *buttonImageName = @"setting_button";
     [originalPswLabel setTextAlignment:NSTextAlignmentLeft];
     [self.view addSubview:originalPswLabel];
 //    top_y += (INSIDE_SPACE + LABEL_HEIGHT);
-    UITextField *originalPswTF = [[UITextField alloc]initWithFrame:CGRectMake(START_X, top_y + (INSIDE_SPACE + LABEL_HEIGHT), TF_WIDTH, TF_HEIGHT)];
+     originalPswTF = [[UITextField alloc]initWithFrame:CGRectMake(START_X, top_y + (INSIDE_SPACE + LABEL_HEIGHT), TF_WIDTH, TF_HEIGHT)];
     [originalPswTF setSecureTextEntry:YES];
     [originalPswTF setBackground:[UIImage imageNamed:TFImageName]];
     originalPswTF.delegate = self;
@@ -79,7 +85,7 @@ NSString *buttonImageName = @"setting_button";
     [newFirstPswLabel setTextAlignment:NSTextAlignmentLeft];
     [self.view addSubview:newFirstPswLabel];
 //    top_y += (INSIDE_SPACE + LABEL_HEIGHT);
-    UITextField *newFirstPswTF = [[UITextField alloc]initWithFrame:CGRectMake(START_X, top_y + (INSIDE_SPACE + LABEL_HEIGHT), TF_WIDTH, TF_HEIGHT)];
+    newFirstPswTF = [[UITextField alloc]initWithFrame:CGRectMake(START_X, top_y + (INSIDE_SPACE + LABEL_HEIGHT), TF_WIDTH, TF_HEIGHT)];
     [newFirstPswTF setSecureTextEntry:YES];
     [newFirstPswTF setBackground:[UIImage imageNamed:TFImageName]];
     newFirstPswTF.delegate = self;
@@ -94,7 +100,7 @@ NSString *buttonImageName = @"setting_button";
     [newSecondPswLabel setTextAlignment:NSTextAlignmentLeft];
     [self.view addSubview:newSecondPswLabel];
 //    top_y += (INSIDE_SPACE + LABEL_HEIGHT);
-    UITextField *newSecondPswTF = [[UITextField alloc]initWithFrame:CGRectMake(START_X, top_y + (INSIDE_SPACE + LABEL_HEIGHT), TF_WIDTH, TF_HEIGHT)];
+    newSecondPswTF = [[UITextField alloc]initWithFrame:CGRectMake(START_X, top_y + (INSIDE_SPACE + LABEL_HEIGHT), TF_WIDTH, TF_HEIGHT)];
     [newSecondPswTF setSecureTextEntry:YES];
     [newSecondPswTF setBackground:[UIImage imageNamed:TFImageName]];
     newSecondPswTF.delegate = self;
@@ -106,7 +112,33 @@ NSString *buttonImageName = @"setting_button";
     [sureButton setTitle:@"确认" forState:UIControlStateNormal];
     [sureButton setTintColor:[UIColor whiteColor]];
     [sureButton.titleLabel setFont:textFont];
+    [sureButton addTarget:self action:@selector(changeAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sureButton];
+}
+
+-(void)changeAction:(id)sender{
+    if([originalPswTF.text compare:@""] == NSOrderedSame ||
+       [newFirstPswTF.text compare:@""]== NSOrderedSame ||[newSecondPswTF.text compare:@""] == NSOrderedSame ||
+       newFirstPswTF.text != newFirstPswTF.text ){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:@"密码为空或者两次输入不一致"delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
+
+    }
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"正在修改中" message:@"正在访问发送修改请求" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+    [alertView show];
+
+    Dao *dao = [Dao sharedDao];
+    int rs = [dao requestForChangePasswd:originalPswTF.text NewPassword:newSecondPswTF.text];
+    
+    if(rs == 1){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"修改成功" message:@"已经为您修改了密码" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
+
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"修改错误" message:@"可能是网络或者服务器出了点小问题" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
+
+    }
 }
 
 - (void)didReceiveMemoryWarning

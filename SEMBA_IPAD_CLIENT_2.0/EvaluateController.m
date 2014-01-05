@@ -42,10 +42,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bar_bg"] forBarMetrics:UIBarMetricsDefault];
     current_index = -1;
+    self.navigationController.navigationBar.tintColor = [UIColor redColor];
     //_selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 196, 44)];
     //[_scrollView addSubview:_selectView];
-    
+    UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    [titleLabel setFont:[UIFont systemFontOfSize:19]];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [titleLabel setTextColor:[UIColor redColor]];
+    [titleLabel setText:@"评教"];
+    self.navigationItem.titleView = titleLabel;
+
     NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:@"10",@"9",@"8",@"7",@"6",@"5",@"4",@"3",@"2",@"1", nil];
     ScorePoint *point1 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 402, 32, 32)];
     [point1 setDataArray:array];
@@ -132,12 +140,17 @@
             NSString *oneString = [NSString stringWithFormat:@" %@ %@",onedata.courseName,onedata.teacherName];
             [arr  addObject:oneString];
         }
-        
+        if(l == 0){
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有评教" message:@"当前没有评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+            [alertView show];
+        }
         [_selectView setData:arr];
     }else if( ret == 0 ){
-        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有评教" message:@"当前没有评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
     }else if( ret == -1 ){
-        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"服务器故障" message:@"服务器或者网络可能出错了哦" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
     }
     //[self Dismiss];
 

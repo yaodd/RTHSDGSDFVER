@@ -17,6 +17,8 @@
     UIView *popUpView;
     SingleChooseCourseDataObject *dataobj;
     MRProgressOverlayView *overlayView;
+    NSArray *imageArray;
+    int index ;
 }
 
 @end
@@ -51,6 +53,7 @@
         // Custom initialization
         SysbsModel *model = [SysbsModel getSysbsModel];
         dataobj = [model.chooseCourseListResult.arr objectAtIndex:course_index];
+        index = course_index;
     }
     return self;
 }
@@ -58,17 +61,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    imageArray = [NSArray arrayWithObjects:@"lixinchun",@"lutaihong",@"maoyunshi", nil];
+    self.navigationController.navigationBar.tintColor = [UIColor redColor];
+    
+    
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 1024, 768)];
     [self.view addSubview:_scrollView];
     _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 28, 400, 60  )];
     _titleLabel.text = @"测试课程标题";
     [_scrollView addSubview:_titleLabel];
     
-    _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(226, 78, 400, 40)];
+    _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(226, 78, 400, 20)];
     _nameLabel.text = @"授课老师:测试账号";
     [_scrollView addSubview:_nameLabel];
     
-    _dateLabel = [[UILabel alloc]    initWithFrame:CGRectMake(228, 106, 400, 40)];
+    _dateLabel = [[UILabel alloc]    initWithFrame:CGRectMake(228, 106, 400, 20)];
     _dateLabel.text = @"上课时间：测试时间";
     [_scrollView addSubview:_dateLabel];
     
@@ -115,7 +122,9 @@
     [self updateContentSize];
 	// Do any additional setup after loading the view.
     [_selectButton addTarget:self action:@selector(chooseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
+    _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 20, 120, 134)];
+    [_scrollView addSubview:_imageView];
+    _imageView.image = [UIImage imageNamed:[imageArray objectAtIndex:index% 3]];
 }
 
 -(void)updateContent{
@@ -244,7 +253,7 @@
     [popUpView addSubview:popUpTitle];
     
     UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
-    popUpContent.text = @"确认选取这门课程么？ 选课后将不能退课如需退课请联系教务老师。";
+    popUpContent.text = @"确认选取这门课程么？ 选课后将不能退课如需退课请联系教务老师。\n教务总监 周军霞老师：020-84112613；18666080259";
     [popUpView addSubview:popUpContent];
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(86, 160, 80, 40)];
     [button setTitle:@"我再看看" forState:UIControlStateNormal];
@@ -266,7 +275,7 @@
     [popUpView addSubview:popUpTitle];
     
     UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
-    popUpContent.text = @"你已经选了这门课了，不要重复选取谢谢！";
+    popUpContent.text = @"您已经选了这门课了，不要重复选取谢谢！";
     [popUpView addSubview:popUpContent];
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(200, 160, 80, 40)];
     [button setTitle:@"我知道了" forState:UIControlStateNormal];
@@ -283,7 +292,7 @@
     [popUpView addSubview:popUpTitle];
     
     UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
-    popUpContent.text = @"很抱歉，限选人数已满。如需听课，请联系教务人员安排。联系电话：020-88888888";
+    popUpContent.text = @"很抱歉，限选人数已满。如需听课，请联系教务人员安排。\n教务总监 周军霞老师：020-84112613；18666080259";
     [popUpView addSubview:popUpContent];
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(200, 160, 80, 40)];
     [button setTitle:@"我知道了" forState:UIControlStateNormal];
@@ -318,7 +327,7 @@
     [popUpView addSubview:popUpTitle];
     
     UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
-    popUpContent.text = @"很抱歉，系统暂时不支持退课。如需退课请联系教务老师。联系电话：020-88888888";
+    popUpContent.text = @"很抱歉，系统暂时不支持退课。如需退课请联系教务老师。教务总监 周军霞老师：020-84112613；18666080259";
     [popUpView addSubview:popUpContent];
     
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(200, 160, 80, 40)];
