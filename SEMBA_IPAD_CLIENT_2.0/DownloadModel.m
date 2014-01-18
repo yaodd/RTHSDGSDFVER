@@ -199,7 +199,13 @@ NSString *NOTEFolderName = @"NOTE";
     
     CGRect pageRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
     pageRect.origin = CGPointZero;
+    if (pageRect.size.width < pageRect.size.height) {
+        CGFloat len = pageRect.size.width;
+        pageRect.size.width = pageRect.size.height;
+        pageRect.size.height = len;
+    }
     
+    NSLog(@"pdf size %f %f",pageRect.size.width,pageRect.size.height);
     //开启图片绘制 上下文
     UIGraphicsBeginImageContext(pageRect.size);
     

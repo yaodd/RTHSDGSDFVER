@@ -80,10 +80,22 @@ NSString *buttonImageName2 = @"setting_button";
     [sureButton setTitle:@"确定" forState:UIControlStateNormal];
     [sureButton setTintColor:[UIColor whiteColor]];
     [sureButton.titleLabel setFont:textFont];
+    [sureButton addTarget:self action:@selector(sureAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sureButton];
     
 }
 
+- (void)sureAction:(id)sender
+{
+    int success = 1;
+    if (success == 1) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示！" message:@"已收到您的意见，谢谢！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertView show];
+    } else{
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示！" message:@"反馈发送失败！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertView show];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
