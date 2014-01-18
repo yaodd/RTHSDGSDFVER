@@ -60,8 +60,8 @@
         nameLabel.text = courseName;
         nameLabel.textColor = [UIColor colorWithRed:198.0/255 green:56.0/255 blue:91.0/255 alpha:1.0];
         nameLabel.font = [UIFont fontWithName:@"Heiti SC" size:27.0];
-        nameLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        nameLabel.numberOfLines = 0;
+//        nameLabel.lineBreakMode = NSLineBreakByCharWrapping;
+//        nameLabel.numberOfLines = 0;
         [nameLabel setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:nameLabel];
         topY += (30);

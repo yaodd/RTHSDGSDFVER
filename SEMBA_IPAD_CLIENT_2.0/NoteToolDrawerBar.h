@@ -43,5 +43,6 @@
 - (void)openOrCloseToolBar;
 
 - (id)initWithFrame:(CGRect)frame parentView :(UIView *) parentview;
+- (void)setButtonColor:(UIColor *)color;
 
 @end
