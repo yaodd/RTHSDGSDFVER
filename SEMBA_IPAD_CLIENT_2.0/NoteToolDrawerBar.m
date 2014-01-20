@@ -7,14 +7,16 @@
 //
 
 #import "NoteToolDrawerBar.h"
-
+#import "UIColor+category.h"
 #define BUTTON_X    0.0f
-#define BUTTON_Y    52.0f
+#define BUTTON_Y    20.0f
 #define BUTTON_WIDTH_SMALL    97.0f
 #define BUTTON_HEIGHT_SMALL   73.0f
 #define BUTTON_WIDTH_LARGE    156.0f
 #define BUTTON_HEIGHT_LARGE   88.0f
 #define BUTTON_SPACE    16.0f
+
+#define COLOR_BUTTON_TAG    111111
 
 
 @implementation NoteToolDrawerBar
@@ -40,7 +42,7 @@
         parentRect.size.height = parentView.frame.size.width;
         
         UIImageView *background = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ppt_toolbox_bg"]];
-        [background setFrame:CGRectMake(0, 0, background.frame.size.width, background.frame.size.height)];
+        [background setFrame:CGRectMake(0, 0, background.frame.size.width, 80 + 3 * 60 + 3 * BUTTON_SPACE + 20 * 2 + 20)];
         [self addSubview:background];
         
         UIView *touchView = [[UIView alloc]initWithFrame:CGRectMake(frame.size.width - 40, 0, 40, frame.size.height)];
@@ -70,20 +72,41 @@
 
 - (void)initButton{
     imageNameNArray = [[NSMutableArray alloc]initWithObjects:@"ppt_toolbox_colorpicker_bg",@"ppt_toolbox_pencil",@"ppt_toolbox_brush",@"ppt_toolbox_eraser",@"ppt_toolbox_camera",@"ppt_toolbox_recorder", nil];
-    imageNameHArray = [[NSMutableArray alloc]initWithObjects:@"ppt_toolbox_colorpicker_bg_active",@"ppt_toolbox_pencil_active",@"ppt_toolbox_brush_active",@"ppt_toolbox_eraser_active",@"ppt_toolbox_camera_active",@"ppt_toolbox_recorder_active", nil];    CGFloat topButtonY = BUTTON_Y;
+    imageNameHArray = [[NSMutableArray alloc]initWithObjects:@"ppt_toolbox_colorpicker_bg_active",@"ppt_toolbox_pencil_active",@"ppt_toolbox_brush_active",@"ppt_toolbox_eraser_active",@"ppt_toolbox_camera_active",@"ppt_toolbox_recorder_active", nil];
+    CGFloat topButtonY = BUTTON_Y;
     buttonArray = [[NSMutableArray alloc]init];
-    for (int i = 0 ; i < 6; i ++) {
+    for (int i = 0 ; i < 4; i ++) {
         UIImage *image = [UIImage imageNamed:[imageNameNArray objectAtIndex:i]];
-        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(BUTTON_X, topButtonY, image.size.width, image.size.height)];
-//        [button setBackgroundColor:[UIColor grayColor]];
+        CGFloat width = image.size.width;
+        CGFloat height = image.size.height;
         
+        if (i == 0) {
+            image = [[UIColor blackColor] createImage];
+            width = 80;
+            height = 80;
+        }
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(BUTTON_X, topButtonY, width, height)];
+//        [button setBackgroundColor:[UIColor grayColor]];
+        if (i == 0) {
+            [button.layer setCornerRadius:40];
+            [button.layer setBorderColor:[UIColor whiteColor].CGColor];
+            [button.layer setBorderWidth:4];
+            [button.layer setMasksToBounds:YES];
+//            [button setTag:COLOR_BUTTON_TAG];
+        }
         [button setBackgroundImage:image forState:UIControlStateNormal];
         [button setTag:i + 1];
         [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
         [buttonArray addObject:button];
         [self addSubview:button];
-        topButtonY += (image.size.height + BUTTON_SPACE);
+        topButtonY += (height + BUTTON_SPACE);
     }
+}
+
+- (void)setButtonColor:(UIColor *)color
+{
+    UIButton *button = (UIButton *)[self viewWithTag:1];
+    [button setBackgroundImage:[color createImage] forState:UIControlStateNormal];
 }
 
 - (void)buttonAction:(UIButton *)button
