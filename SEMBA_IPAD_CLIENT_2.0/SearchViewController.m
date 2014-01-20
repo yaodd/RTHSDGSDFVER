@@ -78,8 +78,9 @@ NSString *NOTEFolderName2 = @"NOTE";
     [self.navigationController.view addSubview:overlayView];
     [overlayView show:YES];
     NSLog(@"queue count %d",[queue.operations count]);
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backToMainPage:)];
-    [backItem setImage:[UIImage imageNamed:@"pptsearch_cancle"]];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(backToMainPage:)];
+    [backItem setTintColor:[UIColor redColor]];
+//    [backItem setImage:[UIImage imageNamed:@"pptsearch_cancle"]];
     [self.navigationItem setHidesBackButton:YES];
     self.navigationItem.rightBarButtonItem = backItem;
     

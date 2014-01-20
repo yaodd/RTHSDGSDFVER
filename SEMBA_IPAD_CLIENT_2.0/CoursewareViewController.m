@@ -128,7 +128,7 @@ NSString *NOTEFolderName3 = @"NOTE";
     MyCourse *myCourse = sysbsModel.myCourse;
     Course *course = [myCourse findCourse:cid];
     NSString *title = course.courseName;
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(400 - 100, 0, 200, 44)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(400 - 200, 0, 400, 44)];
     [titleLabel setText:title];
     [titleLabel setTextColor:[UIColor redColor]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
@@ -517,8 +517,25 @@ NSString *NOTEFolderName3 = @"NOTE";
 //下载所有课件
 - (void)downloadAllAction:(id)sender
 {
+    int count = 0;
     for (int i = 0; i < [displayArray count]; i ++) {
         [self downloadPDF:i];
+        CoursewareItem *item = [displayArray objectAtIndex:i];
+        NSString *filePath = item.PDFPath;
+        if (filePath) {
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if([fileManager fileExistsAtPath:filePath])
+            {
+                count++;
+            }
+        }
+    }
+    if (count == [displayArray count]) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"本课程课件已全部下载！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertView show];
+    } else{
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"课件正在下载中！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertView show];
     }
 }
 

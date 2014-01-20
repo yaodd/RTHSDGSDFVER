@@ -35,6 +35,7 @@
 #import "CourseMarkViewController.h"
 #import <MessageUI/MessageUI.h>
 #import "NoteToolDrawerBar.h"
+#import "UIColor+category.h"
 
 #define kActionSheetColor       100
 #define kActionSheetTool        101
@@ -490,6 +491,11 @@
     NSNumber *key = [NSNumber numberWithInteger:page]; // # key
     ReaderContentView *newContentView = [contentViews objectForKey:key];
     newContentView.isNote = NO;
+    [noteToolDrawerBar closeAllButton];
+    [swatchView setHidden:YES];
+    [penWidthView setHidden:YES];
+    [eraserWidthView setHidden:YES];
+    [markerWidthView setHidden:YES];
     //注释不yes？
 //    [newContentView setUserInteractionEnabled:YES];
     
@@ -636,7 +642,7 @@
     [self.view addSubview:imageView];
     //左边的工具栏
     
-    noteToolDrawerBar = [[NoteToolDrawerBar alloc]initWithFrame:CGRectMake(0, 0, 174, 539) parentView:self.view];
+    noteToolDrawerBar = [[NoteToolDrawerBar alloc]initWithFrame:CGRectMake(0, 0, 174, 358) parentView:self.view];
     noteToolDrawerBar.delegate = self;
     [self.view addSubview:noteToolDrawerBar];
     
@@ -723,18 +729,23 @@
 //笔记的工具栏
 //清空全部要改。
 - (void)initToolView{
-    int colorNum = 6;
-    CGFloat buttonWidth = 60.0f;
-    CGFloat buttonHeight = 60.0f;
-    CGFloat viewY = 100.0f + 40.0f;
+    int colorNum = 7;
+    CGFloat buttonWidth = 36.0f;
+    CGFloat buttonHeight = 36.0f;
+    CGFloat viewY = 190.0f + 40.0f;
     CGFloat viewX = 160.0f;
     //奇怪的变量名
     //colorNum * buttonWidth + 4 * 10  + 40
-    swatchView = [[UIView alloc]initWithFrame:CGRectMake(0, viewY, colorNum * buttonWidth + 4 * 10  + 40, buttonHeight)];
-    [swatchView setBackgroundColor:[UIColor grayColor]];
-    NSArray *colorArray = [[NSArray alloc]initWithObjects:[UIColor blackColor],[UIColor redColor],[UIColor greenColor],[UIColor blueColor],[UIColor yellowColor],[UIColor whiteColor], nil];
+    swatchView = [[UIView alloc]initWithFrame:CGRectMake(150, viewY, colorNum * buttonWidth + 6 * 15  + 20, 56)];
+    [swatchView.layer setCornerRadius:5];
+    [swatchView setBackgroundColor:[UIColor colorWithWhite:225.0/255 alpha:0.8]];
+    NSArray *colorArray = [[NSArray alloc]initWithObjects:[UIColor redColor],[UIColor orangeColor],[UIColor yellowColor],[UIColor blueColor],[UIColor greenColor],[UIColor purpleColor],[UIColor blackColor], nil];
     for (int i = 0; i < colorNum; i ++) {
-        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(20 + (buttonWidth + 10) * i,0, buttonWidth, buttonHeight)];
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(10 + (buttonWidth + 15) * i,10, buttonWidth, buttonHeight)];
+        [button.layer setBorderWidth:2];
+        [button.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [button.layer setCornerRadius:buttonWidth / 2];
+        [button.layer setMasksToBounds:YES];
         [button setTag:i + 1];
         [button setBackgroundColor:[colorArray objectAtIndex:i]];
         [button addTarget:self action:@selector(choColorAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -751,8 +762,8 @@
     [penWidthView setBackgroundColor:penBg];
     UISlider *penWidthSlider = [[UISlider alloc]initWithFrame:CGRectMake(15, 12, 185, 29)];
 //    [penWidthSlider setTintColor:[UIColor redColor]];
-    [penWidthSlider setMaximumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_active"] forState:UIControlStateNormal];
-    [penWidthSlider setMinimumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_inactive"] forState:UIControlStateNormal];
+    [penWidthSlider setMaximumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_inactive"] forState:UIControlStateNormal];
+    [penWidthSlider setMinimumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_active"] forState:UIControlStateNormal];
 //    [penWidthSlider setThumbImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_handle"] forState:UIControlStateNormal];
     
     [penWidthSlider setMinimumValue:kPenWidthMin];
@@ -770,8 +781,8 @@
     UIColor *markerBg = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ppt_toolbox_pencil_adjust_bg"]];
     [markerWidthView setBackgroundColor:markerBg];
     UISlider *markerWidthSlider = [[UISlider alloc]initWithFrame:CGRectMake(15, 12, 185, 29)];
-    [markerWidthSlider setMaximumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_active"] forState:UIControlStateNormal];
-    [markerWidthSlider setMinimumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_inactive"] forState:UIControlStateNormal];
+    [markerWidthSlider setMaximumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_inactive"] forState:UIControlStateNormal];
+    [markerWidthSlider setMinimumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_active"] forState:UIControlStateNormal];
 //    [markerWidthSlider setThumbImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_handle"] forState:UIControlStateNormal];
     [markerWidthSlider setMinimumValue:kPenWidthMin];
     [markerWidthSlider setMaximumValue:kPenWidthMax];
@@ -783,13 +794,13 @@
     markerWidthView.hidden = YES;
     [self.view addSubview:markerWidthView];
     
-    viewY += (outButtonHeight + 10 + 5);
+    viewY += (outButtonHeight + 10);
     eraserWidthView = [[UIView alloc]initWithFrame:CGRectMake(viewX, viewY, 310, 58)];
     UIColor *eraserBg = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bg"]];
     [eraserWidthView setBackgroundColor:eraserBg];
     UISlider *eraserWidthSlider = [[UISlider alloc]initWithFrame:CGRectMake(15, 12, 185, 29)];
-    [eraserWidthSlider setMaximumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_active"] forState:UIControlStateNormal];
-    [eraserWidthSlider setMinimumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_inactive"] forState:UIControlStateNormal];
+    [eraserWidthSlider setMaximumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_inactive"] forState:UIControlStateNormal];
+    [eraserWidthSlider setMinimumTrackImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_bar_active"] forState:UIControlStateNormal];
 //    [eraserWidthSlider setThumbImage:[UIImage imageNamed:@"ppt_toolbox_eraser_adjust_handle"] forState:UIControlStateNormal];
     [eraserWidthSlider setMinimumValue:kPenWidthMin];
     [eraserWidthSlider setMaximumValue:kPenWidthMax];
@@ -876,10 +887,9 @@
 - (void)choColorAction:(id)sender{
     UIButton *button = (UIButton *)sender;
     UIColor *color = button.backgroundColor;
-//    UIButton *originalButton = [noteToolDrawerBar.buttonArray objectAtIndex:0];
-//    [originalButton setBackgroundColor:color];
     self.drawNewView.lineColor = color;
     curPenColor = color;
+    [noteToolDrawerBar setButtonColor:color];
     [self viewDisappear:swatchView];
 }
 
@@ -998,7 +1008,7 @@
 }
 
 
-
+/*
 #pragma Notebar delegate
 //这个函数是废了么？
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar choiceColor:(UIButton *)button{
@@ -1010,7 +1020,7 @@
     
     [actionSheet setTag:kActionSheetColor];
     [actionSheet showInView:self.view];
-     */
+     
 }
 
 //
@@ -1051,7 +1061,7 @@
 - (void)tappedInNoteToolbar:(NoteToolbar *)toolbar clearAction:(UIButton *)button{
     [self.drawNewView clear];
 }
-
+*/
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
@@ -1925,12 +1935,12 @@
     [self viewDisappear:swatchView];
     [self viewDisappear:eraserWidthView];
     [noteToolDrawerBar closeAllButton];
-    [self stopDraw];
-    [self saveDraw];
-    int page = [document.pageNumber intValue];
-    NSNumber *key = [NSNumber numberWithInteger:page]; // # key
-    ReaderContentView *newContentView = [contentViews objectForKey:key];
-    [self addDrawView:newContentView];
+//    [self stopDraw];
+//    [self saveDraw];
+//    int page = [document.pageNumber intValue];
+//    NSNumber *key = [NSNumber numberWithInteger:page]; // # key
+//    ReaderContentView *newContentView = [contentViews objectForKey:key];
+//    [self addDrawView:newContentView];
     NSLog(@"%s", __FUNCTION__);
 }
 #pragma ACEDrawView delegate
@@ -2008,6 +2018,7 @@
     markEditView.frame = CGRectMake(curFrame.origin.x, curFrame.origin.y + 200, curFrame.size.width, curFrame.size.height);
     [UIView commitAnimations];
 }
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return NO;
 }

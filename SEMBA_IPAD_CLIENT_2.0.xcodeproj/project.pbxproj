@@ -308,6 +308,7 @@
 		9C6BACA61845DE7C008B12A4 /* maoyunshi.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6BACA31845DE7C008B12A4 /* maoyunshi.png */; };
 		9C77E18C183F5729006737E5 /* DownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C77E18B183F5729006737E5 /* DownloadModel.m */; };
 		9C9240B11830AF8E00415735 /* MRCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9240B01830AF8E00415735 /* MRCircularProgressView.m */; };
+		9CB0BD3D188BC16A000516CA /* UIColor+category.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB0BD3C188BC16A000516CA /* UIColor+category.m */; };
 		9CB9908A183E00390082BAF5 /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB99089183E00390082BAF5 /* SetupViewController.m */; };
 		9CB9908D183E386E0082BAF5 /* ChangePswViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB9908C183E386E0082BAF5 /* ChangePswViewController.m */; };
 		9CB99090183F01260082BAF5 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB9908F183F01260082BAF5 /* FeedbackViewController.m */; };
@@ -748,6 +749,8 @@
 		9C9240B61830D01800415735 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		9C9240B71830D01800415735 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		9C9240B81830D01800415735 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		9CB0BD3B188BC16A000516CA /* UIColor+category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+category.h"; sourceTree = "<group>"; };
+		9CB0BD3C188BC16A000516CA /* UIColor+category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+category.m"; sourceTree = "<group>"; };
 		9CB99088183E00390082BAF5 /* SetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupViewController.h; sourceTree = "<group>"; };
 		9CB99089183E00390082BAF5 /* SetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupViewController.m; sourceTree = "<group>"; };
 		9CB9908B183E386E0082BAF5 /* ChangePswViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePswViewController.h; sourceTree = "<group>"; };
@@ -1399,6 +1402,15 @@
 			name = MRCircularProgressView;
 			sourceTree = "<group>";
 		};
+		9CB0BD3A188BC12E000516CA /* UIColor+catogory */ = {
+			isa = PBXGroup;
+			children = (
+				9CB0BD3B188BC16A000516CA /* UIColor+category.h */,
+				9CB0BD3C188BC16A000516CA /* UIColor+category.m */,
+			);
+			name = "UIColor+catogory";
+			sourceTree = "<group>";
+		};
 		9CB99057183DDAFF0082BAF5 /* SetUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -1562,6 +1574,7 @@
 		9CBD15D9181E68D800075BDF /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				9CB0BD3A188BC12E000516CA /* UIColor+catogory */,
 				9C51E7EC18444623003F2130 /* MRProgressView */,
 				9CF2D5AC183614ED0026502F /* UITextView+category */,
 				9CBD15CE181E674E00075BDF /* UITapGestureRecognizer+category */,
@@ -2177,6 +2190,7 @@
 				2BB815491830AE0200736512 /* MyCourse.m in Sources */,
 				9CB99090183F01260082BAF5 /* FeedbackViewController.m in Sources */,
 				9CBD161A181E695900075BDF /* ReaderDocument.m in Sources */,
+				9CB0BD3D188BC16A000516CA /* UIColor+category.m in Sources */,
 				9CBD15F8181E692700075BDF /* CGPDFDocument.m in Sources */,
 				9CBD163E181E699D00075BDF /* ASIFormDataRequest.m in Sources */,
 				9CBD15F9181E692700075BDF /* ReaderDocumentOutline.m in Sources */,

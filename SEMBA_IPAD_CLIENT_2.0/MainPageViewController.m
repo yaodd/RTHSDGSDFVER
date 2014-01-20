@@ -110,9 +110,9 @@
     [mainView addSubview:courseImageView];
     
     CGFloat labelStartX = 41.0f;
-    CGFloat labelTopY   = 71.0f;
+    CGFloat labelTopY   = 31.0f;
     
-    courseLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelStartX, labelTopY, 200, 40)];
+    courseLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelStartX, labelTopY, 200, 180)];
     UIColor *redColor = [UIColor colorWithRed:198.0/255 green:56.0/255 blue:91.0/255 alpha:1.0];
     
     //[courseLabel setText:@"战略管理"];
@@ -121,6 +121,8 @@
     [courseLabel setBackgroundColor:[UIColor clearColor]];
     [courseLabel setTextColor:redColor];
     [courseLabel setTextAlignment:NSTextAlignmentLeft];
+    [courseLabel setNumberOfLines:0];
+    [courseLabel setLineBreakMode:NSLineBreakByCharWrapping];
     [self.courseImageView addSubview:courseLabel];
     
     teachLabel = [[UILabel alloc]initWithFrame:CGRectMake(courseImageView.frame.size.width - 41 - 200, labelTopY + 13, 200, 20)];
