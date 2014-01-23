@@ -16,6 +16,11 @@
 #define kContentKey @"content"
 #define kDateKey @"date"
 
+@interface NoticeTableView()
+{
+    UILabel *emptyLabel;
+}
+@end
 @implementation NoticeTableView
 {
     NSMutableDictionary *dicClicked;
@@ -48,6 +53,12 @@
         [self setShowsVerticalScrollIndicator:NO];
         [self setSeparatorColor:[UIColor clearColor]];
         
+        emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, 800, 40)];
+        [emptyLabel setTextColor:[UIColor blackColor]];
+        [emptyLabel setText:@"暂时还没有通知噢，先去看看课件吧！"];
+        [emptyLabel setFont:[UIFont systemFontOfSize:34]];
+        [emptyLabel setHidden:YES];
+        [self addSubview:emptyLabel];
     }
     return self;
 }
@@ -58,6 +69,11 @@
 - (void)setTableViewData:(NSMutableArray *)data
 {
     self.dataArray = data;
+    if ([dataArray count] == 0) {
+        [emptyLabel setHidden:NO];
+    } else{
+        [emptyLabel setHidden:YES];
+    }
 }
 
 

@@ -10,7 +10,7 @@
 
 @implementation Course
 
-@synthesize courseName,courseDescription,teacherName,fileArr,cid,recommendBook,timeArr;
+@synthesize courseName,courseDescription,teacher,fileArr,cid;
 @synthesize startTime = _startTime;
 @synthesize endTime = _endTime;
 +(id)alloc{
@@ -21,14 +21,11 @@
     if(self = [super init]){
         cid = 0;
         fileArr = [[NSMutableArray alloc] init];
-        recommendBook = [[NSMutableArray alloc] init];
-        timeArr = [[NSMutableArray alloc] init];
         courseName = @"";
         courseDescription = @"";
         _startTime = @"";
         _endTime = @"";
         _location = @"";
-        teacherName = @"";
         return self;
     }
     return nil;

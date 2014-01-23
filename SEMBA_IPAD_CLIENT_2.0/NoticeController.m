@@ -130,6 +130,8 @@
     }else {
     
     }
+    [self.noticeTableView setTableViewData:originDataArray];
+    [self.noticeTableView reloadData];
     [self endLoading];
     NSLog(@"endLoadingpre");
     /*

@@ -41,7 +41,7 @@
         contentBg.backgroundColor = [UIColor clearColor];
         [self addSubview:contentBg];
         
-        month = [[UILabel alloc] initWithFrame:CGRectMake(0, 45, 103, 50)];
+        month = [[UILabel alloc] initWithFrame:CGRectMake(0, 52, 103, 50)];
         month.backgroundColor = [UIColor clearColor];
         month.font = [UIFont fontWithName:@"Heiti SC" size:30.0];
         month.textColor = [UIColor whiteColor];
@@ -49,21 +49,23 @@
         month.textAlignment = NSTextAlignmentCenter;
         [self addSubview:month];
         
-        name = [[UILabel alloc] initWithFrame:CGRectMake(40+103, 20, 200, 40)];
+        name = [[UILabel alloc] initWithFrame:CGRectMake(40+103, 10, 200, 40)];
         name.text = @"课程名称";
         name.backgroundColor = [UIColor clearColor];
         name.font = [UIFont fontWithName:@"Heiti SC" size:20];
         name.textColor = titleColor;
+        [name setNumberOfLines:0];
+        [name setLineBreakMode:NSLineBreakByCharWrapping];
         [self addSubview:name];
         
-        teacher = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x + name.frame.size.width, 35, 150, 20)];
+        teacher = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x + name.frame.size.width, 25, 150, 20)];
         teacher.text = @"教授名";
         teacher.backgroundColor = [UIColor clearColor];
         teacher.font = [UIFont fontWithName:@"Heiti SC" size:18];
         teacher.textColor = textColor;
         [self addSubview:teacher];
         
-        date = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x, name.frame.origin.y + name.frame.size.height + 15, 300, 20)];
+        date = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x, name.frame.origin.y + name.frame.size.height + 5, 300, 20)];
         date.text = @"日期：";
         date.backgroundColor = [UIColor clearColor];
         date.font = [UIFont fontWithName:@"Heiti SC" size:18];

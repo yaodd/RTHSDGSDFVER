@@ -376,6 +376,8 @@ filename:(NSString*)filename{
     return rs;
 }
 */
+
+
 -(int)requestForMyCourse:(int)uid{
     int ret = 0;
     NSString * urlString  = [NSString stringWithFormat:@"%@%@",baseUrl,courseUrl];
@@ -391,6 +393,7 @@ filename:(NSString*)filename{
         NSArray *arr = [rs objectForKey:@"data"];
         int l = [arr count];
         for (int i = 0; i < l; ++i) {
+            
             NSDictionary *onedict = [arr objectAtIndex:i];
             Course *one = [[Course alloc]  init];
             one.cid = [(NSNumber*)[onedict objectForKey:@"courseid"] integerValue];
@@ -400,6 +403,27 @@ filename:(NSString*)filename{
             //NSLog(@"FUCK%@",one.location);
             one.startTime = [onedict objectForKey:@"startdate"];
             one.endTime = [onedict objectForKey:@"enddate"];
+            
+            NSMutableArray *teachArr = [[NSMutableArray alloc]init];
+            int teacher_len = [(NSNumber*)[onedict objectForKey:@"teacher_len"] intValue];
+            if (teacher_len > 0){
+                NSMutableArray *teachDataArr = [onedict objectForKey:@"teacher"];
+                for (int j = 0 ; j < teacher_len; ++j) {
+                    NSDictionary *oneteacher = [teachDataArr objectAtIndex:j];
+                    User *ateacher = [[User alloc]init];
+                    ateacher.uid = [(NSNumber*) [oneteacher objectForKey:@"uid"]intValue];
+                    ateacher.type = [(NSNumber*)[oneteacher objectForKey:@"type"]intValue];
+                    ateacher.username = [oneteacher objectForKey:@"username"];
+                    ateacher.headImgUrl = [oneteacher objectForKey:@"headimg"];
+                    ateacher.selfSummary = [oneteacher objectForKey:@"selfsummary"];
+                    [teachArr addObject:ateacher];
+                }
+                one.coverUrl = ((User*)[teachArr objectAtIndex:i]).headImgUrl;
+            }else{
+                one.coverUrl = @"";
+            }
+            
+            one.teacher = teachArr;
             [allMyCourse addObject:one];
         }
         MyCourse *myCourse = [[MyCourse alloc] init];

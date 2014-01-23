@@ -306,7 +306,7 @@
             
         }else{
 
-            cell.icon.image = [UIImage imageNamed:@"news center-study"];
+            cell.icon.image = [UIImage imageNamed:@"course_normal"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
             cell.title.textColor = [UIColor whiteColor];
         }
@@ -324,7 +324,7 @@
             cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
         }else {
             
-            cell.icon.image = [UIImage imageNamed:@"news center-note"];
+            cell.icon.image = [UIImage imageNamed:@"ppt_normal"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
             cell.title.textColor = [UIColor whiteColor];
         }
@@ -344,7 +344,7 @@
             cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
         }else {
 
-            cell.icon.image = [UIImage imageNamed:@"news center-pen"];
+            cell.icon.image = [UIImage imageNamed:@"pingjiao_normal"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
             cell.title.textColor = [UIColor whiteColor];
         }
@@ -364,7 +364,7 @@
             cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
         }else {
             
-            cell.icon.image = [UIImage imageNamed:@"news center-calender"];
+            cell.icon.image = [UIImage imageNamed:@"schedule_normal"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
             cell.title.textColor = [UIColor whiteColor];
         }
@@ -378,13 +378,13 @@
         
         if(currentRow == 4){
             
-            cell.icon.image = [UIImage imageNamed:@"schedule_pressed"];
+            cell.icon.image = [UIImage imageNamed:@"xuanke_pressed"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
             //NSLog(@"row3's bgImg frame:%f--%f", cell.backgroundImg.frame.origin.x, cell.backgroundImg.frame.origin.y);
             cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
         }else {
             
-            cell.icon.image = [UIImage imageNamed:@"news center-calender"];
+            cell.icon.image = [UIImage imageNamed:@"xuanke_normal"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.2];
             cell.title.textColor = [UIColor whiteColor];
         }
@@ -405,13 +405,13 @@
         
         if(currentRow == 5){
             
-            cell.icon.image = [UIImage imageNamed:@"news center-mail"];
+            cell.icon.image = [UIImage imageNamed:@"news_pressed"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
             cell.title.textColor = [UIColor colorWithRed:212/255.0 green:74/255.0 blue:108/255.0 alpha:1.0];
             
         }else{
             
-            cell.icon.image = [UIImage imageNamed:@"news center-calender"];
+            cell.icon.image = [UIImage imageNamed:@"news_normal"];
             cell.backgroundImg.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
             cell.title.textColor = [UIColor whiteColor];
         }
