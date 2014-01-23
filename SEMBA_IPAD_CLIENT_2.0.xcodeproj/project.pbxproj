@@ -1005,17 +1005,6 @@
 		2BF802B71872521D0085D148 /* ChooseCourse */ = {
 			isa = PBXGroup;
 			children = (
-				2BBA3F841878017F00AC25B3 /* tanchuang.png */,
-				2BBA3F701876DDCE00AC25B3 /* bg.jpg */,
-				2BBA3F711876DDCE00AC25B3 /* button_choose.png */,
-				2BBA3F721876DDCE00AC25B3 /* button_chosen.png */,
-				2BBA3F731876DDCE00AC25B3 /* button_outdate.png */,
-				2BBA3F741876DDCE00AC25B3 /* head.jpg */,
-				2BBA3F751876DDCE00AC25B3 /* time.png */,
-				2BBA3F761876DDCE00AC25B3 /* title.png */,
-				2BBA3F771876DDCE00AC25B3 /* triangle.png */,
-				2BBA3F781876DDCE00AC25B3 /* user.png */,
-				2BBA3F791876DDCE00AC25B3 /* yixuan.png */,
 				2BF802B81872523F0085D148 /* CourseLIstViewController.h */,
 				2BF802B91872523F0085D148 /* CourseLIstViewController.m */,
 				2BF802BB187252500085D148 /* CourseDetailViewController.h */,
@@ -1440,6 +1429,24 @@
 			name = Search;
 			sourceTree = "<group>";
 		};
+		9C62C3801892241400E79625 /* ChooseCourse */ = {
+			isa = PBXGroup;
+			children = (
+				2BBA3F841878017F00AC25B3 /* tanchuang.png */,
+				2BBA3F701876DDCE00AC25B3 /* bg.jpg */,
+				2BBA3F711876DDCE00AC25B3 /* button_choose.png */,
+				2BBA3F721876DDCE00AC25B3 /* button_chosen.png */,
+				2BBA3F731876DDCE00AC25B3 /* button_outdate.png */,
+				2BBA3F741876DDCE00AC25B3 /* head.jpg */,
+				2BBA3F751876DDCE00AC25B3 /* time.png */,
+				2BBA3F761876DDCE00AC25B3 /* title.png */,
+				2BBA3F771876DDCE00AC25B3 /* triangle.png */,
+				2BBA3F781876DDCE00AC25B3 /* user.png */,
+				2BBA3F791876DDCE00AC25B3 /* yixuan.png */,
+			);
+			name = ChooseCourse;
+			sourceTree = "<group>";
+		};
 		9C9240AE1830AF6800415735 /* MRCircularProgressView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1577,6 +1584,7 @@
 		9CBD15BE181E4FEC00075BDF /* Resourse */ = {
 			isa = PBXGroup;
 			children = (
+				9C62C3801892241400E79625 /* ChooseCourse */,
 				2B16548D1863228F00985C54 /* Evalution */,
 				9C6BAC9D1845DD87008B12A4 /* image01.png */,
 				9C6BAC9E1845DD87008B12A4 /* image01@2x.png */,

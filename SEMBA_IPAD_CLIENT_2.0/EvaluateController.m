@@ -75,6 +75,7 @@
     [point9 setDataArray:array];
     ScorePoint *point10 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 852, 32, 32)];
     [point10 setDataArray:array];
+    _scrollView.delegate = self;
     [_scrollView addSubview:point10];
     [_scrollView addSubview:point9];
     [_scrollView addSubview:point8];
@@ -113,7 +114,45 @@
     _classNumLabel.text = class_num;
     NSThread *thread =[[NSThread alloc]initWithTarget:self selector:@selector(setData) object:nil];
     [thread start];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGRect scrollFrame = _scrollView.frame;
+    scrollFrame.origin.y = 0 - 350;
+    [UIView animateWithDuration:0.15
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             _scrollView.frame = scrollFrame;
+                         } completion:^(BOOL finished) {
+                             _scrollView.frame = scrollFrame;
+
+    }];
+    
+    
+    //    NSLog(@"show");
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [_suggestTextView resignFirstResponder];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    CGRect scrollFrame = _scrollView.frame;
+    scrollFrame.origin.y = 0;
+    _scrollView.frame = scrollFrame;
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -204,6 +243,7 @@
 }
 
 -(void)upEvaluation:(id)sender{
+    [_suggestTextView resignFirstResponder];
     if(current_index < 0){
         NSLog(@"current_index < 0");
         return ;

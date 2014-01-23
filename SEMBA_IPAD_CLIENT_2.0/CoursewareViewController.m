@@ -108,7 +108,7 @@ NSString *NOTEFolderName3 = @"NOTE";
     
 //	self.view.backgroundColor = [UIColor clearColor]; // Transparent
 
-	self.title = @"课件";
+	self.title = @"课程";
     
     
     UIBarButtonItem *downloadAllButton = [[UIBarButtonItem alloc]initWithTitle:@"下载全部" style:UIBarButtonItemStyleBordered target:self action:@selector(downloadAllAction:)];

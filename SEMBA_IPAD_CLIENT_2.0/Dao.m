@@ -22,7 +22,7 @@
 
 //NSString *baseUrl = @"http://222.200.177.14/EMBAWEBDEVELOP/";
 //NSString *baseUrl = @"http://115.28.18.130/EMBAWEBDEVELOP/";
-NSString *baseUrl = @"http://115.28.18.130/EMBAWEBDEVELOP/api/";
+NSString *baseUrl = @"http://115.28.18.130/SEMBAWEBDEVELOP/api/";
 NSString *Url = @"http://localhost/test.php";
 NSString *checkInUrl = @"checkin.php";
 NSString *checkInHistory = @"checkinhistory.php";

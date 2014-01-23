@@ -45,16 +45,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    self.title = @"课程表";
 	// Do any additional setup after loading the view.
-    
     [self.view setBackgroundColor:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
     
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bar_bg"] forBarMetrics:UIBarMetricsDefault];
     
-    UIImageView *title = [[UIImageView alloc] initWithFrame:CGRectMake(470, 30, 71, 21)];
-    title.image = [UIImage imageNamed:@"schedule"];
-    [self.navigationController.view addSubview:title];
+//    UIImageView *title = [[UIImageView alloc] initWithFrame:CGRectMake(470, 30, 71, 21)];
+//    title.image = [UIImage imageNamed:@"schedule"];
+//    [self.navigationController.view addSubview:title];
+    
+    UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    [titleLabel setFont:[UIFont systemFontOfSize:19]];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [titleLabel setTextColor:[UIColor redColor]];
+    [titleLabel setText:@"课程表"];
+    self.navigationItem.titleView = titleLabel;
     
     UIImageView *centerLine = [[UIImageView alloc] initWithFrame:CGRectMake(500, 0, 7, 700)];
     centerLine.image = [UIImage imageNamed:@"course_line"];

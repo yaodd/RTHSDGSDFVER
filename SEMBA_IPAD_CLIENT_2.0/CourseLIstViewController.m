@@ -38,6 +38,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"选课";
+    UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    [titleLabel setFont:[UIFont systemFontOfSize:19]];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [titleLabel setTextColor:[UIColor redColor]];
+    [titleLabel setText:@"选课"];
+    self.navigationItem.titleView = titleLabel;
+    
     self.navigationController.navigationBar.tintColor = [UIColor redColor];
 	// Do any additional setup after loading the view.
     _tableView.dataSource = self;
