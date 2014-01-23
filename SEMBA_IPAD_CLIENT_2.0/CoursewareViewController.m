@@ -451,7 +451,7 @@ NSString *NOTEFolderName3 = @"NOTE";
             
 //            NSLog(@"PDFFirstImage %d",index);
             [button setImage:PDFFirstImage forState:UIControlStateNormal];
-            [button setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
+//            [button setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
             
             
 //            [button removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
@@ -469,7 +469,7 @@ NSString *NOTEFolderName3 = @"NOTE";
         }
         UIImage *image = [UIImage imageNamed:@"pptsearch_ppt"];
         [button setBackgroundImage:image forState:UIControlStateNormal];
-
+//        [button setImage:image forState:UIControlStateNormal];
         
         
         [label setHidden:NO];
