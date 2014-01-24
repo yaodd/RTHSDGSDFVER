@@ -10,4 +10,9 @@
 
 @implementation WebImgResourceContainer
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 832ddb0a6146adc500d9eae836c19b5a7e25f07e
 @end
