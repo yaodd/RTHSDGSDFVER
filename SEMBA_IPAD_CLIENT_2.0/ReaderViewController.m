@@ -2029,7 +2029,10 @@
     //当前这页的view。。奇怪的变量名。。
     ReaderContentView *newContentView = [contentViews objectForKey:key];
     //newContentView.isNote = YES;
-    if(newContentView.isNote == YES)
+    NSLog(@"tag %d %d",otherGestureRecognizer.view.tag,gestureRecognizer.view.tag);
+    CGPoint point = [gestureRecognizer locationInView:self.view];
+    NSLog(@"point %f %f",point.x,point.y);
+    if(newContentView.isNote == YES && point.x > 40)
         return YES;
     else
         return NO;

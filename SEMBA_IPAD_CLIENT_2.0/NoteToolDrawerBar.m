@@ -49,9 +49,11 @@
         [touchView setBackgroundColor:[UIColor clearColor]];
 
         UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
+        panRecognizer.view.tag = 111111;
 //        [touchView addGestureRecognizer:panRecognizer];
         [self addGestureRecognizer:panRecognizer];
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
+        tapRecognizer.view.tag = 222222;
         [touchView addGestureRecognizer:tapRecognizer];
         
         [self addSubview:touchView];

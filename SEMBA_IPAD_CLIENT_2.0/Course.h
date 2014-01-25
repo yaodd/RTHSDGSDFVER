@@ -15,13 +15,15 @@
 @property int cid;
 @property (strong,nonatomic)NSString *courseName;
 @property (strong,nonatomic)NSString *courseDescription;
-@property (strong,nonatomic)NSString *teacherName;
+//@property (strong,nonatomic)NSString *teacherName;
 @property (strong,nonatomic)NSMutableArray *fileArr;
-@property (strong,nonatomic)NSMutableArray *recommendBook;
-@property (strong,nonatomic)NSMutableArray *timeArr;
 @property (strong,nonatomic)NSString *startTime;
 @property (strong,nonatomic)NSString *endTime;
 @property (strong,nonatomic)NSString *location;
+@property (nonatomic,strong)NSMutableArray *teacher;
+@property (nonatomic,strong)NSString *coverUrl;
+
+
 +(id)alloc;
 -(id)init;
 
