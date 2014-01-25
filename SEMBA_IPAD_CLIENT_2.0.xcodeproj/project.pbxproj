@@ -19,6 +19,8 @@
 		2B16549B186322C200985C54 /* table_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B16549A186322C200985C54 /* table_bg@2x.jpg */; };
 		2B16549E1863234D00985C54 /* ScorePoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B16549D1863234D00985C54 /* ScorePoint.m */; };
 		2B1654A1186323B500985C54 /* EvaluateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1654A0186323B500985C54 /* EvaluateCell.m */; };
+		2B43281118925B310032F262 /* WebImgResourceContainer.h in Sources */ = {isa = PBXBuildFile; fileRef = 2B43280F18925B310032F262 /* WebImgResourceContainer.h */; };
+		2B43281218925B310032F262 /* WebImgResourceContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B43281018925B310032F262 /* WebImgResourceContainer.m */; };
 		2B5AA8C91830EBFC00CC0DBD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9240B71830D01800415735 /* LoginViewController.m */; };
 		2B5AA8CA1830ECBB00CC0DBD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C9240B81830D01800415735 /* LoginViewController.xib */; };
 		2B7D6E3A18759A7900836899 /* ChooseCourseListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D6E3918759A7900836899 /* ChooseCourseListResult.m */; };
@@ -420,6 +422,8 @@
 		2B16549D1863234D00985C54 /* ScorePoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScorePoint.m; sourceTree = "<group>"; };
 		2B16549F186323B500985C54 /* EvaluateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvaluateCell.h; sourceTree = "<group>"; };
 		2B1654A0186323B500985C54 /* EvaluateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaluateCell.m; sourceTree = "<group>"; };
+		2B43280F18925B310032F262 /* WebImgResourceContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebImgResourceContainer.h; sourceTree = "<group>"; };
+		2B43281018925B310032F262 /* WebImgResourceContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebImgResourceContainer.m; sourceTree = "<group>"; };
 		2B7D6E3818759A7900836899 /* ChooseCourseListResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCourseListResult.h; sourceTree = "<group>"; };
 		2B7D6E3918759A7900836899 /* ChooseCourseListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCourseListResult.m; sourceTree = "<group>"; };
 		2B7D6E3B18759AAC00836899 /* SingleChooseCourseDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleChooseCourseDataObject.h; sourceTree = "<group>"; };
@@ -963,6 +967,8 @@
 		2BB815361830ACFA00736512 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2B43280F18925B310032F262 /* WebImgResourceContainer.h */,
+				2B43281018925B310032F262 /* WebImgResourceContainer.m */,
 				2BB8153B1830AE0200736512 /* Course.h */,
 				2BB8153C1830AE0200736512 /* Course.m */,
 				2BB8153D1830AE0200736512 /* File.h */,
@@ -2207,6 +2213,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B43281118925B310032F262 /* WebImgResourceContainer.h in Sources */,
+				2B43281218925B310032F262 /* WebImgResourceContainer.m in Sources */,
 				2B7D6E3A18759A7900836899 /* ChooseCourseListResult.m in Sources */,
 				2B98B0FC1839DAD900EBA2E0 /* SetUpView.m in Sources */,
 				9CF2D65B1839FF810026502F /* SearchViewController.m in Sources */,
