@@ -11,8 +11,8 @@
 @implementation User
 
 
-@synthesize username,headImg,company,rank,cellNum,uid;
-
+@synthesize username,headImgUrl,company,rank,cellNum,uid,class_num;
+@synthesize selfSummary;
 //static User* user;
 
 +(id)alloc{

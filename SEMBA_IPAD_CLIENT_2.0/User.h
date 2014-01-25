@@ -19,10 +19,11 @@
 
 @property (nonatomic)int uid;
 @property (nonatomic)int class_num;
+@property (nonatomic)int type;
 @property (strong,nonatomic)NSString *username;
 @property (strong,nonatomic)NSString *company;
 @property (strong,nonatomic)NSString *rank;
-@property (strong,nonatomic)UIImage *headImg;
+@property (strong,nonatomic)NSString *headImgUrl;
 @property (strong,nonatomic)NSString *cellNum;
-
+@property (strong,nonatomic)NSString *selfSummary;
 @end

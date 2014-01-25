@@ -19,4 +19,14 @@
 @property (nonatomic, retain) UILabel *classRoomLabel;
 @property (nonatomic, retain) UIButton *courseButton;
 @property (nonatomic, retain) NSArray *courseArray;
+//获取图片的线程类。
+@property (nonatomic,retain)NSOperationQueue *requestImageQuque;
+
+-(void)displayProductImage;
+
+-(void)displayImageByIndex:(NSInteger)index ByImageURL:(NSURL*)url;
+
+-(void)imageDidReceive:(UIImageView*)imageView;
+
+
 @end

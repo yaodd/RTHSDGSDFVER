@@ -46,6 +46,7 @@
 @synthesize dateLabel;
 @synthesize courseButton;
 @synthesize courseArray;
+@synthesize requestImageQuque = _requestImageQuque;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,6 +62,10 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]];
     [self getCatchFromFile];
+    
+    NSOperationQueue *tempQueue = [[NSOperationQueue alloc]init];
+    
+    _requestImageQuque = tempQueue;
 
     courseArray = [[NSArray alloc]init];
     NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(loadDataSelector:) object:nil];
@@ -172,6 +177,8 @@
     //[self.courseImageView addSubview:courseButton];
     
 	// Do any additional setup after loading the view.
+    //加载课程封面图片
+    [self displayProductImage];
 }
 
 - (void)searchButtonAction:(UIBarButtonItem *)button{
@@ -234,7 +241,7 @@
         //妈蛋 。。arr 你妹啊。。死数据还这样写。。。真是给跪了。。
         UIImage *image = [UIImage imageNamed:[array objectAtIndex:(i%3)]];
         //妈蛋加死数据也不是你这样加的啊我草。。
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",course.startTime,@"date",image,@"courseImage",course.teacherName,@"teachName", nil];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",course.startTime,@"date",image,@"courseImage",course.teacher,@"teachName", nil];
         
         CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(START_X + (i % 4) * (COURSE_ITEM_LENGTH + SPACE_IN),START_Y + MAIN_VIEW_HEIGHT + SPACE_OUT + (i / 4) * (COURSE_ITEM_LENGTH + SPACE_IN), COURSE_ITEM_LENGTH, COURSE_ITEM_LENGTH) :dict];
         singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
@@ -312,7 +319,7 @@
     SysbsModel *sysbsModel = [SysbsModel getSysbsModel];
     User *user = sysbsModel.user;
     
-    NSDictionary *userDict = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:user.uid],@"uid",user.username,@"userName",user.company,@"company",user.rank,@"rank",user.headImg,@"handImg",user.cellNum,@"cellNum", nil];
+    NSDictionary *userDict = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:user.uid],@"uid",user.username,@"userName",user.company,@"company",user.rank,@"rank",user.headImgUrl,@"handImg",user.cellNum,@"cellNum", nil];
 //    NSMutableDictionary *userDict = [[NSMutableDictionary alloc]init];
 //    [userDict setObject:[NSNumber numberWithInt:user.uid] forKey:@"uid"];
 //    [userDict setObject:user.username forKey:@"userName"];
@@ -341,20 +348,10 @@
             [fileArr addObject:dict];
         }
         
-        NSMutableArray *bookArr = [[NSMutableArray alloc]init];
-        for (int k = 0; k < course.recommendBook.count; k ++) {
-            RecommendBook *book = [course.recommendBook objectAtIndex:k];
-            NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:book.bookName,@"bookName",book.author,@"author",book.publisher,@"publisher",book.description,@"description", nil];
-//            NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
-//            [dict setObject:book.bookName forKey:@"bookName"];
-//            [dict setObject:book.author forKey:@"author"];
-//            [dict setObject:book.publisher forKey:@"publisher"];
-//            [dict setObject:book.description forKey:@"description"];
-            [bookArr addObject:dict];
-        }
         
         
-        NSDictionary *courseDict = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:course.cid],@"cid",course.courseName,@"courseName",fileArr,@"fileArr",bookArr,@"bookArr",course.timeArr,@"timeArr",course.courseDescription,@"courseDescription",course.teacherName,@"teacherName", nil];
+        
+        NSDictionary *courseDict = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:course.cid],@"cid",course.courseName,@"courseName",fileArr,@"fileArr",course.courseDescription,@"courseDescription",course.teacher,@"teacher", nil];
 //        NSMutableDictionary *courseDict = [[NSMutableDictionary alloc]init];
 //        [courseDict setObject:[NSNumber numberWithInt:course.cid] forKey:@"cid"];
 //        [courseDict setObject:course.courseName forKey:@"courseName"];
@@ -436,10 +433,8 @@
             book.publisher = [bookDict objectForKey:@"publisher"];
             [bookArr addObject:book];
         }
-        NSMutableArray *timeArr = [courseDict objectForKey:@"timeArr"];
-        course.timeArr = timeArr;
+        
         course.fileArr = fileArr;
-        course.recommendBook = bookArr;
         [courseArr addObject:course];
     }
     MyCourse *myCourse = [[MyCourse alloc]init];
@@ -450,5 +445,18 @@
     NSLog(@"userid!%d",model.user.uid);
 }
 
+-(void)displayProductImage{
+    //设置根ip地址
+    NSURL *url = [NSURL URLWithString:@"http://115.28.18.130"];
+    
+}
+
+-(void)displayImageByIndex:(NSInteger)index ByImageURL:(NSURL*)url{
+    
+}
+
+-(void)imageDidReceive:(UIImageView*)imageView{
+    
+}
 
 @end
