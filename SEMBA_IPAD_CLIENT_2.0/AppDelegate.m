@@ -13,6 +13,8 @@
 #import "MenuController.h"
 #import "DDMenuController.h"
 #import "SysbsModel.h"
+
+
 @implementation AppDelegate
 @synthesize window;
 @synthesize hostController;
@@ -31,22 +33,28 @@
     
     window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds]; // Main application window
     window.backgroundColor = [UIColor whiteColor];
+    
     WelcomeViewController *rootViewController = [[WelcomeViewController alloc]init];
     window.rootViewController = rootViewController;
+     /*
+    UIViewController *controller = [[DetailViewController alloc]initWithNibName:@"DetailView" bundle:nil];
+    self.window.rootViewController = controller;
+*/
     Dao* dao = [Dao sharedDao];
     [window makeKeyAndVisible];
 //    Dao *dao = [Dao sharedDao];
     SysbsModel *model = [SysbsModel getSysbsModel];
+    
     ASIDownloadCache *cache = [[ASIDownloadCache alloc]init];
-
+    
     self.downCache = cache;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths objectAtIndex:0];
-
-    [self.downCache setStoragePath:[documentDirectory stringByAppendingPathComponent:@"resoure"]];
-//[self.downloadCache setStoragePath:documentDirectory];
+    
+    [self.downCache setStoragePath:[documentDirectory stringByAppendingPathComponent:@"resource"]];
+    //[self.downCache setStoragePath:documentDirectory];
     [self.downCache setDefaultCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
-
+     
     return YES;
 }
 							

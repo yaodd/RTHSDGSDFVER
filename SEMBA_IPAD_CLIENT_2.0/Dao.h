@@ -177,8 +177,15 @@
  *-3 已经选了该课。
 */
 -(int)requestForChooseCourse:(int)cid userid:(int)uid;
+/*意见返回接口
+ *返回
+ *1 代表反馈成功。
+ *0 代表反馈失败。
+ */
+-(int)requestForFeedBack:(int)uid feedback:(NSString*)text;
 //
 //-(NSString *) requestForName:(int)tid;
 -(void)reachabilityChanged:(NSNotification*)note;
+
 
 @end

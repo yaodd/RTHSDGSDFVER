@@ -21,6 +21,10 @@
 @property (nonatomic, retain) NSArray *courseArray;
 //获取图片的线程类。
 @property (nonatomic,retain)NSOperationQueue *requestImageQuque;
+//存放获取资源
+@property(nonatomic,strong)NSMutableArray *originalIndexArray;
+@property(nonatomic,strong)NSMutableDictionary *originalOperationDic;
+
 
 -(void)displayProductImage;
 

@@ -30,19 +30,22 @@
     return self;
 }
 
-- (id)initWithFrame:(CGRect)frame :(NSMutableDictionary *)courseDict{
+- (id)initWithFrame:(CGRect)frame dictionary:(NSMutableDictionary *)courseDict{
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        NSLog(@"init courseitem");
+        courseImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) ];
+        [self addSubview:courseImg];
         [self.layer setCornerRadius:20.0f];
         NSString *date = [courseDict objectForKey:@"date"];
         NSString *courseName = [courseDict objectForKey:@"courseName"];
         NSString *teachName = [courseDict objectForKey:@"teachName"];
 //        NSLog(@"1 %@ 2 %@ 3 %@",courseName,date,teachName);
-        UIImage *courseImage = [courseDict objectForKey:@"courseImage"];
+        //UIImage *courseImage = [courseDict objectForKey:@"courseImage"];
 //        UIImage *courseImage = [UIImage imageNamed:@"lixinchun"];
 //        self.backgroundColor = [UIColor grayColor];
-        [self setBackgroundColor:[UIColor colorWithPatternImage:courseImage]];
+        //[self setBackgroundColor:[UIColor colorWithPatternImage:courseImage]];
         
 //        courseImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 //        [courseImg setImage:courseImage];
@@ -74,6 +77,8 @@
         [resumeLabel setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:resumeLabel];
         
+        
+    
         dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - (START_X * 2) - 200, topY + INFO_VIEW_Y, 200, 15)];
         dateLabel.text = date;
         dateLabel.textColor = [UIColor colorWithRed:56.0/255 green:16.0/255 blue:33.0/255 alpha:1.0];
