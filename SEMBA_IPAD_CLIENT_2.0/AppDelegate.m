@@ -16,6 +16,7 @@
 @implementation AppDelegate
 @synthesize window;
 @synthesize hostController;
+@synthesize downCache = _downCache;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -36,6 +37,16 @@
     [window makeKeyAndVisible];
 //    Dao *dao = [Dao sharedDao];
     SysbsModel *model = [SysbsModel getSysbsModel];
+    ASIDownloadCache *cache = [[ASIDownloadCache alloc]init];
+
+    self.downCache = cache;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+
+//    [self.downCache setStoragePath:[documentDirectory stringByAppendingPathComponent:@"resoure"]];
+//[self.downloadCache setStoragePath:documentDirectory];
+//    [self.downCache setDefaultCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
+
     return YES;
 }
 							

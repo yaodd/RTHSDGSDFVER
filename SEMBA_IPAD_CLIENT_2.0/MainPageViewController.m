@@ -46,6 +46,7 @@
 @synthesize dateLabel;
 @synthesize courseButton;
 @synthesize courseArray;
+@synthesize requestImageQuque = _requestImageQuque;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,6 +62,10 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]];
     [self getCatchFromFile];
+    
+    NSOperationQueue *tempQueue = [[NSOperationQueue alloc]init];
+    
+    _requestImageQuque = tempQueue;
 
     courseArray = [[NSArray alloc]init];
     NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(loadDataSelector:) object:nil];
@@ -172,6 +177,8 @@
     //[self.courseImageView addSubview:courseButton];
     
 	// Do any additional setup after loading the view.
+    //加载课程封面图片
+    [self displayProductImage];
 }
 
 - (void)searchButtonAction:(UIBarButtonItem *)button{
@@ -438,5 +445,18 @@
     NSLog(@"userid!%d",model.user.uid);
 }
 
+-(void)displayProductImage{
+    //设置根ip地址
+    NSURL *url = [NSURL URLWithString:@"http://115.28.18.130"];
+    
+}
+
+-(void)displayImageByIndex:(NSInteger)index ByImageURL:(NSURL*)url{
+    
+}
+
+-(void)imageDidReceive:(UIImageView*)imageView{
+    
+}
 
 @end
