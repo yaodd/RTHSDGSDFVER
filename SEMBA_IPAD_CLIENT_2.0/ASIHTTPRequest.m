@@ -1932,6 +1932,11 @@ static NSOperationQueue *sharedQueue = nil;
 	if ([self error] || [self mainRequest]) {
 		return;
 	}
+    if(delegate){
+        NSLog(@"delegate");
+    }
+    
+    //NSLog(@"%@",delegate);
 	if (delegate && [delegate respondsToSelector:didStartSelector]) {
 		[delegate performSelector:didStartSelector withObject:self];
 	}

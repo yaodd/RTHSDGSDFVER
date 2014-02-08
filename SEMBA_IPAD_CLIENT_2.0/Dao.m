@@ -23,6 +23,7 @@
 //NSString *baseUrl = @"http://222.200.177.14/EMBAWEBDEVELOP/";
 //NSString *baseUrl = @"http://115.28.18.130/EMBAWEBDEVELOP/";
 NSString *baseUrl = @"http://115.28.18.130/SEMBAWEBDEVELOP/api/";
+
 NSString *Url = @"http://localhost/test.php";
 NSString *checkInUrl = @"checkin.php";
 NSString *checkInHistory = @"checkinhistory.php";
@@ -52,6 +53,8 @@ NSString *getMessage = @"getMyMessage.php";
 NSString *chooseCourse = @"choosesinglecourse.php";
 //获取选课列表地址
 NSString *fetchChooseCourseList = @"fetchchoosecourselist.php";
+//意见反馈接口
+NSString *feedbackUrl = @"upLoadFeedBack.php";
 
 +(id)sharedDao{
     static Dao* sharedDaoer;
@@ -391,6 +394,8 @@ filename:(NSString*)filename{
         
         NSMutableArray *allMyCourse = [[NSMutableArray alloc] init];
         NSArray *arr = [rs objectForKey:@"data"];
+        NSLog(@"%@",arr);
+        NSLog(@"mycourse");
         int l = [arr count];
         for (int i = 0; i < l; ++i) {
             
@@ -403,10 +408,12 @@ filename:(NSString*)filename{
             //NSLog(@"FUCK%@",one.location);
             one.startTime = [onedict objectForKey:@"startdate"];
             one.endTime = [onedict objectForKey:@"enddate"];
-            
+            NSLog(@"teacher_len");
+
             NSMutableArray *teachArr = [[NSMutableArray alloc]init];
             int teacher_len = [(NSNumber*)[onedict objectForKey:@"teacher_len"] intValue];
             if (teacher_len > 0){
+                NSLog(@"%d",teacher_len);
                 NSMutableArray *teachDataArr = [onedict objectForKey:@"teacher"];
                 for (int j = 0 ; j < teacher_len; ++j) {
                     NSDictionary *oneteacher = [teachDataArr objectAtIndex:j];
@@ -418,7 +425,8 @@ filename:(NSString*)filename{
                     ateacher.selfSummary = [oneteacher objectForKey:@"selfsummary"];
                     [teachArr addObject:ateacher];
                 }
-                one.coverUrl = ((User*)[teachArr objectAtIndex:i]).headImgUrl;
+                one.coverUrl = ((User*)[teachArr objectAtIndex:0]).headImgUrl;
+                NSLog(@"coverurl %@",one.coverUrl);
             }else{
                 one.coverUrl = @"";
             }
@@ -482,7 +490,7 @@ filename:(NSString*)filename{
             one.fileName = [onedict objectForKey:@"filename"];
             one.filePath = [onedict objectForKey:@"filepath"];
             one.date = [onedict objectForKey:@"date"];
-            NSLog(@"filepath%@",one.filePath);
+            //NSLog(@"filepath%@",one.filePath);
 //            NSLog(@"now%d",now.cid);
             one.course = nowCourse;
             //这里可能还需要重构。
@@ -594,7 +602,7 @@ filename:(NSString*)filename{
             singledata.tid = [ (NSNumber *)[onedict objectForKey:@"tid"] integerValue];
             singledata.cid = [ (NSNumber *) [onedict objectForKey:@"cid"] integerValue];
             singledata.eid = [ (NSNumber *)[onedict objectForKey:@"id"] integerValue];
-            NSLog(@"fuckingeid %d",singledata.eid);
+            
             [arr addObject:singledata];
         }
         model.EvaluationList = arr;
@@ -640,7 +648,7 @@ filename:(NSString*)filename{
         NSMutableArray *resultArr = [[NSMutableArray alloc]init];
         NSArray *data = [rs objectForKey:@"data"];
         int len = [data count];
-        
+        NSLog(@"choose len%d",len);
         for (int i = 0 ; i < len; ++i) {
             SingleChooseCourseDataObject *dataobj = [[SingleChooseCourseDataObject alloc]init];
             NSDictionary *single_data = [data objectAtIndex:i];
@@ -665,19 +673,41 @@ filename:(NSString*)filename{
             }
             
             NSMutableArray *tArr = [[NSMutableArray alloc]init];
-            NSArray *tdArr = [course_data objectForKey:@"teacher"];
-            int tLen = [tdArr count];
-            for (int i = 0 ; i < tLen; ++i) {
-                NSDictionary *singleTeacher = [tdArr objectAtIndex:i];
-                NSString *name = [singleTeacher objectForKey:@"username"];
-                [tArr addObject:name];
+            int tLen = [(NSNumber *)[single_data objectForKey:@"teacher_len"] intValue];
+            NSLog(@"tLen%d",tLen);
+            if(tLen>0){
+                NSArray *tdArr = [single_data objectForKey:@"teacher"];
+            //int tLen = [tdArr count];
+                for (int i = 0 ; i < tLen; ++i) {
+                    NSDictionary *singleTeacher = [tdArr objectAtIndex:i];
+                    NSString *name = [singleTeacher objectForKey:@"username"];
+                    [tArr addObject:name];
+                    if(i == 0){
+                        dataobj.coverUrl = [singleTeacher objectForKey:@"headimg"];
+                    }
+                }
+                dataobj.teacherArr = tArr;
+            }else{
+                dataobj.teacherArr = [[NSMutableArray alloc]init];
             }
-            dataobj.teacherArr = tArr;
             [resultArr addObject:dataobj];
         }
         chooseResult.arr = resultArr;
         model.chooseCourseListResult = chooseResult;
     }
+    
+    return ret;
+}
+
+-(int)requestForFeedBack:(int)uid feedback:(NSString *)text{
+    int ret = 0;
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    [dict setObject:[NSNumber numberWithInt:uid] forKey:@"uid"];
+    [dict setObject:text forKey:@"feedback"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",baseUrl,
+                           feedbackUrl];
+    NSDictionary *rs = [self request:urlString dict:dict ];
+    ret = [ (NSNumber *)[rs objectForKey:@"isSuccess"] integerValue];
     
     return ret;
 }

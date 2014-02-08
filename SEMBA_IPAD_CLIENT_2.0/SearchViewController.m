@@ -311,7 +311,7 @@ NSString *NOTEFolderName2 = @"NOTE";
         Course *course = [courseDisplayArray objectAtIndex:i];
         
         NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",course.teacher,@"teachName",@"2013/11/11",@"date", nil];
-        CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(20 + i * 250,20, 235, 235) :dict];
+        CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(20 + i * 250,20, 235, 235) dictionary:dict];
         UITapGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
         NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:course.cid],@"tag", nil];
         [singleTapGesture setMyDict:myDict];

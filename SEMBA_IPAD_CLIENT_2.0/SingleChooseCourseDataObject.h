@@ -19,6 +19,8 @@
 @property (nonatomic,strong)NSString *enddate;
 @property (nonatomic,strong)NSString *contentShortView;
 @property (nonatomic,strong)NSString *teacherShortView;
+//封面图片
+@property (nonatomic,strong)NSString *coverUrl;
 @property int nowChooseNum;
 @property int maxChooseNum;
 
