@@ -7,7 +7,7 @@
 //
 
 #import "WebImgResourceContainer.h"
-
+#import "ASIDownloadCache.h"
 @implementation WebImgResourceContainer
 
 
@@ -39,14 +39,15 @@
     
     [self.httpRequest setDownloadCache:self.appDelegate.downCache];
     [self.httpRequest setDelegate:self];
-    NSLog(@"before start");
+
     [self.httpRequest setDidStartSelector:@selector(didStartHttpRequest:)];
-    NSLog(@"before finish");
+    NSLog(@"after");
+    
     [self.httpRequest setDidFinishSelector:@selector(didFinishHttpRequest:)];
-    NSLog(@"before failed");
+    
     [self.httpRequest setDidFailSelector:@selector(didFailedHttpRequest:)];
     [self.httpRequest startAsynchronous];
-    NSLog(@"start asynchronous");
+
 }
 
 -(void)didStartHttpRequest:(ASIHTTPRequest *)request{

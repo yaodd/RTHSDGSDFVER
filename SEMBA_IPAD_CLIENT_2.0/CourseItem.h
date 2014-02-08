@@ -17,5 +17,5 @@
 @property (nonatomic, strong) UILabel *resumeLabel;
 
 -(void)jumpToDetail:(id)sender;
-- (id)initWithFrame:(CGRect)frame :(NSDictionary *)courseDict;
+- (id)initWithFrame:(CGRect)frame dictionary:(NSDictionary *)courseDict;
 @end
