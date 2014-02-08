@@ -496,6 +496,7 @@ NSString *NOTEFolderName3 = @"NOTE";
     
     
     UIButton *button = (UIButton *)[buttonArray objectAtIndex:index % buttonNumber];
+    [button setTitle:@"" forState:UIControlStateNormal];
     MRCircularProgressView *progress = (MRCircularProgressView *)[button viewWithTag:PROGRESS_TAG];
     for (ASIHTTPRequest *request in queue.operations) {
         if ([request isExecuting]) {
@@ -661,6 +662,13 @@ NSString *NOTEFolderName3 = @"NOTE";
     [button removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
     [button addTarget:self action:@selector(openCourseware:) forControlEvents:UIControlEventTouchUpInside];
     [progressView setHidden:YES];
+}
+- (void)downloadWrong:(MRCircularProgressView *)progressView{
+    [progressView setHidden:YES];
+    NSDictionary *myDict = progressView.myDict;
+    int index = [(NSNumber *)[myDict objectForKey:@"index"] intValue];
+    UIButton *button = [self.buttonArray objectAtIndex:index % buttonNumber];
+    [button setTitle:@"下载失败" forState:UIControlStateNormal];
 }
 #pragma MRProgressDelegate mark
 - (void)progressFinished:(MRCircularProgressView *)progress{
