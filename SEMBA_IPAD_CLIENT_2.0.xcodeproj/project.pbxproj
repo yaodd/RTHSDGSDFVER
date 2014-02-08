@@ -25,6 +25,7 @@
 		2B5AA8CA1830ECBB00CC0DBD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C9240B81830D01800415735 /* LoginViewController.xib */; };
 		2B7D6E3A18759A7900836899 /* ChooseCourseListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D6E3918759A7900836899 /* ChooseCourseListResult.m */; };
 		2B7D6E3D18759AAC00836899 /* SingleChooseCourseDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D6E3C18759AAC00836899 /* SingleChooseCourseDataObject.m */; };
+		2B94D20A18A53E1E00103CBD /* EvaluationDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B94D20918A53E1E00103CBD /* EvaluationDataModel.m */; };
 		2B98B0FC1839DAD900EBA2E0 /* SetUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B98B0FA1839DAD900EBA2E0 /* SetUpView.m */; };
 		2BB8153A1830AD7C00736512 /* Dao.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB815391830AD7B00736512 /* Dao.m */; };
 		2BB815471830AE0200736512 /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB8153C1830AE0200736512 /* Course.m */; };
@@ -49,7 +50,6 @@
 		2BBA3F891878EFE800AC25B3 /* bubble_schedule_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBA3F881878EFE800AC25B3 /* bubble_schedule_right.png */; };
 		2BEC7C79186810100007972A /* NoticeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C78186810100007972A /* NoticeData.m */; };
 		2BEC7C7C186812170007972A /* AllNoticeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C7B186812170007972A /* AllNoticeData.m */; };
-		2BEC7C7F1868255D0007972A /* EvaluationDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC7C7E1868255D0007972A /* EvaluationDataModel.m */; };
 		2BF802BA1872523F0085D148 /* CourseLIstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF802B91872523F0085D148 /* CourseLIstViewController.m */; };
 		2BF802BD187252500085D148 /* CourseDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF802BC187252500085D148 /* CourseDetailViewController.m */; };
 		2BF802BF187255370085D148 /* CourseList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BF802BE187255370085D148 /* CourseList.xib */; };
@@ -428,6 +428,7 @@
 		2B7D6E3918759A7900836899 /* ChooseCourseListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCourseListResult.m; sourceTree = "<group>"; };
 		2B7D6E3B18759AAC00836899 /* SingleChooseCourseDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleChooseCourseDataObject.h; sourceTree = "<group>"; };
 		2B7D6E3C18759AAC00836899 /* SingleChooseCourseDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleChooseCourseDataObject.m; sourceTree = "<group>"; };
+		2B94D20918A53E1E00103CBD /* EvaluationDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EvaluationDataModel.m; path = ../EvaluationDataModel.m; sourceTree = "<group>"; };
 		2B98B0F91839DAD900EBA2E0 /* SetUpView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetUpView.h; sourceTree = "<group>"; };
 		2B98B0FA1839DAD900EBA2E0 /* SetUpView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetUpView.m; sourceTree = "<group>"; };
 		2BB815381830AD7B00736512 /* Dao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dao.h; sourceTree = "<group>"; };
@@ -464,7 +465,6 @@
 		2BEC7C7A186812170007972A /* AllNoticeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNoticeData.h; sourceTree = "<group>"; };
 		2BEC7C7B186812170007972A /* AllNoticeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNoticeData.m; sourceTree = "<group>"; };
 		2BEC7C7D1868255D0007972A /* EvaluationDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvaluationDataModel.h; sourceTree = "<group>"; };
-		2BEC7C7E1868255D0007972A /* EvaluationDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaluationDataModel.m; sourceTree = "<group>"; };
 		2BF802B81872523F0085D148 /* CourseLIstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseLIstViewController.h; sourceTree = "<group>"; };
 		2BF802B91872523F0085D148 /* CourseLIstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseLIstViewController.m; sourceTree = "<group>"; };
 		2BF802BB187252500085D148 /* CourseDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseDetailViewController.h; sourceTree = "<group>"; };
@@ -990,7 +990,7 @@
 				2BEC7C7A186812170007972A /* AllNoticeData.h */,
 				2BEC7C7B186812170007972A /* AllNoticeData.m */,
 				2BEC7C7D1868255D0007972A /* EvaluationDataModel.h */,
-				2BEC7C7E1868255D0007972A /* EvaluationDataModel.m */,
+				2B94D20918A53E1E00103CBD /* EvaluationDataModel.m */,
 				2B7D6E3818759A7900836899 /* ChooseCourseListResult.h */,
 				2B7D6E3B18759AAC00836899 /* SingleChooseCourseDataObject.h */,
 				2B7D6E3C18759AAC00836899 /* SingleChooseCourseDataObject.m */,
@@ -2238,7 +2238,6 @@
 				2BEC7C79186810100007972A /* NoticeData.m in Sources */,
 				591E5D0D183F43B9000B9824 /* MenuCell.m in Sources */,
 				9C51E80B1844472B003F2130 /* MRWeakProxy.m in Sources */,
-				2BEC7C7F1868255D0007972A /* EvaluationDataModel.m in Sources */,
 				2B16549E1863234D00985C54 /* ScorePoint.m in Sources */,
 				9CBD163C181E699D00075BDF /* ASIAuthenticationDialog.m in Sources */,
 				2BB815481830AE0200736512 /* File.m in Sources */,
@@ -2305,6 +2304,7 @@
 				9C51E7FF1844464A003F2130 /* MRActivityIndicatorView.m in Sources */,
 				9CBD163D181E699D00075BDF /* ASIInputStream.m in Sources */,
 				59D096EB183600B00097C6AC /* RegisterContentController.m in Sources */,
+				2B94D20A18A53E1E00103CBD /* EvaluationDataModel.m in Sources */,
 				2B1654491862B1EC00985C54 /* EvaluationData.m in Sources */,
 				2BB8154B1830AE0200736512 /* SysbsModel.m in Sources */,
 				9CBD15D8181E68CA00075BDF /* UIButton+associate.m in Sources */,

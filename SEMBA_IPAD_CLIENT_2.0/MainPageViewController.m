@@ -18,6 +18,7 @@
 #import "User.h"
 #import "DownloadModel.h"
 #import "LoginViewController.h"
+#import "WebImgResourceContainer.h"
 
 #define START_X 18
 #define START_Y 24
@@ -47,6 +48,8 @@
 @synthesize courseButton;
 @synthesize courseArray;
 @synthesize requestImageQuque = _requestImageQuque;
+@synthesize originalIndexArray = _originalIndexArray;
+@synthesize originalOperationDic = _originalOperationDic;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -64,8 +67,14 @@
     [self getCatchFromFile];
     
     NSOperationQueue *tempQueue = [[NSOperationQueue alloc]init];
-    
     _requestImageQuque = tempQueue;
+    
+    NSMutableArray *array = [[NSMutableArray alloc]init];
+    self.originalIndexArray = array;
+    
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+    self.originalOperationDic = dict;
+
 
     courseArray = [[NSArray alloc]init];
     NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(loadDataSelector:) object:nil];
@@ -178,7 +187,8 @@
     
 	// Do any additional setup after loading the view.
     //加载课程封面图片
-    [self displayProductImage];
+    //[self displayProductImage];
+    
 }
 
 - (void)searchButtonAction:(UIBarButtonItem *)button{
@@ -210,7 +220,7 @@
     NSLog(@"mycoursenum%d",[courseArray count]);
     [self performSelectorOnMainThread:@selector(initCourse) withObject:nil waitUntilDone:YES];
 //    [self performSelectorOnMainThread:@selector(downloadAll) withObject:nil waitUntilDone:YES];
-    
+    [self displayProductImage];
 }
 - (void)downloadAll{
     DownloadModel *downloadModel = [DownloadModel getDownloadModel];
@@ -236,19 +246,32 @@
     //你真强。。。
     NSArray *array = [NSArray arrayWithObjects:@"lixinchun",@"lutaihong",@"maoyunshi", nil];
     UITapGestureRecognizer * singleTapGesture;
+
     for (int i = 0;  i < courseNumber; i ++) {
         Course *course = [courseArray objectAtIndex:i];
         //妈蛋 。。arr 你妹啊。。死数据还这样写。。。真是给跪了。。
         UIImage *image = [UIImage imageNamed:[array objectAtIndex:(i%3)]];
         //妈蛋加死数据也不是你这样加的啊我草。。
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",course.startTime,@"date",image,@"courseImage",course.teacher,@"teachName", nil];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",course.startTime,@"date",image,@"courseImage",
+                                     //老师
+                                     @"",@"teachName", nil];
         
-        CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(START_X + (i % 4) * (COURSE_ITEM_LENGTH + SPACE_IN),START_Y + MAIN_VIEW_HEIGHT + SPACE_OUT + (i / 4) * (COURSE_ITEM_LENGTH + SPACE_IN), COURSE_ITEM_LENGTH, COURSE_ITEM_LENGTH) :dict];
+        CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(START_X + (i % 4) * (COURSE_ITEM_LENGTH + SPACE_IN),START_Y + MAIN_VIEW_HEIGHT + SPACE_OUT + (i / 4) * (COURSE_ITEM_LENGTH + SPACE_IN), COURSE_ITEM_LENGTH, COURSE_ITEM_LENGTH) dictionary:dict];
+        
+        //设置courseItem 的tag
+        courseItem.tag = i + 1;
+    
+
         singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
+        
         NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:course.cid],@"tag", nil];
         [singleTapGesture setMyDict:myDict];
+        
+
         [courseItem addGestureRecognizer:singleTapGesture];
         [self.scrollView addSubview:courseItem];
+        
+
     }
     UITapGestureRecognizer *TapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
     if([courseArray count]>0){
@@ -389,7 +412,7 @@
         NSLog(@"in");
         return;
     }
-    NSLog(@"dictInfo %@",dict);
+    //NSLog(@"dictInfo %@",dict);
     NSDictionary *userDict = [dict objectForKey:@"user"];
 //    User *user = sysbsModel.user;
         User *user = [[User alloc]init];
@@ -447,16 +470,56 @@
 
 -(void)displayProductImage{
     //设置根ip地址
-    NSURL *url = [NSURL URLWithString:@"http://115.28.18.130"];
-    
+    NSLog(@"displayproduct");
+    NSURL *url = [NSURL URLWithString:@"http://115.28.18.130/SEMBADEVELOP/img/head/"];
+    int imageCount = [courseArray count];
+    for (int i = 0 ; i < imageCount ; ++i) {
+        Course* course = [courseArray objectAtIndex:i];
+        if ([course.coverUrl isEqualToString:@""] == NO){
+            //获取网络图片。
+            NSLog(@"from internet");
+            NSURL *url = [NSURL URLWithString:course.coverUrl];
+            NSLog(@"%@",course.coverUrl);
+            [self displayImageByIndex:i + 1 ByImageURL:url];
+        }else{
+            //上默认图片
+            continue;
+            NSLog(@"默认图片");
+        }
+    }
 }
 
 -(void)displayImageByIndex:(NSInteger)index ByImageURL:(NSURL*)url{
+    NSString *indexForString =[NSString stringWithFormat:@"%d",index];
+    if([self.originalIndexArray containsObject:indexForString]){
+        return;
+    }
+    CourseItem *courseItem = (CourseItem*)[self.view viewWithTag:index];
+    UIImageView *imageView  = courseItem.courseImg;
+    //[courseItem addSubview:imageView];
+    //courseItem.courseImg;
+    //imageView.tag = index;
+    WebImgResourceContainer *imageOperation = [[WebImgResourceContainer alloc]init];
     
+    imageOperation.resourceURL = url;
+    imageOperation.hostObject = self;
+    
+    imageOperation.resourceDidReceive = @selector(imageDidReceive:);
+    imageOperation.imageView = imageView;
+    
+    [_requestImageQuque addOperation:imageOperation];
+    [self.originalOperationDic setObject:imageOperation forKey:indexForString];
 }
 
 -(void)imageDidReceive:(UIImageView*)imageView{
-    
+    if(imageView== nil || imageView.image ==nil){
+        //
+        return ;
+    }
+    NSLog(@"create new image");
+    //imageView.frame = CGRectMake(0, 0, 300, 300);
+    //[self.view addSubview:imageView];
+
 }
 
 @end

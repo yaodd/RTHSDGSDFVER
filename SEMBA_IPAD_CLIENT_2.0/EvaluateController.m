@@ -99,7 +99,9 @@
     [_scoreArray addObject:point9];
     [_scoreArray addObject:point10];
     
-    _selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 240, 44)];
+    _selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 240, 35)];
+    [_selectView.layer setBorderColor:[UIColor colorWithWhite:215.0/255 alpha:1.0].CGColor];
+    [_selectView.layer setBorderWidth:1.0];
     _selectView.delegate = self;
     
     [_scrollView addSubview:_selectView];
