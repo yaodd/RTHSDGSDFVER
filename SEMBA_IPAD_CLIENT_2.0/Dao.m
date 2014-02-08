@@ -323,6 +323,8 @@ filename:(NSString*)filename{
         //NSLog(@"uid%d",uid);
         NSString *name = [rs objectForKey:@"username"];
         NSNumber *class_num = [rs objectForKey:@"class_num"];
+        NSString *head = [rs objectForKey:@"headimg"];
+        user.headImgUrl = head;
         user.class_num = [class_num integerValue];
         user.username = name;
         model.user = user;

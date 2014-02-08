@@ -22,6 +22,20 @@
 @property (nonatomic,strong)UILabel *teacherShortViewTitle;
 @property (nonatomic,strong) UITextView *teacherShortViewContent;
 @property (nonatomic,strong)UIScrollView *scrollView;
+//获取图片的线程类。
+@property (nonatomic,retain)NSOperationQueue *requestImageQuque;
+//存放获取资源
+@property(nonatomic,strong)NSMutableArray *originalIndexArray;
+@property(nonatomic,strong)NSMutableDictionary *originalOperationDic;
+
+
+-(void)displayProductImage;
+
+-(void)displayImageByIndex:(NSInteger)index ByImageURL:(NSURL*)url;
+
+-(void)imageDidReceive:(UIImageView*)imageView;
+
+
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil courseid:(int)course_index ;
 @end

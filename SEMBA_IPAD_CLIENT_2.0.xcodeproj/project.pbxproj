@@ -26,6 +26,7 @@
 		2B7D6E3A18759A7900836899 /* ChooseCourseListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D6E3918759A7900836899 /* ChooseCourseListResult.m */; };
 		2B7D6E3D18759AAC00836899 /* SingleChooseCourseDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D6E3C18759AAC00836899 /* SingleChooseCourseDataObject.m */; };
 		2B94D20A18A53E1E00103CBD /* EvaluationDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B94D20918A53E1E00103CBD /* EvaluationDataModel.m */; };
+		2B94D20F18A703E100103CBD /* UtilTimeToString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B94D20E18A703E100103CBD /* UtilTimeToString.m */; };
 		2B98B0FC1839DAD900EBA2E0 /* SetUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B98B0FA1839DAD900EBA2E0 /* SetUpView.m */; };
 		2BB8153A1830AD7C00736512 /* Dao.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB815391830AD7B00736512 /* Dao.m */; };
 		2BB815471830AE0200736512 /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB8153C1830AE0200736512 /* Course.m */; };
@@ -429,6 +430,8 @@
 		2B7D6E3B18759AAC00836899 /* SingleChooseCourseDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleChooseCourseDataObject.h; sourceTree = "<group>"; };
 		2B7D6E3C18759AAC00836899 /* SingleChooseCourseDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleChooseCourseDataObject.m; sourceTree = "<group>"; };
 		2B94D20918A53E1E00103CBD /* EvaluationDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EvaluationDataModel.m; path = ../EvaluationDataModel.m; sourceTree = "<group>"; };
+		2B94D20D18A703E100103CBD /* UtilTimeToString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UtilTimeToString.h; sourceTree = "<group>"; };
+		2B94D20E18A703E100103CBD /* UtilTimeToString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UtilTimeToString.m; sourceTree = "<group>"; };
 		2B98B0F91839DAD900EBA2E0 /* SetUpView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetUpView.h; sourceTree = "<group>"; };
 		2B98B0FA1839DAD900EBA2E0 /* SetUpView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetUpView.m; sourceTree = "<group>"; };
 		2BB815381830AD7B00736512 /* Dao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dao.h; sourceTree = "<group>"; };
@@ -1554,6 +1557,8 @@
 				9CBD159E181E4DFB00075BDF /* Images.xcassets */,
 				591680BF1839E8F300381CE4 /* setting_back.png */,
 				9CBD158D181E4DFB00075BDF /* Supporting Files */,
+				2B94D20D18A703E100103CBD /* UtilTimeToString.h */,
+				2B94D20E18A703E100103CBD /* UtilTimeToString.m */,
 			);
 			path = SEMBA_IPAD_CLIENT_2.0;
 			sourceTree = "<group>";
@@ -2242,6 +2247,7 @@
 				9CBD163C181E699D00075BDF /* ASIAuthenticationDialog.m in Sources */,
 				2BB815481830AE0200736512 /* File.m in Sources */,
 				9CBD1622181E695900075BDF /* ThumbsMainToolbar.m in Sources */,
+				2B94D20F18A703E100103CBD /* UtilTimeToString.m in Sources */,
 				9CBD161C181E695900075BDF /* ReaderMainToolbar.m in Sources */,
 				59FD36B71844724700C01940 /* ModifyPSWController.m in Sources */,
 				9CBD15FF181E692800075BDF /* ReaderThumbsView.m in Sources */,

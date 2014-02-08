@@ -172,8 +172,7 @@
     cell.contentTextView.text = singeDataObj.contentShortView;
     [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
     cell.imageView.tag = row + 1;
-    NSLog(@"cell imageView tag%d",cell.imageView.tag);
-    cell.imageView.image = [UIImage imageNamed:@"abc"];
+    //cell.imageView.image = [UIImage imageNamed:@"abc"];
     [imageDict setObject:cell.imageView forKey:[NSString stringWithFormat:@"%d",row]];
     if (row == [dataArr count] - 1){
         [self displayProductImage];
@@ -214,7 +213,7 @@
 
 -(void)displayProductImage{
     //设置根ip地址
-    NSLog(@"displayproduct");
+    
     NSURL *url = [NSURL URLWithString:@"http://115.28.18.130/SEMBADEVELOP/img/head/"];
     int imageCount = [dataArr count];//[courseArray count];
     for (int i = 0 ; i < imageCount ; ++i) {
@@ -225,7 +224,7 @@
             //获取网络图片。
             NSLog(@"choose from internet");
             NSURL *url = [NSURL URLWithString:singeDataObj.coverUrl];
-            NSLog(@"fukcing url%d",singeDataObj.coverUrl);
+            NSLog(@"fukcing url%@",singeDataObj.coverUrl);
             //NSURL *url ;//= [NSURL URLWithString:course.coverUrl];
             //NSLog(@"%@",course.coverUrl);
             [self displayImageByIndex:i ByImageURL:url];
