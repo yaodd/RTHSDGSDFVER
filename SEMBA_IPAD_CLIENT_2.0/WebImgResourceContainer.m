@@ -10,6 +10,7 @@
 #import "ASIDownloadCache.h"
 @implementation WebImgResourceContainer
 
+
 @synthesize resourceURL = _resourceURL;
 @synthesize hostObject = _hostObject;
 @synthesize resourceDidReceive = _resourceDidReceive;

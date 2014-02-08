@@ -245,6 +245,7 @@ NSString *NOTEFolderName = @"NOTE";
     NSLog(@"download error : %@",request.error );
     if (request.downloadProgressDelegate != nil) {
         [request.downloadProgressDelegate setHidden:YES];
+        
         request.downloadProgressDelegate = nil;
     }
 }

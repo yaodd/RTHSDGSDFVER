@@ -17,6 +17,7 @@
 @optional
 
 - (void) downloadFinished:(MRCircularProgressView *)progressView;
+- (void) downloadWrong:(MRCircularProgressView *)progressView;
 
 @end
 @interface DownloadModel : NSObject

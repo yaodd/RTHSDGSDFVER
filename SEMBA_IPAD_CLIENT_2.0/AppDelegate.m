@@ -54,7 +54,12 @@
     [self.downCache setStoragePath:[documentDirectory stringByAppendingPathComponent:@"resource"]];
     //[self.downCache setStoragePath:documentDirectory];
     [self.downCache setDefaultCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
-     
+    
+
+//    [self.downCache setStoragePath:[documentDirectory stringByAppendingPathComponent:@"resoure"]];
+//[self.downloadCache setStoragePath:documentDirectory];
+//    [self.downCache setDefaultCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
+
     return YES;
 }
 							

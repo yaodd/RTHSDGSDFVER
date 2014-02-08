@@ -255,25 +255,21 @@
 {
 	CGRect controlRect = CGRectInset(trackControl.bounds, 4.0f, 0.0f);
 
-	CGFloat thumbWidth = (THUMB_SMALL_WIDTH + THUMB_SMALL_GAP);
-//
-//    
-//
-	NSInteger thumbs = (controlRect.size.width / thumbWidth);
+//	CGFloat thumbWidth = (THUMB_SMALL_WIDTH + THUMB_SMALL_GAP);
+
+//	NSInteger thumbs = (controlRect.size.width / thumbWidth);
 
 	NSInteger pages = [document.pageCount integerValue]; // Pages
-    
+//    
 //    CGFloat controlWidth = trackControl.bounds.size.width;
-    
-//    CGFloat useableWidth = (trackControl.bounds.size.width - THUMB_LARGE_WIDTH);
-    
+//
+    CGFloat useableWidth = (trackControl.bounds.size.width - THUMB_LARGE_WIDTH);
+//
 //    CGFloat stride = (useableWidth / (pages - 1)); // Page stride
-    
-//    CGFloat thumbWidth = (useableWidth / (pages - 1));
-    
-    
-    
-//	NSInteger thumbs = (controlRect.size.width / thumbWidth);
+//
+    CGFloat thumbWidth = (useableWidth / (pages - 1));
+//
+	NSInteger thumbs = (controlRect.size.width / thumbWidth);
 
 
     
