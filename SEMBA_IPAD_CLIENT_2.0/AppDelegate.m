@@ -51,7 +51,7 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths objectAtIndex:0];
     
-    [self.downCache setStoragePath:[documentDirectory stringByAppendingPathComponent:@"resource"]];
+  //  [self.downCache setStoragePath:[documentDirectory stringByAppendingPathComponent:@"resource"]];
     //[self.downCache setStoragePath:documentDirectory];
     [self.downCache setDefaultCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
     
