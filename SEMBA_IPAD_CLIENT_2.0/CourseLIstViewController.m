@@ -172,6 +172,8 @@
     cell.contentTextView.text = singeDataObj.contentShortView;
     [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
     cell.imageView.tag = row + 1;
+    cell.imageView.image = [UIImage imageNamed:@"fengmian"];
+
     //cell.imageView.image = [UIImage imageNamed:@"abc"];
     [imageDict setObject:cell.imageView forKey:[NSString stringWithFormat:@"%d",row]];
     if (row == [dataArr count] - 1){

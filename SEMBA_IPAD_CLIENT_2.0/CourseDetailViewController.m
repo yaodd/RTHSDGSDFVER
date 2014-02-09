@@ -141,6 +141,7 @@
     
     _imageView.layer.masksToBounds = YES;
     _imageView.layer.cornerRadius = 20;
+    _imageView.image = [UIImage imageNamed:@"fengmian"];
 
     [self displayProductImage];
 }

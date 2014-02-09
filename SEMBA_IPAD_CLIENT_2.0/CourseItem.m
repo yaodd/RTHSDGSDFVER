@@ -38,6 +38,7 @@
         courseImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) ];
         courseImg.layer.masksToBounds = YES;
         courseImg.layer.cornerRadius = 20;
+        courseImg.image = [UIImage imageNamed:@"fengmian"];
         [self addSubview:courseImg];
         [self.layer setCornerRadius:20.0f];
         NSString *date = [courseDict objectForKey:@"date"];
