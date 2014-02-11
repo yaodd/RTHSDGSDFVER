@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ASIDownloadCache.h"
+
 @class DDMenuController;
+@class Reachability;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+{
+    Reachability  *hostReach;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, retain) DDMenuController *hostController;

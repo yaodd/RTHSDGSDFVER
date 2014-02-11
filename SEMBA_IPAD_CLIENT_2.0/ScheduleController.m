@@ -57,10 +57,11 @@
 //    [self.navigationController.view addSubview:title];
     
     UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
-    [titleLabel setFont:[UIFont systemFontOfSize:19]];
+    [titleLabel setFont:[UIFont fontWithName:@"STHeitiSC-Medium" size:20.0]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [titleLabel setTextColor:[UIColor redColor]];
     [titleLabel setText:@"课程表"];
+    titleLabel.textColor = [UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0];
     self.navigationItem.titleView = titleLabel;
     
     UIImageView *centerLine = [[UIImageView alloc] initWithFrame:CGRectMake(500, 0, 7, 700)];
@@ -91,7 +92,7 @@
         
             celldata.date =
         //@"123";
-            [NSString stringWithFormat:@"日期:%@——%@",startDate,endDate];
+            [NSString stringWithFormat:@"日期: %@——%@",startDate,endDate];
         //course.startTime;
         }else{
             celldata.date = @"系统数据错误";
@@ -110,18 +111,31 @@
             celldata.month = [NSString stringWithFormat:@"%d月",0];
         }
             //@"11月";
-        celldata.place = [NSString stringWithFormat:@"地点:%@",course.location];
+        celldata.place = [NSString stringWithFormat:@"地点: %@",course.location];
         //@"";
         //@"地点";//
         //course.location;
-        celldata.time = @"时间 9:00AM-12:00AM 2:00-5:00PM";
-        celldata.teacher = @"";
+        celldata.time = @"时间: 9:00AM-12:00AM 2:00-5:00PM";
+        //更新教师名字
+        NSString *teacher = [[NSString alloc] init];
+        NSMutableArray *tArr = (NSMutableArray *)course.teacher;
+        int tlen = (int)[tArr count];
+        NSLog(@"teacherLen-%d", tlen);
+        if(tlen > 0){
+            for(int i = 0; i < tlen; ++i){
+                User *ateacher = (User *)[tArr objectAtIndex:i];
+                teacher = [teacher stringByAppendingString:ateacher.username];
+            }
+        }else {
+            teacher = @"";
+        }
+        celldata.teacher = teacher;
         //course.teacherName;
         //Add a label of year to view
         if(0){//目前永远不会执行。
             UILabel *year = [[UILabel alloc] initWithFrame:CGRectMake(410 , originY, kYearLabelSize.width, kYearLabelSize.height)];
             year.textColor = [UIColor colorWithRed:228/255.0 green:64/255.0 blue:91/255.0 alpha:1.0];
-            year.font = [UIFont fontWithName:@"Heiti SC" size:30.0];
+            year.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:30.0];
             year.text = @"aaa";
             [self.scrollView addSubview:year];
             originY += year.frame.size.height + 50;

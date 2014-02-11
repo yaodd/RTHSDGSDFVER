@@ -14,6 +14,9 @@
 @interface EvaluateController (){
     MRProgressOverlayView *overlayView;
     int current_index ;
+    NSArray *numArr;
+    NSArray *commentArr;
+    int isEnableComment;        //0表示不可评教，1表示可评教
 }
 
 @end
@@ -21,7 +24,7 @@
 @implementation EvaluateController
 @synthesize selectView = _selectView;
 @synthesize evaluateDataArray = _evaluateDataArray;
-@synthesize scoreArray = _scoreArray;
+//@synthesize scoreArray = _scoreArray;
 @synthesize scrollView = _scrollView;
 @synthesize suggestTextView = _suggestTextView;
 @synthesize courseDescription = _courseDescription;
@@ -29,6 +32,9 @@
 @synthesize teacherHead = _teacherHead;
 @synthesize classDateLabel = _classDateLabel;
 @synthesize classNumLabel = _classNumLabel;
+@synthesize scoreView;
+@synthesize scoreCollect;
+@synthesize scoreDict;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,13 +53,18 @@
     self.navigationController.navigationBar.tintColor = [UIColor redColor];
     //_selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 196, 44)];
     //[_scrollView addSubview:_selectView];
+    
+    _teacherHead.layer.masksToBounds = YES;
+    _teacherHead.layer.cornerRadius = 55.5;
+    
     UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
-    [titleLabel setFont:[UIFont systemFontOfSize:19]];
+    [titleLabel setFont:[UIFont fontWithName:@"STHeitiSC-Medium" size:20.0]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [titleLabel setTextColor:[UIColor redColor]];
+    [titleLabel setTextColor:[UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0]];
     [titleLabel setText:@"评教"];
     self.navigationItem.titleView = titleLabel;
 
+    /*
     NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:@"10",@"9",@"8",@"7",@"6",@"5",@"4",@"3",@"2",@"1", nil];
     ScorePoint *point1 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 402, 32, 32)];
     [point1 setDataArray:array];
@@ -76,6 +87,7 @@
     ScorePoint *point10 = [[ScorePoint alloc ]initWithFrame:CGRectMake(897, 852, 32, 32)];
     [point10 setDataArray:array];
     _scrollView.delegate = self;
+    
     [_scrollView addSubview:point10];
     [_scrollView addSubview:point9];
     [_scrollView addSubview:point8];
@@ -98,8 +110,15 @@
     [_scoreArray addObject:point8];
     [_scoreArray addObject:point9];
     [_scoreArray addObject:point10];
+    */
     
-    _selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 240, 44)];
+    _scrollView.delegate = self;
+    
+    _selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 240, 35)];
+    [_selectView.layer setBorderColor:[UIColor colorWithWhite:215.0/255 alpha:1.0].CGColor];
+    [_selectView.layer setBorderWidth:1.0];
+    //因为暂时没有评教，点击无反应
+    _selectView.userInteractionEnabled = NO;
     _selectView.delegate = self;
     
     [_scrollView addSubview:_selectView];
@@ -112,8 +131,20 @@
     SysbsModel *model = [SysbsModel getSysbsModel];
     NSString *class_num = [NSString stringWithFormat:@"班级：黄埔%d期",model.user.class_num];
     _classNumLabel.text = class_num;
-    NSThread *thread =[[NSThread alloc]initWithTarget:self selector:@selector(setData) object:nil];
-    [thread start];
+    
+    Reachability *r = [Reachability reachabilityWithHostname:@"www.baidu.com"];
+    if([r currentReachabilityStatus] == NotReachable){
+            // 没有网络连接
+            NSLog(@"no connection");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"网络出错" message:@"当前没有网络，无法评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
+    }else {
+
+            NSThread *thread =[[NSThread alloc]initWithTarget:self selector:@selector(setData) object:nil];
+            [thread start];
+    }
+    
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -123,10 +154,127 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    commentArr =[[NSArray alloc]initWithObjects:@"one",@"two",@"three",@"four",@"five",@"six",@"seven",@"eight",@"nine",@"ten", nil];
+    numArr = [[NSArray alloc]initWithObjects:@"assess_10",@"assess_9",@"assess_8",@"assess_7",@"assess_6",@"assess_5",@"assess_4",@"assess_3",@"assess_2",@"assess_1", nil];
+    NSNumber *tenNum = [NSNumber numberWithInt:10];
+    scoreDict = [[NSMutableDictionary alloc]init];
+    NSLog(@"scoreCollectcount:%d", [scoreCollect count]);
+    for (int i = 0 ; i < 10; i ++) {
+        [scoreDict setObject:tenNum forKey:[commentArr objectAtIndex:i]];
+        UIButton *button = [scoreCollect objectAtIndex:i];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitle:[NSString stringWithFormat:@"评分"] forState:UIControlStateNormal];
+    }
+    [scoreDict setObject:@"" forKey:@"comment"];
+    [scoreDict setObject:@"" forKey:@"teach"];
+    scoreView = [[UIView alloc]init];
+    scoreView.alpha = 0;
+    UIColor *viewBG = [UIColor colorWithPatternImage:[UIImage imageNamed:@"assess_dropdown_bg"]];
+    [scoreView setBackgroundColor:viewBG];
+    for (int i = 0; i < 5; i ++) {
+        for (int k = 0 ; k < 2; k ++) {
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.frame = CGRectMake(k * 60 + 27, i * 39 + 20, 23, 19);
+            [button setBackgroundImage:[UIImage imageNamed:[numArr objectAtIndex:i * 2 + k]] forState:UIControlStateNormal];
+            [button setTag:i * 2 + k + 1];
+            [button setTitle:[NSString stringWithFormat:@"%d",11-(i * 2 + k + 1) ] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(numButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+            [scoreView addSubview:button];
+            
+        }
+    }
+
+    [self.view addSubview:scoreView];
 }
 
+- (void)numButtonAction:(id)sender
+{
+    
+    UIButton *button = (UIButton *)sender;
+    int tag = button.tag;
+    //UIImage *image = [UIImage imageNamed:[numArr objectAtIndex:tag - 1]];
+    //    UIButton *scoreButton = [scoreButtonCol objectAtIndex:nowButtonIndex - 1];
+    UIButton *scoreButton = [[UIButton alloc]init];
+    for (int i = 0; i < scoreCollect.count; i ++) {
+        NSLog(@"=====");
+        NSLog(@"[scoreCollect objectAtIndex:i]).tag::%d--current_index::%d",((UIButton *)[scoreCollect objectAtIndex:i]).tag, current_index);
+        if (((UIButton *)[scoreCollect objectAtIndex:i]).tag == current_index)
+        {
+            scoreButton = (UIButton *)[scoreCollect objectAtIndex:i];
+            break;
+        }
+    }
+    NSNumber *scoreNum = [NSNumber numberWithInt:11 - tag];
+    NSLog(@"bbbb");
+    NSString *scoreKey = [commentArr objectAtIndex:scoreButton.tag - 1];
+    NSLog(@"aaaa");
+    [scoreDict setObject:scoreNum forKey:scoreKey];
+    
+    
+    //    [scoreButton setImage:image forState:UIControlStateNormal];
+    [scoreButton setTitle:[NSString stringWithFormat:@"%d",11 - tag] forState:UIControlStateNormal];
+    [scoreButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self scoreViewDisappear:scoreView :sender];
+}
+
+- (IBAction)scoreButtonAction:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    NSLog(@"%f %f %f %f",scoreView.frame.origin.x,scoreView.frame.origin.y,scoreView.frame.size.width,scoreView.frame.size.height);
+    current_index = button.tag;
+    //    NSLog(@"inini");
+    if (scoreView.alpha == 1) {
+        [self scoreViewDisappear:scoreView :sender];
+        
+    }
+    
+    {
+        
+        CGRect rect = button.frame;
+        CGFloat offset = [_scrollView contentOffset].y;
+        NSLog(@"offset %f",offset);
+        rect.origin.y -= offset;
+        
+        rect.origin.x -=  77;
+        rect.origin.y += rect.size.height + 20;
+        rect.size.height = 209;
+        rect.size.width = 139;
+        scoreView.frame = rect;
+        //        [scoreView setBackgroundColor:[UIColor redColor]];
+        [self scoreViewAppear:scoreView :sender];
+    }
+}
+
+- (void) scoreViewAppear:(UIView *)view : (id)sender
+{
+    NSLog(@"app");
+    [UIView beginAnimations:@"scoreViewAppear" context:nil];
+    [UIView setAnimationDuration:0.3];
+    CGRect anRect = view.frame;
+    anRect.origin.y -= 20;
+    view.alpha = 1;
+    view.frame = anRect;
+    [UIView commitAnimations];
+    
+}
+
+- (void) scoreViewDisappear:(UIView *)view : (id)sender
+{
+    NSLog(@"disa");
+    [UIView beginAnimations:@"scoreViewDisappear" context:nil];
+    [UIView setAnimationDuration:0.3];
+    CGRect anRect = view.frame;
+    anRect.origin.y += 20;
+    view.alpha = 0;
+    view.frame = anRect;
+    [UIView commitAnimations];
+
+}
+
+
 - (void)keyboardWillShow:(NSNotification *)notification {
-    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+   // CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     CGRect scrollFrame = _scrollView.frame;
     scrollFrame.origin.y = 0 - 350;
     [UIView animateWithDuration:0.15
@@ -145,6 +293,10 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [_suggestTextView resignFirstResponder];
+    //NSLog(@"滚动视图开始滚动，它只调用一次");
+    if (scoreView.alpha != 0) {
+        [self scoreViewDisappear:scoreView :nil];
+    }
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
@@ -171,6 +323,7 @@
 
     int ret = [dao requestForEvaluationList:model.user.uid];
     if ( ret == 1){
+        isEnableComment = 1;
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         NSArray *data = model.EvaluationList;
         int l = [data count];
@@ -180,14 +333,17 @@
             [arr  addObject:oneString];
         }
         if(l == 0){
+            isEnableComment = 0;
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有评教" message:@"当前没有评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
             [alertView show];
         }
         [_selectView setData:arr];
     }else if( ret == 0 ){
+        isEnableComment = 0;
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有评教" message:@"当前没有评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
         [alertView show];
     }else if( ret == -1 ){
+        isEnableComment = 0;
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"服务器故障" message:@"当前没有评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
         [alertView show];
     }
@@ -213,13 +369,27 @@
     EvaluationDataModel *onedata = [arr objectAtIndex:current_index];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"正在评教" message:@"正在发送网络请求请耐心等待，完成后将有提示。" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
     [alertView show];
-    int rs = [dao requestForUpEvaluation:model.user.uid eid:onedata.eid one:[((ScorePoint*)[_scoreArray objectAtIndex:0]).selectedLabel.text intValue] two:[((ScorePoint*)[_scoreArray objectAtIndex:1]).selectedLabel.text intValue] three:[((ScorePoint*)[_scoreArray objectAtIndex:2]).selectedLabel.text intValue] four:[((ScorePoint*)[_scoreArray objectAtIndex:3]).selectedLabel.text intValue] five:[((ScorePoint*)[_scoreArray objectAtIndex:4]).selectedLabel.text intValue] six:[((ScorePoint*)[_scoreArray objectAtIndex:5]).selectedLabel.text intValue] seven:[((ScorePoint*)[_scoreArray objectAtIndex:6]).selectedLabel.text intValue] eight:[((ScorePoint*)[_scoreArray objectAtIndex:7]).selectedLabel.text intValue] nine:[((ScorePoint*)[_scoreArray objectAtIndex:8]).selectedLabel.text intValue] ten:[((ScorePoint*)[_scoreArray objectAtIndex:9]).selectedLabel.text intValue] suggestText:_suggestTextView.text];
+    int rs = [dao requestForUpEvaluation:model.user.uid eid:onedata.eid
+                                     one:((UIButton *)[scoreCollect objectAtIndex:0]).titleLabel.text.intValue
+                                     two:((UIButton *)[scoreCollect objectAtIndex:1]).titleLabel.text.intValue
+                                   three:((UIButton *)[scoreCollect objectAtIndex:2]).titleLabel.text.intValue
+                                    four:((UIButton *)[scoreCollect objectAtIndex:3]).titleLabel.text.intValue
+                                    five:((UIButton *)[scoreCollect objectAtIndex:4]).titleLabel.text.intValue
+                                     six:((UIButton *)[scoreCollect objectAtIndex:5]).titleLabel.text.intValue
+                                   seven:((UIButton *)[scoreCollect objectAtIndex:6]).titleLabel.text.intValue
+                                   eight:((UIButton *)[scoreCollect objectAtIndex:7]).titleLabel.text.intValue
+                                    nine:((UIButton *)[scoreCollect objectAtIndex:8]).titleLabel.text.intValue
+                                     ten:((UIButton *)[scoreCollect objectAtIndex:9]).titleLabel.text.intValue
+                             suggestText:_suggestTextView.text];
     if(rs == 1){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"评教已经成功" message:@"评教已经成功返回可继续其他评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
         [alertView show];
-                for (int i = 0 ; i <[_scoreArray count];++i){
-            ScorePoint *point = [_scoreArray objectAtIndex:i];
-            point.selectedLabel.text = @"10";
+               //评教完成一次后，还原评教之前的内容
+                for (int i = 0 ; i <[scoreCollect count];++i){
+            //ScorePoint *point = [_scoreArray objectAtIndex:i];
+           // point.selectedLabel.text = @"10";
+                    UIButton *btn = (UIButton *)[scoreCollect objectAtIndex:i];
+                    btn.titleLabel.text = @"评分";
             _selectView.selectedLabel.text = @"无";
         }
         [self setData];
@@ -244,13 +414,27 @@
 
 -(void)upEvaluation:(id)sender{
     [_suggestTextView resignFirstResponder];
-    if(current_index < 0){
-        NSLog(@"current_index < 0");
-        return ;
+    //暂时没有评教
+    if(isEnableComment == 0){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有评教" message:@"当前没有评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
     }
+    else {
+    //如果恢复评教功能
+        for(int i = 0; i < [scoreCollect count]; ++i){
+            if([((UIButton *)[scoreCollect objectAtIndex:i]).titleLabel.text isEqualToString:@"评分"]){
+                NSLog(@"没有全部评分！");
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"评教失败" message:@"请完成全部评分" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
+                [alertView show];
+                return ;
+            }
+        }
+    
     //NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(uploadEvaluation) object:nil];
     //[thread start];
     [self uploadEvaluation];
+    }
+    
 }
 
 -(void)selectSomeItem:(int)index{

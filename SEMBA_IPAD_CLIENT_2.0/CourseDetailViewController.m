@@ -65,6 +65,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //底色
+    [self.view setBackgroundColor:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
+    
+    //导航栏红色底线
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bar_bg"] forBarMetrics:UIBarMetricsDefault];
+    
+    self.title = @"课程详情";
+    UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    [titleLabel setFont:[UIFont fontWithName:@"STHeitiSC-Medium" size:20.0]];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [titleLabel setTextColor:[UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0]];
+    [titleLabel setText:@"课程详情"];
+    self.navigationItem.titleView = titleLabel;
+    
     imageArray = [NSArray arrayWithObjects:@"lixinchun",@"lutaihong",@"maoyunshi", nil];
     self.navigationController.navigationBar.tintColor = [UIColor redColor];
     
@@ -78,22 +94,33 @@
     self.originalOperationDic = dict;
 
     
-    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 1024, 768)];
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 1024, 700)];
+    _scrollView.backgroundColor = [UIColor clearColor];
+    
     [self.view addSubview:_scrollView];
-    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 28, 400, 60  )];
+    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 28, 400, 60)];
     _titleLabel.text = @"测试课程标题";
+    _titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:24.0];
+    _titleLabel.backgroundColor = [UIColor clearColor];
+    _titleLabel.textColor = [UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0];
     [_scrollView addSubview:_titleLabel];
     
-    _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(226, 78, 400, 20)];
+    _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 78, 400, 20)];
     _nameLabel.text = @"授课老师:测试账号";
+    _nameLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:16.0];
+    _nameLabel.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_nameLabel];
     
-    _dateLabel = [[UILabel alloc]    initWithFrame:CGRectMake(228, 106, 400, 20)];
+    _dateLabel = [[UILabel alloc]    initWithFrame:CGRectMake(230, 106, 400, 20)];
     _dateLabel.text = @"上课时间：测试时间";
+    _dateLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:16.0];
+    _dateLabel.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_dateLabel];
     
     _peopleNumLabel = [[ UILabel alloc]  initWithFrame:CGRectMake(210, 138, 400, 60)];
     _peopleNumLabel.text = @"已选x人/限选y人";
+    _peopleNumLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:20.0];
+    _peopleNumLabel.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_peopleNumLabel];
     
     //_imageView = []
@@ -103,23 +130,35 @@
     [_selectButton setTitle:@"选课" forState:UIControlStateNormal];
     [_scrollView addSubview:_selectButton];
     
-    _courseShortViewTitle = [[UILabel alloc]initWithFrame:CGRectMake(150, 200, 400, 26)];
+    _courseShortViewTitle = [[UILabel alloc]initWithFrame:CGRectMake(140, 200, 400, 26)];
     _courseShortViewTitle.text = @"课程简介";
+    _courseShortViewTitle.font = [UIFont fontWithName:@"STHeitiSC-Light" size:20.0];
+    _courseShortViewTitle.textColor = [UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0];
+    _courseShortViewTitle.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_courseShortViewTitle];
     
-    _courseShortViewContent = [[UITextView alloc]initWithFrame:CGRectMake(120, 250, 720, 200)];
+    _courseShortViewContent = [[UITextView alloc]initWithFrame:CGRectMake(120, 230, 720, 200)];
     _courseShortViewContent.text =@"测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容测试简介内容";
     _courseShortViewContent.userInteractionEnabled = NO;
+    _courseShortViewContent.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14.0];
+    _courseShortViewContent.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_courseShortViewContent];
     
     _teacherShortViewTitle = [[UILabel alloc]initWithFrame:
-                              CGRectMake(150, _courseShortViewContent.frame.origin.y + _courseShortViewContent.frame.size.height + 40, 100, 26)];
+                              CGRectMake(140,
+                                         _courseShortViewContent.frame.origin.y + _courseShortViewContent.frame.
+                                         size.height + 20, 400, 26)];
     _teacherShortViewTitle.text = @"教师简介";
+    _teacherShortViewTitle.font = [UIFont fontWithName:@"Heiti SC" size:20.0];
+    _teacherShortViewTitle.textColor = [UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0];
+    _teacherShortViewTitle.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_teacherShortViewTitle];
     
-    _teacherShortViewContent = [[UITextView alloc]initWithFrame:CGRectMake(120, _teacherShortViewTitle.frame.origin.y + _teacherShortViewTitle.frame.size.height + 20, 720, 400)];
+    _teacherShortViewContent = [[UITextView alloc]initWithFrame:CGRectMake(120, _teacherShortViewTitle.frame.origin.y + _teacherShortViewTitle.frame.size.height + 40, 720, 400)];
     _teacherShortViewContent.text = @"测试教师简介";
     _teacherShortViewContent.userInteractionEnabled = NO;
+    _teacherShortViewContent.font = [UIFont fontWithName:@"STHeitiSC-Light" size:14.0];
+    _teacherShortViewContent.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_teacherShortViewContent];
     
     UIImage *timelogo = [UIImage imageNamed:@"time.png"];
@@ -135,7 +174,7 @@
     [self updateContentSize];
 	// Do any additional setup after loading the view.
     [_selectButton addTarget:self action:@selector(chooseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 20, 120, 134)];
+    _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(60, 40, 120, 134)];
     [_scrollView addSubview:_imageView];
     //_imageView.image = [UIImage imageNamed:[imageArray objectAtIndex:index% 3]];
     
@@ -148,8 +187,25 @@
 
 -(void)updateContent{
     _titleLabel.text = dataobj.courseTitle;
-    _peopleNumLabel.text = [NSString stringWithFormat:@"已选%d人/限选%d人",dataobj.nowChooseNum ,dataobj.maxChooseNum];
-    //_nameLabel.text
+    
+    //已选人数
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"已选%d人/限选%d人",dataobj.nowChooseNum ,dataobj.maxChooseNum]];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0] range:NSMakeRange(2, 1)];
+    _peopleNumLabel.attributedText= str;
+    
+    NSString *teacher = [[NSString alloc] init];
+    NSArray *tArr = (NSArray *)dataobj.teacherArr;
+    int tlen = (int)[tArr count];
+    NSLog(@"teacherLen-%d", tlen);
+    if(tlen > 0){
+        for(int i = 0; i < tlen; ++i){
+            teacher = [teacher stringByAppendingString:[tArr objectAtIndex:i]];
+        }
+    }else {
+        teacher = @"";
+    }
+    _nameLabel.text = teacher;
+    
     _courseShortViewContent.text = dataobj.contentShortView;
     
     NSString *startdate = [dataobj.startdate substringWithRange:NSMakeRange(5, 5)];
@@ -168,31 +224,38 @@
 
 -(void)updateContentSize{
     CGRect rect = _courseShortViewContent.frame;
-    UIImageView *contentImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"title.png"]];
+    UIImageView *contentImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"title"]];
     contentImage.frame = CGRectMake(120, _courseShortViewTitle.frame.origin.y, 8, 26) ;
     [_scrollView addSubview:contentImage];
     
-    rect.size.height = [self heightForTextView:_courseShortViewContent WithText:_courseShortViewContent.text];
+    rect.size.height = [self heightForTextView:_courseShortViewContent WithText:_courseShortViewContent.text]+7;
     
     _courseShortViewContent.frame = rect;
     //NSLog(@"%f %f",rect.origin.y,rect.size.height);
     //更新教师简介高度。
-    rect.origin.y = rect.origin.y + rect.size.height ;
-    rect.size.height = 40;
-    rect.origin.x = 150;
+    rect.origin.y = rect.origin.y + rect.size.height + 20;
+    rect.size.height = 26;
+    rect.origin.x = 140;
     _teacherShortViewTitle.frame = rect;
-    UIImageView *teacherImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"title.png"]];
+    UIImageView *teacherImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"title"]];
     teacherImage.frame = CGRectMake(120, rect.origin.y, 8, 26);
     [_scrollView addSubview:teacherImage];
     //NSLog(@"%f %f",rect.origin.y,rect.size.height);
     rect.origin.x = 120;
-    rect.origin.y = rect.origin.y + rect.size.height  ;
+    rect.origin.y = rect.origin.y + 30 ;
     rect.size.height = [self heightForTextView:_teacherShortViewContent WithText:_teacherShortViewContent.text];
     _teacherShortViewContent.frame = rect;
     //NSLog(@"%f %f",rect.origin.y,rect.size.height);
     NSLog(@"contentx %f teachery %f",_courseShortViewTitle.frame.origin.x
           ,_teacherShortViewTitle.frame.origin.x);
-    }
+
+    //更新Scrollview的高度
+    rect = _scrollView.frame;
+    CGRect courseShortTitleRect = _courseShortViewTitle.frame;
+    rect.size.height = courseShortTitleRect.origin.y + 2 * courseShortTitleRect.size.height +
+                       _courseShortViewContent.frame.size.height + _teacherShortViewContent.frame.size.height+40;
+    _scrollView.contentSize = rect.size;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -237,9 +300,8 @@
 
 -(void)popUpAView:(int)type{
     if(popUpView != nil)return;
-    popUpView = [[UIView alloc] initWithFrame:CGRectMake(300, 260, 422, 270)];
+    popUpView = [[UIView alloc] initWithFrame:CGRectMake(300, 200, 422, 270)];
     [self.view addSubview:popUpView];
-    //[popUpView setBackgroundColor:[UIColor yellowColor]  ];
     UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"tanchuang.png"]];
     image.frame = CGRectMake(0, 0, 422, 270);
     [popUpView addSubview:image];
@@ -274,7 +336,7 @@
     UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
     popUpContent.text = @"确认选取这门课程么？ 选课后将不能退课如需退课请联系教务老师。\n教务总监 周军霞老师：020-84112613；18666080259";
     [popUpView addSubview:popUpContent];
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(86, 160, 80, 40)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(popUpView.frame.size.width/2 - 40, 160, 80, 40)];
     [button setTitle:@"我再看看" forState:UIControlStateNormal];
     
     [button setBackgroundImage:[UIImage imageNamed:@"button_choose.png"] forState:UIControlStateNormal];
@@ -296,7 +358,7 @@
     UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
     popUpContent.text = @"您已经选了这门课了，不要重复选取谢谢！";
     [popUpView addSubview:popUpContent];
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(200, 160, 80, 40)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(popUpView.frame.size.width/2 - 40, 160, 80, 40)];
     [button setTitle:@"我知道了" forState:UIControlStateNormal];
     
     [button setBackgroundImage:[UIImage imageNamed:@"button_choose.png"] forState:UIControlStateNormal];
@@ -313,7 +375,7 @@
     UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
     popUpContent.text = @"很抱歉，限选人数已满。如需听课，请联系教务人员安排。\n教务总监 周军霞老师：020-84112613；18666080259";
     [popUpView addSubview:popUpContent];
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(200, 160, 80, 40)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(popUpView.frame.size.width/2 - 40, 160, 80, 40)];
     [button setTitle:@"我知道了" forState:UIControlStateNormal];
     
     [button setBackgroundImage:[UIImage imageNamed:@"button_choose.png"] forState:UIControlStateNormal];
@@ -330,7 +392,7 @@
     UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
     popUpContent.text = @"选课成功！";
     [popUpView addSubview:popUpContent];
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(200, 160, 80, 40)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(popUpView.frame.size.width/2 - 40, 160, 80, 40)];
     [button setTitle:@"我知道了" forState:UIControlStateNormal];
     
     [button setBackgroundImage:[UIImage imageNamed:@"button_choose.png"] forState:UIControlStateNormal];
@@ -349,7 +411,7 @@
     popUpContent.text = @"很抱歉，系统暂时不支持退课。如需退课请联系教务老师。教务总监 周军霞老师：020-84112613；18666080259";
     [popUpView addSubview:popUpContent];
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(200, 160, 80, 40)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(popUpView.frame.size.width/2 - 40, 160, 80, 40)];
     [button setTitle:@"我知道了" forState:UIControlStateNormal];
     
     [button setBackgroundImage:[UIImage imageNamed:@"button_choose.png"] forState:UIControlStateNormal];

@@ -31,11 +31,15 @@
         _tableView.delegate = self;
         _selectedLabel.text = @"请选择评教项";
         UIImage *arrowImage = [UIImage imageNamed:@"xiala"];
-        _arrow = [[UIImageView alloc ]initWithImage:arrowImage];
+        
+        _arrow = [[UIImageView alloc ]init];
         _arrow.frame = CGRectMake(196, 0, 44, 35);
+        [_arrow setImage:arrowImage];
+        [_arrow setBackgroundColor:[UIColor colorWithWhite:215.0/255 alpha:1]];
+        [_arrow setContentMode:UIViewContentModeCenter];
         _tableView.hidden = YES;
         _tableView.userInteractionEnabled = YES;
-        
+        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [self addSubview:_arrow];
         [self addSubview:_selectedLabel];
         [self addSubview:_tableView];
@@ -72,7 +76,11 @@
     EvaluateCell *cell = [tableView dequeueReusableCellWithIdentifier:identifiler ] ;
     if(cell ==nil){
         cell = [[EvaluateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifiler];
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 196, 1)];
+        [view setBackgroundColor:[UIColor colorWithWhite:215.0/255 alpha:1.0]];
+        [cell addSubview:view];
     }
+    
     cell.label.text = (NSString* )[_dataArray objectAtIndex:indexPath.row];
     cell.label.font = [UIFont fontWithName:@"Heiti SC" size:15];
     return cell;

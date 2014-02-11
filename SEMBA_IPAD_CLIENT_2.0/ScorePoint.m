@@ -31,6 +31,7 @@
         _tableView.userInteractionEnabled = YES;
         _selectedLabel.text = @"10";
         _tableView.scrollEnabled =YES;
+        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         
         [self addSubview:_selectedLabel];
         [self addSubview:_tableView];
@@ -72,6 +73,9 @@
     EvaluateCell *cell = [tableView dequeueReusableCellWithIdentifier:identifiler ] ;
     if(cell == nil){
         cell = [[EvaluateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifiler];
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 32, 1)];
+        [view setBackgroundColor:[UIColor grayColor]];
+        [cell addSubview:view];
     }
     cell.label.text = (NSString* )[_dataArray objectAtIndex:indexPath.row];
     

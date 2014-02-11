@@ -83,9 +83,9 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bar_bg"] forBarMetrics:UIBarMetricsDefault];
     
     UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
-    [titleLabel setFont:[UIFont systemFontOfSize:19]];
+    [titleLabel setFont:[UIFont fontWithName:@"STHeitiSC-Medium" size:20.0]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [titleLabel setTextColor:[UIColor redColor]];
+    [titleLabel setTextColor:[UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0]];
     [titleLabel setText:@"课程"];
     self.navigationItem.titleView = titleLabel;
     
@@ -259,7 +259,7 @@
         CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(START_X + (i % 4) * (COURSE_ITEM_LENGTH + SPACE_IN),START_Y + MAIN_VIEW_HEIGHT + SPACE_OUT + (i / 4) * (COURSE_ITEM_LENGTH + SPACE_IN), COURSE_ITEM_LENGTH, COURSE_ITEM_LENGTH) dictionary:dict];
         
         //设置courseItem 的tag
-        courseItem.tag = i;
+        courseItem.tag = i + 1;
     
 
         singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
@@ -480,7 +480,7 @@
             NSLog(@"from internet");
             NSURL *url = [NSURL URLWithString:course.coverUrl];
             NSLog(@"%@",course.coverUrl);
-            [self displayImageByIndex:i ByImageURL:url];
+            [self displayImageByIndex:i + 1 ByImageURL:url];
         }else{
             //上默认图片
             continue;

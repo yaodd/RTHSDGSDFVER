@@ -43,6 +43,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //导航栏红色底线
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bar_bg"] forBarMetrics:UIBarMetricsDefault];
+    
     NSOperationQueue *tempQueue = [[NSOperationQueue alloc]init];
     _requestImageQuque = tempQueue;
     
@@ -54,12 +59,11 @@
     
     imageDict = [[NSMutableDictionary alloc]init];
     
-    
     self.title = @"选课";
     UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
-    [titleLabel setFont:[UIFont systemFontOfSize:19]];
+    [titleLabel setFont:[UIFont fontWithName:@"STHeitiSC-Medium" size:20.0]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [titleLabel setTextColor:[UIColor redColor]];
+    [titleLabel setTextColor:[UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0]];
     [titleLabel setText:@"选课"];
     self.navigationItem.titleView = titleLabel;
     
@@ -127,7 +131,7 @@
             }else{
                 dateshow = @"";
             }
-            showtext = [showtext stringByAppendingString:[NSString stringWithFormat:@"\n%d %@ %@",(now_index+1),singeDataObj.courseTitle , dateshow] ];
+            showtext = [showtext stringByAppendingString:[NSString stringWithFormat:@"\n%d. %@\n %@",(now_index+1),singeDataObj.courseTitle , dateshow] ];
             now_index++;
         }
     }
@@ -152,22 +156,40 @@
     }
     //加载内容.
     int row = indexPath.row;
+    
     SingleChooseCourseDataObject *singeDataObj = [dataArr objectAtIndex:row];
+    
     cell.titleLabel.text = singeDataObj.courseTitle;
-    cell.peopleNumLabel.text = [NSString stringWithFormat:@"已选%d人/限选%d人",singeDataObj.nowChooseNum,singeDataObj.maxChooseNum];
+    
+    //已选人数
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"已选%d人/限选%d人",singeDataObj.nowChooseNum,singeDataObj.maxChooseNum]];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0] range:NSMakeRange(2,1)];
+    cell.peopleNumLabel.attributedText = str;
+    
     NSString *startdate = [singeDataObj.startdate substringWithRange:NSMakeRange(5, 5)];
     NSString *enddate = [singeDataObj.enddate substringWithRange:NSMakeRange(5, 5)];
-    
     cell.dateLabel.text = [NSString stringWithFormat:@"%@到%@",startdate,enddate];
     
     /*
     NSString *teacher = (NSString*)[singeDataObj.teacherArr objectAtIndex:0];
     int teachernum = [singeDataObj.teacherArr count];
-    for (int i = 1 ; i < teachernum ; ++i) {
+    for (int i = 0 ; i < teachernum ; ++i) {
         teacher = [teacher stringByAppendingString:teacher];
     }
     cell.nameLabel.text = teacher;
      */
+    NSString *teacher = [[NSString alloc] init];
+    NSArray *tArr = (NSArray *)singeDataObj.teacherArr;
+    int tlen = (int)[tArr count];
+    NSLog(@"teacherLen-%d", tlen);
+    if(tlen > 0){
+        for(int i = 0; i < tlen; ++i){
+            teacher = [teacher stringByAppendingString:[tArr objectAtIndex:i]];
+        }
+    }else {
+        teacher = @"";
+    }
+    cell.nameLabel.text = teacher;
     
     cell.contentTextView.text = singeDataObj.contentShortView;
     [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
@@ -185,7 +207,7 @@
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CourseDetailViewController *controller = [[CourseDetailViewController alloc]initWithNibName:Nil bundle:nil courseid:indexPath.row];
-    [self.navigationController pushViewController:controller animated:NO];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

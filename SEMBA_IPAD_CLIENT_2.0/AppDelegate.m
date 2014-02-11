@@ -22,6 +22,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //注册启用 push
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    
+    
+    // 监测网络情况
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name: kReachabilityChangedNotification
+                                               object: nil];
+    hostReach = [Reachability reachabilityWithHostname:@"www.baidu.com"];
+    [hostReach startNotifier];
+    
     // Override point for customization after application launch.
 //    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     MainPageViewController *mainController = [[MainPageViewController alloc] init];
@@ -52,8 +64,9 @@
     NSString *documentDirectory = [paths objectAtIndex:0];
     
   //  [self.downCache setStoragePath:[documentDirectory stringByAppendingPathComponent:@"resource"]];
+//    [self.downCache setStoragePath:[documentDirectory stringByAppendingPathComponent:@"resource"]];
     //[self.downCache setStoragePath:documentDirectory];
-    [self.downCache setDefaultCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
+//    [self.downCache setDefaultCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];
     
 
 //    [self.downCache setStoragePath:[documentDirectory stringByAppendingPathComponent:@"resoure"]];
@@ -94,5 +107,47 @@
     NSLog(@"CRASH: %@", exception);
     NSLog(@"Stack Trace: %@",[exception callStackSymbols]);
 }
+
+
+//实现推送
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    
+    NSLog(@"NSS %@",NSStringFromSelector(_cmd));
+    
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    
+    NSLog(@"NSS %@",NSStringFromSelector(_cmd));
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"PushMsg" object:nil userInfo:userInfo];
+    
+    
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    
+    NSString *stringToken = [[[[deviceToken description]
+                               stringByReplacingOccurrencesOfString: @"<"
+                               withString: @""]
+                              stringByReplacingOccurrencesOfString: @">"
+                              withString: @""]
+                             stringByReplacingOccurrencesOfString: @" "
+                             withString: @""];
+    NSLog(@"stringToken: %@",stringToken);
+}
+
+//检测网络变化
+- (void)reachabilityChanged:(NSNotification *)note {
+    Reachability* curReach = [note object];
+    NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+    NetworkStatus status = [curReach currentReachabilityStatus];
+    
+    if (status == NotReachable) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"出错啦！" message:@"网络无法连接。" delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}
+
 
 @end

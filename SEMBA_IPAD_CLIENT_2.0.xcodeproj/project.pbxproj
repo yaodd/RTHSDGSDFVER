@@ -102,6 +102,8 @@
 		59D096ED183600B00097C6AC /* RegisterHistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D096EA183600B00097C6AC /* RegisterHistoryController.m */; };
 		59EA48131845E71500F17411 /* RegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59EA48121845E71500F17411 /* RegisterView.m */; };
 		59EA48161845F66400F17411 /* RegisterResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59EA48151845F66400F17411 /* RegisterResultController.m */; };
+		59EE212318AC78B400F4685A /* assess_dropdown_bg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 59EE212218AC78B400F4685A /* assess_dropdown_bg@2X.png */; };
+		59EE212518AC78E600F4685A /* assess_dropdown_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 59EE212418AC78E600F4685A /* assess_dropdown_bg.png */; };
 		59FD36B11844638300C01940 /* ForgetPSWView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FD36B01844638300C01940 /* ForgetPSWView.m */; };
 		59FD36B41844720E00C01940 /* SendEmailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FD36B31844720E00C01940 /* SendEmailController.m */; };
 		59FD36B71844724700C01940 /* ModifyPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FD36B61844724700C01940 /* ModifyPSWController.m */; };
@@ -540,6 +542,8 @@
 		59EA48121845E71500F17411 /* RegisterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterView.m; sourceTree = "<group>"; };
 		59EA48141845F66400F17411 /* RegisterResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterResultController.h; sourceTree = "<group>"; };
 		59EA48151845F66400F17411 /* RegisterResultController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterResultController.m; sourceTree = "<group>"; };
+		59EE212218AC78B400F4685A /* assess_dropdown_bg@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "assess_dropdown_bg@2X.png"; sourceTree = "<group>"; };
+		59EE212418AC78E600F4685A /* assess_dropdown_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = assess_dropdown_bg.png; sourceTree = "<group>"; };
 		59FD36AF1844638300C01940 /* ForgetPSWView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPSWView.h; sourceTree = "<group>"; };
 		59FD36B01844638300C01940 /* ForgetPSWView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPSWView.m; sourceTree = "<group>"; };
 		59FD36B21844720E00C01940 /* SendEmailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendEmailController.h; sourceTree = "<group>"; };
@@ -945,6 +949,8 @@
 		2B16548D1863228F00985C54 /* Evalution */ = {
 			isa = PBXGroup;
 			children = (
+				59EE212418AC78E600F4685A /* assess_dropdown_bg.png */,
+				59EE212218AC78B400F4685A /* assess_dropdown_bg@2X.png */,
 				2B16549A186322C200985C54 /* table_bg@2x.jpg */,
 				2B16548E186322B300985C54 /* scorebox.png */,
 				2B16548F186322B300985C54 /* scorebox@2x.png */,
@@ -2073,6 +2079,7 @@
 				9C52AD46183F327D0017EB07 /* ppt_indicator_right_arrow@2x.png in Resources */,
 				9C4EFFD71890E84300A3BF9D /* news_pressed@2x.png in Resources */,
 				2BBA3F821876DDCE00AC25B3 /* user.png in Resources */,
+				59EE212318AC78B400F4685A /* assess_dropdown_bg@2X.png in Resources */,
 				591E5D1A183F5EEC000B9824 /* course_back.png in Resources */,
 				9C111B7A1842035C001E536A /* edit_off@2x.png in Resources */,
 				591E5D46183F6913000B9824 /* pingjiao_pressed.png in Resources */,
@@ -2082,6 +2089,7 @@
 				9C52AD9A183F32AC0017EB07 /* bookmark_edit_item_bg@2x.png in Resources */,
 				9C52AD3F183F327D0017EB07 /* ppt_indicator_grey.png in Resources */,
 				9C111B9E18420F62001E536A /* ppt_toolbox_colorpicker_bg.png in Resources */,
+				59EE212518AC78E600F4685A /* assess_dropdown_bg.png in Resources */,
 				9C0F8ADE1827636200FEFABA /* Reader-Mark-N.png in Resources */,
 				9C111B741841D017001E536A /* search.png in Resources */,
 				2B165494186322B300985C54 /* scorebox.png in Resources */,

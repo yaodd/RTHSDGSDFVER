@@ -2032,7 +2032,7 @@
     NSLog(@"tag %d %d",otherGestureRecognizer.view.tag,gestureRecognizer.view.tag);
     CGPoint point = [gestureRecognizer locationInView:self.view];
     NSLog(@"point %f %f",point.x,point.y);
-    if(newContentView.isNote == YES && point.x > 40)
+    if(newContentView.isNote == YES && ![otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]])
         return YES;
     else
         return NO;

@@ -130,9 +130,9 @@ NSString *NOTEFolderName3 = @"NOTE";
     NSString *title = course.courseName;
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(400 - 200, 0, 400, 44)];
     [titleLabel setText:title];
-    [titleLabel setTextColor:[UIColor redColor]];
+    [titleLabel setTextColor:[UIColor colorWithRed:199/255.0 green:56/255.0 blue:91/255.0 alpha:1.0]];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [titleLabel setFont:[UIFont systemFontOfSize:19]];
+    [titleLabel setFont:[UIFont fontWithName:@"STHeitiSC-Medium" size:20.0]];
     [searchView addSubview:titleLabel];
     self.navigationItem.titleView = searchView;
 }

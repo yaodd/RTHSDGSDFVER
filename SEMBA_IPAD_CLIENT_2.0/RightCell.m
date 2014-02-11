@@ -43,16 +43,16 @@
         
         month = [[UILabel alloc] initWithFrame:CGRectMake(0, 52, 103, 50)];
         month.backgroundColor = [UIColor clearColor];
-        month.font = [UIFont fontWithName:@"Heiti SC" size:30.0];
+        month.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:30.0];
         month.textColor = [UIColor whiteColor];
         month.text = @"月份";
         month.textAlignment = NSTextAlignmentCenter;
         [self addSubview:month];
         
-        name = [[UILabel alloc] initWithFrame:CGRectMake(40+103, 10, 200, 40)];
+        name = [[UILabel alloc] initWithFrame:CGRectMake(163, 5, 200, 60)];
         name.text = @"课程名称";
         name.backgroundColor = [UIColor clearColor];
-        name.font = [UIFont fontWithName:@"Heiti SC" size:20];
+        name.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:20];
         name.textColor = titleColor;
         [name setNumberOfLines:0];
         [name setLineBreakMode:NSLineBreakByCharWrapping];
@@ -61,27 +61,27 @@
         teacher = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x + name.frame.size.width, 25, 150, 20)];
         teacher.text = @"教授名";
         teacher.backgroundColor = [UIColor clearColor];
-        teacher.font = [UIFont fontWithName:@"Heiti SC" size:18];
+        teacher.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:18];
         teacher.textColor = textColor;
         [self addSubview:teacher];
         
         date = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x, name.frame.origin.y + name.frame.size.height + 5, 300, 20)];
         date.text = @"日期：";
         date.backgroundColor = [UIColor clearColor];
-        date.font = [UIFont fontWithName:@"Heiti SC" size:18];
+        date.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:18];
         date.textColor = textColor;
         [self addSubview:date];
         
         place = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x, date.frame.origin.y + date.frame.size.height + 15, 300, 20)];
         place.text = @"地点";
         place.backgroundColor = [UIColor clearColor];
-        place.font = [UIFont fontWithName:@"Heiti SC" size:18];
+        place.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:18];
         place.textColor = textColor;
         [self addSubview:place];
         
         time = [[UILabel alloc] initWithFrame:CGRectMake(name.frame.origin.x, place.frame.origin.y + place.frame.size.height + 15, 300, 20)];
         time.backgroundColor = [UIColor clearColor];
-        time.font = [UIFont fontWithName:@"Heiti SC" size:18];
+        time.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:18];
         time.text = @"时间：";
         time.textColor = textColor;
         [self addSubview:time];

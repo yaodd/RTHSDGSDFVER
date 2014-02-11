@@ -7,7 +7,9 @@
 //
 
 #import "FeedbackViewController.h"
-
+#import "Dao.h"
+#import "SysbsModel.h"
+#import "User.h"
 #define START_X     26.0f
 #define LABEL_Y     40.0f
 #define LABEL_WIDTH 345.0f
@@ -24,6 +26,7 @@ NSString *TVImageName = @"setting_text_field_big";
 NSString *buttonImageName2 = @"setting_button";
 @interface FeedbackViewController (){
     UIView *parentView;
+    UITextView *contentTV;
 }
 
 @end
@@ -67,7 +70,7 @@ NSString *buttonImageName2 = @"setting_button";
     [TVBgIV setImage:[UIImage imageNamed:TVImageName]];
     [self.view addSubview:TVBgIV];
     
-    UITextView *contentTV = [[UITextView alloc]initWithFrame:CGRectMake(START_X, TEXTVIEW_Y, TEXTVIEW_WIDTH, TEXTVIEW_HEIGHT)];
+    contentTV = [[UITextView alloc]initWithFrame:CGRectMake(START_X, TEXTVIEW_Y, TEXTVIEW_WIDTH, TEXTVIEW_HEIGHT)];
     [contentTV setBackgroundColor:[UIColor clearColor]];
 //    contentTV seti
     [contentTV setTextColor:textColor];
@@ -87,10 +90,17 @@ NSString *buttonImageName2 = @"setting_button";
 
 - (void)sureAction:(id)sender
 {
+    if (contentTV.text.length == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"反馈内容不能为空！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
     int success = 1;
+    success = [[Dao sharedDao] requestForFeedBack:[SysbsModel getSysbsModel].user.uid feedback:contentTV.text];
     if (success == 1) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示！" message:@"已收到您的意见，谢谢！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertView show];
+        [contentTV setText:@""];
     } else{
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示！" message:@"反馈发送失败！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertView show];
