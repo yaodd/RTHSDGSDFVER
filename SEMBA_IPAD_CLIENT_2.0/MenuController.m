@@ -18,6 +18,7 @@
 #import "CourseLIstViewController.h"
 #import "Dao.h"
 #import "SysbsModel.h"
+#import "WebImgResourceContainer.h"
 
 #define menuWidth 238
 
@@ -45,6 +46,9 @@
 @synthesize setupView;
 @synthesize noticeController;
 @synthesize registerView;
+@synthesize requestImageQuque = _requestImageQuque;
+@synthesize originalIndexArray = _originalIndexArray;
+@synthesize originalOperationDic = _originalOperationDic;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -63,6 +67,15 @@
 //    hostController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).hostController;
     hostController.delegate = self;
     
+    NSOperationQueue *tempQueue = [[NSOperationQueue alloc]init];
+    _requestImageQuque = tempQueue;
+    
+    NSMutableArray *array = [[NSMutableArray alloc]init];
+    self.originalIndexArray = array;
+    
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+    self.originalOperationDic = dict;
+
     //NSLog(@"MenuView did load");
     currentRow = 0;
     
@@ -84,6 +97,9 @@
     headImg.frame = headFrame;
     headImg.backgroundColor = [UIColor blackColor];
     [headImg setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"news center-circle on the menu"]]];
+    headImg.layer.masksToBounds = YES;
+    headImg.layer.cornerRadius = 10;
+    
     [self.view addSubview:headImg];
     SysbsModel *model = [SysbsModel getSysbsModel];
     //UserNameLabel
@@ -178,6 +194,7 @@
     
     registerView = [[RegisterView alloc] initWithDefault:hostController];
     registerView.alpha = 0.0f;
+    [self displayProductImage];
 }
 
 - (void)dealloc{
@@ -527,6 +544,58 @@
     return NO;
 }
 
+-(void)displayProductImage{
+    //设置根ip地址
+    NSLog(@"displayproduct");
+    NSURL *url = [NSURL URLWithString:@"http://115.28.18.130/SEMBADEVELOP/img/head/"];
+    int imageCount = 1;
+    for (int i = 0 ; i < imageCount ; ++i) {
+        User *user = [SysbsModel getSysbsModel].user;
+        if ([user.headImgUrl isEqualToString:@""] == NO){
+            //获取网络图片。
+            NSLog(@"from internet");
+            NSURL *url = [NSURL URLWithString:user.headImgUrl];
+            NSLog(@"%@",user.headImgUrl);
+            [self displayImageByIndex:i ByImageURL:url];
+        }else{
+            //上默认图片
+            continue;
+            NSLog(@"默认图片");
+        }
+    }
+}
+
+-(void)displayImageByIndex:(NSInteger)index ByImageURL:(NSURL*)url{
+    NSString *indexForString =[NSString stringWithFormat:@"%d",index];
+    if([self.originalIndexArray containsObject:indexForString]){
+        return;
+    }
+    UIImageView *imageView = headImg;
+    //[courseItem addSubview:imageView];
+    //courseItem.courseImg;
+    //imageView.tag = index;
+    WebImgResourceContainer *imageOperation = [[WebImgResourceContainer alloc]init];
+    
+    imageOperation.resourceURL = url;
+    imageOperation.hostObject = self;
+    
+    imageOperation.resourceDidReceive = @selector(imageDidReceive:);
+    imageOperation.imageView = imageView;
+    
+    [_requestImageQuque addOperation:imageOperation];
+    [self.originalOperationDic setObject:imageOperation forKey:indexForString];
+}
+
+-(void)imageDidReceive:(UIImageView*)imageView{
+    if(imageView== nil || imageView.image ==nil){
+        //
+        return ;
+    }
+    NSLog(@"create new image");
+    //imageView.frame = CGRectMake(0, 0, 300, 300);
+    //[self.view addSubview:imageView];
+    
+}
 
 
 @end

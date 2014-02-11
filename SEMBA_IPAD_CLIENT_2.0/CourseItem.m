@@ -36,21 +36,14 @@
         // Initialization code
         NSLog(@"init courseitem");
         courseImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) ];
+        courseImg.layer.masksToBounds = YES;
+        courseImg.layer.cornerRadius = 20;
+        courseImg.image = [UIImage imageNamed:@"fengmian"];
         [self addSubview:courseImg];
         [self.layer setCornerRadius:20.0f];
         NSString *date = [courseDict objectForKey:@"date"];
         NSString *courseName = [courseDict objectForKey:@"courseName"];
         NSString *teachName = [courseDict objectForKey:@"teachName"];
-//        NSLog(@"1 %@ 2 %@ 3 %@",courseName,date,teachName);
-        //UIImage *courseImage = [courseDict objectForKey:@"courseImage"];
-//        UIImage *courseImage = [UIImage imageNamed:@"lixinchun"];
-//        self.backgroundColor = [UIColor grayColor];
-        //[self setBackgroundColor:[UIColor colorWithPatternImage:courseImage]];
-        
-//        courseImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-//        [courseImg setImage:courseImage];
-//        [courseImg.layer setCornerRadius:20.0f];
-//        [self addSubview:courseImg];
         
         UIView *infoView = [[UIView alloc]initWithFrame:CGRectMake(0, INFO_VIEW_Y, self.frame.size.width, INFO_VIEW_HEIGHT)];
         [infoView setBackgroundColor:[UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]];

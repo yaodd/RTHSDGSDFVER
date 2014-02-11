@@ -12,11 +12,13 @@
 #import "SysbsModel.h"
 #import "CourseDetailViewController.h"
 #import "MRProgressOverlayView.h"
+#import "WebImgResourceContainer.h"
 
 @interface CourseLIstViewController (){
     NSArray *dataArr;
     MRProgressOverlayView *overlayView;
     NSArray *imageArray;
+    NSMutableDictionary *imageDict;
 }
 
 @end
@@ -25,6 +27,9 @@
 @synthesize alreadyChooseTextView = _alreadyChooseTextView;
 @synthesize tableView  = _tableView;
 @synthesize alreadyChoose = _alreadyChoose;
+@synthesize requestImageQuque = _requestImageQuque;
+@synthesize originalIndexArray = _originalIndexArray;
+@synthesize originalOperationDic = _originalOperationDic;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,6 +43,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSOperationQueue *tempQueue = [[NSOperationQueue alloc]init];
+    _requestImageQuque = tempQueue;
+    
+    NSMutableArray *array = [[NSMutableArray alloc]init];
+    self.originalIndexArray = array;
+    
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+    self.originalOperationDic = dict;
+    
+    imageDict = [[NSMutableDictionary alloc]init];
+    
+    
     self.title = @"选课";
     UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
     [titleLabel setFont:[UIFont systemFontOfSize:19]];
@@ -76,6 +93,7 @@
     if(rs == 1){
         
         [self updateContent];
+       // [self displayProductImage];
         
     }else if(rs == -2){//弹窗 选课
         
@@ -94,6 +112,7 @@
     //int l = [arr count];
     dataArr = [NSArray arrayWithArray:arr];
     [_tableView reloadData];
+    
     int len = [dataArr count];
     int now_index = 0;
     NSString *showtext = @"";
@@ -127,6 +146,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *contentIdentifier = [NSString stringWithFormat:@"Cell%d%d",[indexPath section],[indexPath row]]; //以indexPath来唯一确定cell,不使用完全重用机制
     SingleCourseCell *cell = [ tableView dequeueReusableCellWithIdentifier:contentIdentifier];
+    NSLog(@"contentident %@",contentIdentifier);
     if(cell == nil){
         cell = [[SingleCourseCell alloc ]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:contentIdentifier];
     }
@@ -150,7 +170,15 @@
      */
     
     cell.contentTextView.text = singeDataObj.contentShortView;
-    cell.imageView.image = [UIImage imageNamed:[imageArray objectAtIndex:indexPath.row % 3]];
+    [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    cell.imageView.tag = row + 1;
+    cell.imageView.image = [UIImage imageNamed:@"fengmian"];
+
+    //cell.imageView.image = [UIImage imageNamed:@"abc"];
+    [imageDict setObject:cell.imageView forKey:[NSString stringWithFormat:@"%d",row]];
+    if (row == [dataArr count] - 1){
+        [self displayProductImage];
+    }
     return cell;
 }
 
@@ -184,5 +212,70 @@
     
     return fHeight;
 }
+
+-(void)displayProductImage{
+    //设置根ip地址
+    
+    NSURL *url = [NSURL URLWithString:@"http://115.28.18.130/SEMBADEVELOP/img/head/"];
+    int imageCount = [dataArr count];//[courseArray count];
+    for (int i = 0 ; i < imageCount ; ++i) {
+        SingleChooseCourseDataObject *singeDataObj = [dataArr objectAtIndex:i];
+        //Course* course = [courseArray objectAtIndex:i];
+        if (
+            [singeDataObj.coverUrl isEqualToString:@""] == NO){
+            //获取网络图片。
+            NSLog(@"choose from internet");
+            NSURL *url = [NSURL URLWithString:singeDataObj.coverUrl];
+            NSLog(@"fukcing url%@",singeDataObj.coverUrl);
+            //NSURL *url ;//= [NSURL URLWithString:course.coverUrl];
+            //NSLog(@"%@",course.coverUrl);
+            [self displayImageByIndex:i ByImageURL:url];
+        }else{
+            //上默认图片
+            continue;
+            NSLog(@"默认图片");
+        }
+    }
+}
+
+-(void)displayImageByIndex:(NSInteger)index ByImageURL:(NSURL*)url{
+    NSString *indexForString =[NSString stringWithFormat:@"%d",index];
+    if([self.originalIndexArray containsObject:indexForString]){
+        return;
+    }
+    NSLog(@"fucking index%d",index);
+    NSString *contentIdentifier = [NSString stringWithFormat:@"Cell%d%d",0,index]; //以indexPath来唯一确定cell,不使用完全重用机制
+    SingleCourseCell *cell = [ _tableView
+                              dequeueReusableCellWithIdentifier:contentIdentifier];
+    NSLog(@"choose content%@",contentIdentifier);
+    NSLog(@"something%@",cell.titleLabel.text);
+    UIImageView *imageView = [imageDict objectForKey:[NSString stringWithFormat:@"%d",index]];//cell.imageView;//= courseItem.courseImg;
+    NSLog(@"imageview tag %d",imageView.tag);
+    //[courseItem addSubview:imageView];
+    //courseItem.courseImg;
+    //imageView.tag = index;
+    WebImgResourceContainer *imageOperation = [[WebImgResourceContainer alloc]init];
+    
+    imageOperation.resourceURL = url;
+    imageOperation.hostObject = self;
+    
+    imageOperation.resourceDidReceive = @selector(imageDidReceive:);
+    imageOperation.imageView = imageView;
+    
+    [_requestImageQuque addOperation:imageOperation];
+    [self.originalOperationDic setObject:imageOperation forKey:indexForString];
+}
+
+-(void)imageDidReceive:(UIImageView*)imageView{
+    if(imageView== nil || imageView.image ==nil){
+        //
+        return ;
+    }
+    NSLog(@"create new image");
+    //imageView.frame = CGRectMake(0, 0, 300, 300);
+    //[self.view addSubview:imageView];
+    
+}
+
 
 @end
