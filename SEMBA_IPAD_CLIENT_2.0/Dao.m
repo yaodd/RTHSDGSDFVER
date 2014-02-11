@@ -323,6 +323,8 @@ filename:(NSString*)filename{
         //NSLog(@"uid%d",uid);
         NSString *name = [rs objectForKey:@"username"];
         NSNumber *class_num = [rs objectForKey:@"class_num"];
+        NSString *head = [rs objectForKey:@"headimg"];
+        user.headImgUrl = head;
         user.class_num = [class_num integerValue];
         user.username = name;
         model.user = user;
@@ -602,7 +604,7 @@ filename:(NSString*)filename{
             singledata.tid = [ (NSNumber *)[onedict objectForKey:@"tid"] integerValue];
             singledata.cid = [ (NSNumber *) [onedict objectForKey:@"cid"] integerValue];
             singledata.eid = [ (NSNumber *)[onedict objectForKey:@"id"] integerValue];
-            NSLog(@"fuckingeid %d",singledata.eid);
+            
             [arr addObject:singledata];
         }
         model.EvaluationList = arr;
@@ -648,7 +650,7 @@ filename:(NSString*)filename{
         NSMutableArray *resultArr = [[NSMutableArray alloc]init];
         NSArray *data = [rs objectForKey:@"data"];
         int len = [data count];
-        
+        NSLog(@"choose len%d",len);
         for (int i = 0 ; i < len; ++i) {
             SingleChooseCourseDataObject *dataobj = [[SingleChooseCourseDataObject alloc]init];
             NSDictionary *single_data = [data objectAtIndex:i];
@@ -673,14 +675,23 @@ filename:(NSString*)filename{
             }
             
             NSMutableArray *tArr = [[NSMutableArray alloc]init];
-            NSArray *tdArr = [course_data objectForKey:@"teacher"];
-            int tLen = [tdArr count];
-            for (int i = 0 ; i < tLen; ++i) {
-                NSDictionary *singleTeacher = [tdArr objectAtIndex:i];
-                NSString *name = [singleTeacher objectForKey:@"username"];
-                [tArr addObject:name];
+            int tLen = [(NSNumber *)[single_data objectForKey:@"teacher_len"] intValue];
+            NSLog(@"tLen%d",tLen);
+            if(tLen>0){
+                NSArray *tdArr = [single_data objectForKey:@"teacher"];
+            //int tLen = [tdArr count];
+                for (int i = 0 ; i < tLen; ++i) {
+                    NSDictionary *singleTeacher = [tdArr objectAtIndex:i];
+                    NSString *name = [singleTeacher objectForKey:@"username"];
+                    [tArr addObject:name];
+                    if(i == 0){
+                        dataobj.coverUrl = [singleTeacher objectForKey:@"headimg"];
+                    }
+                }
+                dataobj.teacherArr = tArr;
+            }else{
+                dataobj.teacherArr = [[NSMutableArray alloc]init];
             }
-            dataobj.teacherArr = tArr;
             [resultArr addObject:dataobj];
         }
         chooseResult.arr = resultArr;

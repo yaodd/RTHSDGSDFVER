@@ -280,8 +280,6 @@
     previousPoint1 = [touch previousLocationInView:self];
     currentPoint = [touch locationInView:self];
     
-    NSLog(@"DRAWMOVE");
-    
     if ([self.currentTool isKindOfClass:[ACEDrawingPenTool class]]) {
         CGRect bounds = [(ACEDrawingPenTool*)self.currentTool addPathPreviousPreviousPoint:previousPoint2 withPreviousPoint:previousPoint1 withCurrentPoint:currentPoint];
         
@@ -304,7 +302,7 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"END曼丹。");
+    
     // make sure a point is recorded
     [self touchesMoved:touches withEvent:event];
     
@@ -330,12 +328,12 @@
     //firstTouch = YES;
 }
 
-//目测就是因为无端端调用了这个函数
+
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"cancel drawer");
+    
     // make sure a point is recorded
-    NSLog(@"%@",event);
+    
     [self touchesEnded:touches withEvent:event];//调用触摸结束
     [self.delegate cancelDrawState:self];
 }
@@ -348,7 +346,6 @@
             return;
     }
     [self performSelectorOnMainThread:@selector(threadFinish) withObject:nil waitUntilDone:YES];
-    NSLog(@"no stop");
     
 }
 - (void)threadFinish

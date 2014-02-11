@@ -11,6 +11,7 @@
 #import "SysbsModel.h"
 #import "SingleChooseCourseDataObject.h"
 #import "MRProgressOverlayView.h"
+#import "WebImgResourceContainer.h"
 
 @interface CourseDetailViewController (){
     BOOL haveSelected;
@@ -36,6 +37,9 @@
 @synthesize teacherShortViewContent = _teacherShortViewContent;
 @synthesize teacherShortViewTitle = _teacherShortViewTitle;
 @synthesize scrollView = _scrollView;
+@synthesize requestImageQuque = _requestImageQuque;
+@synthesize originalIndexArray = _originalIndexArray;
+@synthesize originalOperationDic = _originalOperationDic;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -64,6 +68,15 @@
     imageArray = [NSArray arrayWithObjects:@"lixinchun",@"lutaihong",@"maoyunshi", nil];
     self.navigationController.navigationBar.tintColor = [UIColor redColor];
     
+    NSOperationQueue *tempQueue = [[NSOperationQueue alloc]init];
+    _requestImageQuque = tempQueue;
+    
+    NSMutableArray *array = [[NSMutableArray alloc]init];
+    self.originalIndexArray = array;
+    
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+    self.originalOperationDic = dict;
+
     
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 1024, 768)];
     [self.view addSubview:_scrollView];
@@ -124,7 +137,13 @@
     [_selectButton addTarget:self action:@selector(chooseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 20, 120, 134)];
     [_scrollView addSubview:_imageView];
-    _imageView.image = [UIImage imageNamed:[imageArray objectAtIndex:index% 3]];
+    //_imageView.image = [UIImage imageNamed:[imageArray objectAtIndex:index% 3]];
+    
+    _imageView.layer.masksToBounds = YES;
+    _imageView.layer.cornerRadius = 20;
+    _imageView.image = [UIImage imageNamed:@"fengmian"];
+
+    [self displayProductImage];
 }
 
 -(void)updateContent{
@@ -356,5 +375,57 @@
     
     return fHeight;
 }
+
+-(void)displayProductImage{
+    //设置根ip地址
+    NSLog(@"displayproduct");
+    NSURL *url = [NSURL URLWithString:@"http://115.28.18.130/SEMBADEVELOP/img/head/"];
+    int imageCount = 1;
+    for (int i = 0 ; i < imageCount ; ++i) {
+        
+        if ([dataobj.coverUrl isEqualToString:@""] == NO){
+            //获取网络图片。
+            NSLog(@"from internet");
+            NSURL *url = [NSURL URLWithString:dataobj.coverUrl];
+            NSLog(@"%@",dataobj.coverUrl);
+            [self displayImageByIndex:i ByImageURL:url];
+        }else{
+            //上默认图片
+            continue;
+            NSLog(@"默认图片");
+        }
+    }
+}
+
+-(void)displayImageByIndex:(NSInteger)index ByImageURL:(NSURL*)url{
+    NSString *indexForString =[NSString stringWithFormat:@"%d",index];
+    if([self.originalIndexArray containsObject:indexForString]){
+        return;
+    }
+    
+    UIImageView *imageView  = self.imageView;//=
+    WebImgResourceContainer *imageOperation = [[WebImgResourceContainer alloc]init];
+    
+    imageOperation.resourceURL = url;
+    imageOperation.hostObject = self;
+    
+    imageOperation.resourceDidReceive = @selector(imageDidReceive:);
+    imageOperation.imageView = imageView;
+    
+    [_requestImageQuque addOperation:imageOperation];
+    [self.originalOperationDic setObject:imageOperation forKey:indexForString];
+}
+
+-(void)imageDidReceive:(UIImageView*)imageView{
+    if(imageView== nil || imageView.image ==nil){
+        //
+        return ;
+    }
+    NSLog(@"create new image");
+    //imageView.frame = CGRectMake(0, 0, 300, 300);
+    //[self.view addSubview:imageView];
+    
+}
+
 
 @end

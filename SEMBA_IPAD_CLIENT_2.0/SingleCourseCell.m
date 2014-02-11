@@ -55,8 +55,11 @@
         
         _contentTextView.userInteractionEnabled = NO;
         
-        _imageView = [[UIImageView alloc]   initWithFrame:CGRectMake(20, 20, 106, 126)];
+        _imageView = [[UIImageView alloc]   initWithFrame:CGRectMake(20, 20,106, 126)];
         [self addSubview:_imageView];
+        _imageView.layer.masksToBounds = YES;
+        _imageView.layer.cornerRadius = 10;
+
     }
     return self;
 }
