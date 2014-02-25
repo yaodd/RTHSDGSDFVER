@@ -243,6 +243,7 @@ NSString *NOTEFolderName = @"NOTE";
 //下载出错处理
 - (void) requestWentWrong:(ASIHTTPRequest *)request{
     NSLog(@"download error : %@",request.error );
+    NSLog(@"url %@",request.url);
     if (request.downloadProgressDelegate != nil) {
         [request.downloadProgressDelegate setHidden:YES];
         
