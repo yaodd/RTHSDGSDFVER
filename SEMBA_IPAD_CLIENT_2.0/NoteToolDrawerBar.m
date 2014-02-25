@@ -197,6 +197,8 @@
             if (self.center.x < openPoint.x * 1/2) {
                 self.center = closePoint;
 //                [self transformArrow:NO];
+                [self.delegate drawerClose:self];
+
             }else
             {
                 self.center = openPoint;
@@ -225,6 +227,7 @@
         if (isOpen) {
             self.center = closePoint;
 //            [self transformArrow:NO];
+            [self.delegate drawerClose:self];
         }else
         {
             self.center = openPoint;

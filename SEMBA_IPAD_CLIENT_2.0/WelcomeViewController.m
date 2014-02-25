@@ -11,6 +11,9 @@
 #import "DDMenuController.h"
 #import "MenuController.h"
 #import "LoginViewController.h"
+#import "GuideViewController.h"
+
+#define FIRST_OPEN_KEY  @"firstOpen"
 
 @interface WelcomeViewController ()
 
@@ -69,9 +72,18 @@
 - (void)jumpToMainPage
 {
 
+    BOOL notFirstOpen = [[NSUserDefaults standardUserDefaults] boolForKey:FIRST_OPEN_KEY];
 //    [self performSegueWithIdentifier:@"jumpFromWelToMainID" sender:nil];
-    LoginViewController *loginViewController = [[LoginViewController alloc]init];
-    [self presentViewController:loginViewController animated:YES completion:NO];
+    if (notFirstOpen) {
+        LoginViewController *loginViewController = [[LoginViewController alloc]init];
+        [self presentViewController:loginViewController animated:YES completion:NO];
+
+    }else{
+        GuideViewController *guideViewController = [[GuideViewController alloc]init];
+        [self presentViewController:guideViewController animated:YES completion:nil];
+    }
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:FIRST_OPEN_KEY];
+    
     
 }
 

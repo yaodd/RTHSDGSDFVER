@@ -11,6 +11,7 @@
 #import "FeedbackViewController.h"
 #import "LoginViewController.h"
 #import "DownloadModel.h"
+#import "AboutUsViewController.h"
 
 #define START_X     8.0f
 #define START_Y     16.0f
@@ -188,6 +189,7 @@ NSString *arrowImageName = @"setting_right_arrow";
     [aboutUsLabel setTextAlignment:NSTextAlignmentLeft];
     [aboutUsLabel setFont:textFont];
     [aboutUsItem addSubview:aboutUsLabel];
+    [aboutUsItem addTarget:self action:@selector(aboutUsAction:) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *aboutUsArrow = [[UIImageView alloc]initWithFrame:CGRectMake(ARROW_X, ARROW_Y, ARROW_WIDTH, ARROW_HEIGHT)];
     [aboutUsArrow setImage:[UIImage imageNamed:arrowImageName]];
     [aboutUsItem addSubview:aboutUsArrow];
@@ -211,6 +213,10 @@ NSString *arrowImageName = @"setting_right_arrow";
     FeedbackViewController *feedbackViewController = [[FeedbackViewController alloc]init];
     feedbackViewController.title = @"意见反馈";
     [self.navigationController pushViewController:feedbackViewController animated:YES];
+}
+- (void) aboutUsAction:(UIButton *)sender{
+    AboutUsViewController *aboutUsViewController = [[AboutUsViewController alloc]init];
+    [self.navigationController pushViewController:aboutUsViewController animated:YES];
 }
 - (void)didReceiveMemoryWarning
 {
