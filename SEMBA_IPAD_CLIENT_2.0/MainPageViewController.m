@@ -211,14 +211,16 @@
     } else if (myCourseRequest == -1){
         NSLog(@"服务器出错！");
     }
+    
     MyCourse *myCourse = sysbsModel.myCourse;
     courseArray = [myCourse getMyCourse];
+    NSLog(@"mycoursenum%d",[courseArray count]);
+    [self performSelectorOnMainThread:@selector(initCourse) withObject:nil waitUntilDone:YES];
+    
     for (int i = 0; i < [courseArray count]; i ++) {
         Course *course = [courseArray objectAtIndex:i];
         [dao requestForFileList:course.cid];
     }
-    NSLog(@"mycoursenum%d",[courseArray count]);
-    [self performSelectorOnMainThread:@selector(initCourse) withObject:nil waitUntilDone:YES];
 //    [self performSelectorOnMainThread:@selector(downloadAll) withObject:nil waitUntilDone:YES];
     [self displayProductImage];
 }

@@ -350,7 +350,6 @@
 		9CBD15B0181E4DFB00075BDF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CBD15AE181E4DFB00075BDF /* InfoPlist.strings */; };
 		9CBD15B2181E4DFB00075BDF /* SEMBA_IPAD_CLIENT_2_0Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBD15B1181E4DFB00075BDF /* SEMBA_IPAD_CLIENT_2_0Tests.m */; };
 		9CBD15BD181E4E2D00075BDF /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBD15BC181E4E2D00075BDF /* WelcomeViewController.m */; };
-		9CBD15C8181E50AA00075BDF /* MainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBD15C7181E50AA00075BDF /* MainPageViewController.m */; };
 		9CBD15CA181E535F00075BDF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CBD15C9181E535F00075BDF /* Main.storyboard */; };
 		9CBD15CD181E5B3500075BDF /* CourseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBD15CC181E5B3500075BDF /* CourseItem.m */; };
 		9CBD15D4181E679600075BDF /* UITapGestureRecognizer+category.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBD15D3181E679600075BDF /* UITapGestureRecognizer+category.m */; };
@@ -400,12 +399,13 @@
 		9CE229FB18BC854500225521 /* aboutus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE229F918BC854500225521 /* aboutus@2x.png */; };
 		9CE22A0E18BC85C100225521 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE22A0C18BC85C100225521 /* AboutUsViewController.m */; };
 		9CE22A1318BC870B00225521 /* GuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE22A1218BC870B00225521 /* GuideViewController.m */; };
-		9CE22A1A18BC8B2300225521 /* guide_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A1418BC8B2300225521 /* guide_01.png */; };
-		9CE22A1B18BC8B2300225521 /* guide_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A1518BC8B2300225521 /* guide_01@2x.png */; };
-		9CE22A1C18BC8B2300225521 /* guide_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A1618BC8B2300225521 /* guide_02.png */; };
-		9CE22A1D18BC8B2300225521 /* guide_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A1718BC8B2300225521 /* guide_02@2x.png */; };
-		9CE22A1E18BC8B2300225521 /* guide_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A1818BC8B2300225521 /* guide_03.png */; };
-		9CE22A1F18BC8B2300225521 /* guide_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A1918BC8B2300225521 /* guide_03@2x.png */; };
+		9CE22A3218BED0FC00225521 /* guide_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A2C18BED0FC00225521 /* guide_01.png */; };
+		9CE22A3318BED0FC00225521 /* guide_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A2D18BED0FC00225521 /* guide_01@2x.png */; };
+		9CE22A3418BED0FC00225521 /* guide_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A2E18BED0FC00225521 /* guide_02.png */; };
+		9CE22A3518BED0FC00225521 /* guide_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A2F18BED0FC00225521 /* guide_02@2x.png */; };
+		9CE22A3618BED0FC00225521 /* guide_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A3018BED0FC00225521 /* guide_03.png */; };
+		9CE22A3718BED0FC00225521 /* guide_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CE22A3118BED0FC00225521 /* guide_03@2x.png */; };
+		9CE22A3918BED15200225521 /* MainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE22A3818BED15200225521 /* MainPageViewController.m */; };
 		9CF2D5AF1836154E0026502F /* UITextView+category.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF2D5AE1836154E0026502F /* UITextView+category.m */; };
 		9CF2D65B1839FF810026502F /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF2D65A1839FF810026502F /* SearchViewController.m */; };
 /* End PBXBuildFile section */
@@ -835,7 +835,6 @@
 		9CBD15BB181E4E2D00075BDF /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		9CBD15BC181E4E2D00075BDF /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		9CBD15C6181E50AA00075BDF /* MainPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainPageViewController.h; sourceTree = "<group>"; };
-		9CBD15C7181E50AA00075BDF /* MainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainPageViewController.m; sourceTree = "<group>"; };
 		9CBD15C9181E535F00075BDF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		9CBD15CB181E5B3500075BDF /* CourseItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseItem.h; sourceTree = "<group>"; };
 		9CBD15CC181E5B3500075BDF /* CourseItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseItem.m; sourceTree = "<group>"; };
@@ -925,12 +924,13 @@
 		9CE22A0C18BC85C100225521 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
 		9CE22A1118BC870B00225521 /* GuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideViewController.h; sourceTree = "<group>"; };
 		9CE22A1218BC870B00225521 /* GuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideViewController.m; sourceTree = "<group>"; };
-		9CE22A1418BC8B2300225521 /* guide_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_01.png; sourceTree = "<group>"; };
-		9CE22A1518BC8B2300225521 /* guide_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_01@2x.png"; sourceTree = "<group>"; };
-		9CE22A1618BC8B2300225521 /* guide_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_02.png; sourceTree = "<group>"; };
-		9CE22A1718BC8B2300225521 /* guide_02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_02@2x.png"; sourceTree = "<group>"; };
-		9CE22A1818BC8B2300225521 /* guide_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_03.png; sourceTree = "<group>"; };
-		9CE22A1918BC8B2300225521 /* guide_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_03@2x.png"; sourceTree = "<group>"; };
+		9CE22A2C18BED0FC00225521 /* guide_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_01.png; sourceTree = "<group>"; };
+		9CE22A2D18BED0FC00225521 /* guide_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_01@2x.png"; sourceTree = "<group>"; };
+		9CE22A2E18BED0FC00225521 /* guide_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_02.png; sourceTree = "<group>"; };
+		9CE22A2F18BED0FC00225521 /* guide_02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_02@2x.png"; sourceTree = "<group>"; };
+		9CE22A3018BED0FC00225521 /* guide_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guide_03.png; sourceTree = "<group>"; };
+		9CE22A3118BED0FC00225521 /* guide_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guide_03@2x.png"; sourceTree = "<group>"; };
+		9CE22A3818BED15200225521 /* MainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainPageViewController.m; sourceTree = "<group>"; };
 		9CF2D5AD1836154E0026502F /* UITextView+category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+category.h"; sourceTree = "<group>"; };
 		9CF2D5AE1836154E0026502F /* UITextView+category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+category.m"; sourceTree = "<group>"; };
 		9CF2D6591839FF810026502F /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
@@ -1631,12 +1631,12 @@
 		9CBD15BE181E4FEC00075BDF /* Resourse */ = {
 			isa = PBXGroup;
 			children = (
-				9CE22A1418BC8B2300225521 /* guide_01.png */,
-				9CE22A1518BC8B2300225521 /* guide_01@2x.png */,
-				9CE22A1618BC8B2300225521 /* guide_02.png */,
-				9CE22A1718BC8B2300225521 /* guide_02@2x.png */,
-				9CE22A1818BC8B2300225521 /* guide_03.png */,
-				9CE22A1918BC8B2300225521 /* guide_03@2x.png */,
+				9CE22A2C18BED0FC00225521 /* guide_01.png */,
+				9CE22A2D18BED0FC00225521 /* guide_01@2x.png */,
+				9CE22A2E18BED0FC00225521 /* guide_02.png */,
+				9CE22A2F18BED0FC00225521 /* guide_02@2x.png */,
+				9CE22A3018BED0FC00225521 /* guide_03.png */,
+				9CE22A3118BED0FC00225521 /* guide_03@2x.png */,
 				2B94D21018A70D4F00103CBD /* cover_upper@2x.png */,
 				2B94D21118A70D4F00103CBD /* fengmian@2x.png */,
 				9C62C3801892241400E79625 /* ChooseCourse */,
@@ -1847,7 +1847,7 @@
 			isa = PBXGroup;
 			children = (
 				9CBD15C6181E50AA00075BDF /* MainPageViewController.h */,
-				9CBD15C7181E50AA00075BDF /* MainPageViewController.m */,
+				9CE22A3818BED15200225521 /* MainPageViewController.m */,
 				9CBD15CB181E5B3500075BDF /* CourseItem.h */,
 				9CBD15CC181E5B3500075BDF /* CourseItem.m */,
 			);
@@ -1983,13 +1983,13 @@
 				9C52AD94183F32AC0017EB07 /* bookmark_edit_back@2x.png in Resources */,
 				591E5D1E183F5EEC000B9824 /* course_line.png in Resources */,
 				9C52AE10183F33BA0017EB07 /* setting_text_field@2x.png in Resources */,
-				9CE22A1C18BC8B2300225521 /* guide_02.png in Resources */,
 				9C111BA718420F62001E536A /* ppt_toolbox_pencil_active@2x.png in Resources */,
 				9C52ADCD183F33290017EB07 /* news center-next mail.png in Resources */,
 				9C52AE27183F353D0017EB07 /* ppt_toolbox_eraser_delete_all@2x.png in Resources */,
 				9C111B7D1842035C001E536A /* pack_up@2x.png in Resources */,
 				2BBA3F7C1876DDCE00AC25B3 /* button_chosen.png in Resources */,
 				2B5AA8CA1830ECBB00CC0DBD /* LoginViewController.xib in Resources */,
+				9CE22A3418BED0FC00225521 /* guide_02.png in Resources */,
 				9C0F8AE11827636200FEFABA /* Reader-Mark-Y@2x.png in Resources */,
 				9C52AD42183F327D0017EB07 /* ppt_indicator_left_arrow@2x.png in Resources */,
 				9C111B9F18420F62001E536A /* ppt_toolbox_colorpicker_bg@2x.png in Resources */,
@@ -1998,12 +1998,12 @@
 				9C52AE2C183F37BA0017EB07 /* nav_bar_bg@2x.png in Resources */,
 				9C111BA018420F62001E536A /* ppt_toolbox_colorpicker.png in Resources */,
 				9C111B9718420F62001E536A /* ppt_toolbox_brush_active@2x.png in Resources */,
+				9CE22A3618BED0FC00225521 /* guide_03.png in Resources */,
 				9C52AD51183F327D0017EB07 /* ppt_popup_bg.png in Resources */,
 				591E5D54183F6921000B9824 /* line_head.png in Resources */,
 				2BBA3F7D1876DDCE00AC25B3 /* button_outdate.png in Resources */,
 				2BBA3F851878017F00AC25B3 /* tanchuang.png in Resources */,
 				9C52AD41183F327D0017EB07 /* ppt_indicator_left_arrow.png in Resources */,
-				9CE22A1B18BC8B2300225521 /* guide_01@2x.png in Resources */,
 				9C52AE1B183F35280017EB07 /* ppt_toolbox_eraser_delete_all.png in Resources */,
 				9C111BC4184235B9001E536A /* button_log_in@2x.png in Resources */,
 				9CE229FA18BC854500225521 /* aboutus.png in Resources */,
@@ -2031,7 +2031,6 @@
 				9C52AD52183F327D0017EB07 /* ppt_popup_bg@2x.png in Resources */,
 				9C111BA418420F62001E536A /* ppt_toolbox_eraser.png in Resources */,
 				9C111B9A18420F62001E536A /* ppt_toolbox_camera_active.png in Resources */,
-				9CE22A1D18BC8B2300225521 /* guide_02@2x.png in Resources */,
 				9C111B9618420F62001E536A /* ppt_toolbox_brush_active.png in Resources */,
 				590367B51841E1D000C4D1D0 /* schedule.png in Resources */,
 				9C111BA918420F62001E536A /* ppt_toolbox_pencil@2x.png in Resources */,
@@ -2064,12 +2063,14 @@
 				9C52AE0D183F33BA0017EB07 /* setting_text_field_dot.png in Resources */,
 				9C0F8AE41827636200FEFABA /* Reader-Thumbs.png in Resources */,
 				9C0F8AE41827636200FEFABA /* Reader-Thumbs.png in Resources */,
+				9CE22A3518BED0FC00225521 /* guide_02@2x.png in Resources */,
 				9C4EFFBD1890E6B900A3BF9D /* xuanke_normal@2x.png in Resources */,
 				9C52AE25183F353D0017EB07 /* ppt_toolbox_eraser_adjust_bg@2x.png in Resources */,
 				9C0F8AE41827636200FEFABA /* Reader-Thumbs.png in Resources */,
 				9C52AD97183F32AC0017EB07 /* bookmark_edit_delete.png in Resources */,
 				591E5D55183F6921000B9824 /* line_head@2x.png in Resources */,
 				591E5D1D183F5EEC000B9824 /* course_couyrse@2x.png in Resources */,
+				9CE22A3718BED0FC00225521 /* guide_03@2x.png in Resources */,
 				9C4EFFCB1890E82400A3BF9D /* pingjiao_normal@2x.png in Resources */,
 				9C0F8AE31827636200FEFABA /* Reader-Print@2x.png in Resources */,
 				9C4EFFD61890E84300A3BF9D /* news_pressed.png in Resources */,
@@ -2087,7 +2088,6 @@
 				9C52AD77183F327D0017EB07 /* ppt_toolbox_yellow.png in Resources */,
 				9C52AE33183F39A70017EB07 /* pptsearch_ppt@2x.png in Resources */,
 				9C52AE09183F33BA0017EB07 /* setting_switch_on.png in Resources */,
-				9CE22A1F18BC8B2300225521 /* guide_03@2x.png in Resources */,
 				9C52AD93183F32AC0017EB07 /* bookmark_edit_back.png in Resources */,
 				9C111BC7184235B9001E536A /* check_box.png in Resources */,
 				9C52AE24183F353D0017EB07 /* ppt_toolbox_eraser_adjust_bar_inactive@2x.png in Resources */,
@@ -2105,6 +2105,7 @@
 				9C52AD4E183F327D0017EB07 /* ppt_nav_bookmark@2x.png in Resources */,
 				9C111BA818420F62001E536A /* ppt_toolbox_pencil.png in Resources */,
 				9C52ADC0183F33290017EB07 /* news center-blank@2x.png in Resources */,
+				9CE22A3318BED0FC00225521 /* guide_01@2x.png in Resources */,
 				9C52ADDE183F33290017EB07 /* news center-white line on the menu@2x.png in Resources */,
 				9C4EFFCE1890E83300A3BF9D /* schedule_normal.png in Resources */,
 				9C0F8AD91827636200FEFABA /* Reader-Button-H@2x.png in Resources */,
@@ -2168,6 +2169,7 @@
 				9C52ADD9183F33290017EB07 /* news center-sign.png in Resources */,
 				9C52AD4B183F327D0017EB07 /* ppt_nav_bookmark_active.png in Resources */,
 				9C52AE19183F35280017EB07 /* ppt_toolbox_eraser_adjust_bg.png in Resources */,
+				9CE22A3218BED0FC00225521 /* guide_01.png in Resources */,
 				9C4EFFC71890E81700A3BF9D /* ppt_normal@2x.png in Resources */,
 				9C52AE23183F353D0017EB07 /* ppt_toolbox_eraser_adjust_bar_active@2x.png in Resources */,
 				9C52ADFF183F33BA0017EB07 /* setting_nav_back.png in Resources */,
@@ -2217,7 +2219,6 @@
 				2BF802BF187255370085D148 /* CourseList.xib in Resources */,
 				9C111BDE18423A21001E536A /* ppt_toolbox_bg@2x.png in Resources */,
 				9C52AD64183F327D0017EB07 /* ppt_toolbox_colorpicker_unfold@2x.png in Resources */,
-				9CE22A1E18BC8B2300225521 /* guide_03.png in Resources */,
 				9C0F8AE61827636200FEFABA /* Reader-Button-H.png in Resources */,
 				2B94D21318A70D4F00103CBD /* fengmian@2x.png in Resources */,
 				9C52ADFB183F33BA0017EB07 /* setting_button.png in Resources */,
@@ -2251,7 +2252,6 @@
 				9C111B7B1842035C001E536A /* edit_on@2x.png in Resources */,
 				9C52AE03183F33BA0017EB07 /* setting_right_arrow.png in Resources */,
 				591E5D47183F6913000B9824 /* pingjiao_pressed@2x.png in Resources */,
-				9CE22A1A18BC8B2300225521 /* guide_01.png in Resources */,
 				9C52ADD8183F33290017EB07 /* news center-setting@2x.png in Resources */,
 				9C52AE00183F33BA0017EB07 /* setting_nav_back@2x.png in Resources */,
 				591E5D3E183F6909000B9824 /* news_bottom.png in Resources */,
@@ -2328,7 +2328,6 @@
 				9CBD1641181E699D00075BDF /* ASIDownloadCache.m in Sources */,
 				591E5D10183F4466000B9824 /* MenuController.m in Sources */,
 				9CBD1621181E695900075BDF /* ThumbsViewController.m in Sources */,
-				9CBD15C8181E50AA00075BDF /* MainPageViewController.m in Sources */,
 				59D096EC183600B00097C6AC /* RegisterController.m in Sources */,
 				9C51E7FE1844464A003F2130 /* UIImage+MRImageEffects.m in Sources */,
 				9CBD161E181E695900075BDF /* ReaderContentView.m in Sources */,
@@ -2344,6 +2343,7 @@
 				9CBD161A181E695900075BDF /* ReaderDocument.m in Sources */,
 				9CB0BD3D188BC16A000516CA /* UIColor+category.m in Sources */,
 				9CBD15F8181E692700075BDF /* CGPDFDocument.m in Sources */,
+				9CE22A3918BED15200225521 /* MainPageViewController.m in Sources */,
 				9CBD163E181E699D00075BDF /* ASIFormDataRequest.m in Sources */,
 				9CBD15F9181E692700075BDF /* ReaderDocumentOutline.m in Sources */,
 				591E5D08183F43A4000B9824 /* NoticeTableCell.m in Sources */,
