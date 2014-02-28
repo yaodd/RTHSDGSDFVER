@@ -300,7 +300,7 @@
     
     
     cell.title.text = [titleArray objectAtIndex:indexPath.row];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //NSLog(@"currentRow:%d", currentRow);
     if(indexPath.row == 0){
         
@@ -449,7 +449,6 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if(currentRow == indexPath.row){
         //[list deselectRowAtIndexPath:indexPath animated:YES];
         return;
@@ -466,6 +465,7 @@
             noticeController.view.alpha = 0.0;
             [noticeController.view setHidden:YES];
         }
+        
 
     }else if(indexPath.row == 2){
         //implement the views' translate
@@ -526,7 +526,7 @@
         } completion:^(BOOL finished) {
             [noticeController.view setUserInteractionEnabled:YES];
             [self.view bringSubviewToFront:noticeController.view];
-            [hostController showLeftController:NO];
+
         }];
 
         

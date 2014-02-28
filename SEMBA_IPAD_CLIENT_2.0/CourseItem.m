@@ -38,12 +38,18 @@
         courseImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) ];
         courseImg.layer.masksToBounds = YES;
         courseImg.layer.cornerRadius = 20;
+        
+        
         courseImg.image = [UIImage imageNamed:@"fengmian"];
         [self addSubview:courseImg];
         [self.layer setCornerRadius:20.0f];
         NSString *date = [courseDict objectForKey:@"date"];
         NSString *courseName = [courseDict objectForKey:@"courseName"];
         NSString *teachName = [courseDict objectForKey:@"teachName"];
+        UIImage *image = [courseDict objectForKey:@"courseImage"];
+        if (image != nil) {
+            [courseImg setImage:image];
+        }
         
         UIView *infoView = [[UIView alloc]initWithFrame:CGRectMake(0, INFO_VIEW_Y, self.frame.size.width, INFO_VIEW_HEIGHT)];
         [infoView setBackgroundColor:[UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]];

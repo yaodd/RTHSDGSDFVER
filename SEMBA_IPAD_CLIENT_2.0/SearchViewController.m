@@ -310,7 +310,13 @@ NSString *NOTEFolderName2 = @"NOTE";
     for (int i = 0;  i < courseNumber; i ++) {
         Course *course = [courseDisplayArray objectAtIndex:i];
         
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",course.teacher,@"teachName",@"2013/11/11",@"date", nil];
+        NSString *teacherName;
+        if ([course.teacher count] > 0) {
+            teacherName = ((User *)[course.teacher objectAtIndex:0]).username;
+        } else{
+            teacherName = @"";
+        }
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",teacherName,@"teachName",@"2013/11/11",@"date", nil];
         CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(20 + i * 250,20, 235, 235) dictionary:dict];
         UITapGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
         NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:course.cid],@"tag", nil];

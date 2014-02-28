@@ -34,7 +34,6 @@
         [self addSubview:belowLine];
         [self addSubview:topLine];
         [self addSubview:icon];
-        
              
     }
     return self;

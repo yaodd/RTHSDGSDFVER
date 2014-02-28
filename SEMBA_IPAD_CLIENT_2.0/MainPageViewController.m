@@ -31,6 +31,8 @@
 #define COURSE_ITEM_LENGTH  238
 
 #define HISTORY_PLIST_KEY   @"history_plist_key"
+
+NSString *COVERFolderName = @"COVER";
 @interface MainPageViewController (){
     UILabel *infoLabel;
 }
@@ -63,6 +65,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"课程中心";
     [self.view setBackgroundColor:[UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]];
     [self getCatchFromFile];
     
@@ -163,7 +166,6 @@
     
     labelTopY += (20 + 22);
     infoLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelStartX, labelTopY, courseImageView.frame.size.width - (labelStartX * 2),70)];
-    //[infoLabel setText:@"速度速度速度放松放松方式方法是对方未按时大范围阿斯顿发违法斯蒂芬阿瑟发文阿斯顿发违法瑟尔"];
     [infoLabel setNumberOfLines:0];
     //......
 //    [infoLabel setTextAlignment:NSTextAlignmentLeft];
@@ -227,6 +229,8 @@
     [self displayProductImage];
 }
 - (void)downloadAll{
+    [self saveCatchToFile];
+
     DownloadModel *downloadModel = [DownloadModel getDownloadModel];
     SysbsModel *sysbsModel = [SysbsModel getSysbsModel];
     MyCourse *myCourse = sysbsModel.myCourse;
@@ -252,13 +256,23 @@
     UITapGestureRecognizer * singleTapGesture;
 
     for (int i = 0;  i < courseNumber; i ++) {
+        //从文件夹里面获取保存的封面图片
+        NSString *contents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *coverFolder = [contents stringByAppendingPathComponent:COVERFolderName];
+        DownloadModel *downloadModel = [DownloadModel getDownloadModel];
+        [downloadModel createDir:coverFolder];
+        NSString *coverPath = [coverFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.png",i + 1]];
+        NSData *data = [NSData dataWithContentsOfFile:coverPath];
+        UIImage *image = [UIImage imageWithData:data];
+        
+        
         Course *course = [courseArray objectAtIndex:i];
         //妈蛋 。。arr 你妹啊。。死数据还这样写。。。真是给跪了。。
-        UIImage *image = [UIImage imageNamed:[array objectAtIndex:(i%3)]];
+//        UIImage *image = [UIImage imageNamed:[array objectAtIndex:(i%3)]];
         //妈蛋加死数据也不是你这样加的啊我草。。
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",course.startTime,@"date",image,@"courseImage",
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",course.startTime,@"date",
                                      //老师
-                                     @"",@"teachName", nil];
+                                     @"",@"teachName",image,@"courseImage", nil];
         
         CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(START_X + (i % 4) * (COURSE_ITEM_LENGTH + SPACE_IN),START_Y + MAIN_VIEW_HEIGHT + SPACE_OUT + (i / 4) * (COURSE_ITEM_LENGTH + SPACE_IN), COURSE_ITEM_LENGTH, COURSE_ITEM_LENGTH) dictionary:dict];
         
@@ -286,12 +300,8 @@
         courseButton.userInteractionEnabled = YES;
         [courseButton addGestureRecognizer:TapGesture];
     }
-    NSLog(@"image frame %f %f %f %f ",courseImageView.frame.origin.x,courseImageView.frame.origin.y,courseImageView.frame.size.width,courseImageView.frame.size.height);
-    NSLog(@"fucking frame %f %f %f %f ",courseButton.frame.origin.x,courseButton.frame.origin.y,courseButton.frame.size.width,courseButton.frame.size.height);
-        //手贱。
     [courseImageView addSubview:courseButton];
     //[courseButton addGestureRecognizer:singleTapGesture];
-    [self saveCatchToFile];
 //    [self downloadAll];
     
     //取出最新的课程。
@@ -361,7 +371,7 @@
     NSMutableArray *courseArrTemp = [myCourse courseArr];
     for (int i = 0 ; i < courseArrTemp.count; i ++) {
         Course *course = [courseArrTemp objectAtIndex:i];
-        
+        NSLog(@"count %d",[course.fileArr count]);
         NSMutableArray *fileArr = [[NSMutableArray alloc]init];
         for (int k = 0; k < course.fileArr.count; k ++) {
             File *file = [course.fileArr objectAtIndex:k];
@@ -473,9 +483,12 @@
 }
 
 -(void)displayProductImage{
+    
+    
     //设置根ip地址
     NSLog(@"displayproduct");
     NSURL *url = [NSURL URLWithString:@"http://115.28.18.130/SEMBADEVELOP/img/head/"];
+    
     int imageCount = [courseArray count];
     for (int i = 0 ; i < imageCount ; ++i) {
         Course* course = [courseArray objectAtIndex:i];
@@ -498,7 +511,11 @@
     if([self.originalIndexArray containsObject:indexForString]){
         return;
     }
+    
+    
+    
     CourseItem *courseItem = (CourseItem*)[self.view viewWithTag:index];
+    
     UIImageView *imageView  = courseItem.courseImg;
     //[courseItem addSubview:imageView];
     //courseItem.courseImg;
@@ -510,17 +527,31 @@
     
     imageOperation.resourceDidReceive = @selector(imageDidReceive:);
     imageOperation.imageView = imageView;
-    
+    [imageOperation.imageView setTag:index];
     [_requestImageQuque addOperation:imageOperation];
     [self.originalOperationDic setObject:imageOperation forKey:indexForString];
 }
 
 -(void)imageDidReceive:(UIImageView*)imageView{
-    if(imageView== nil || imageView.image ==nil){
+    //建立保存封面的文件夹
+    NSString *contents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *coverFolder = [contents stringByAppendingPathComponent:COVERFolderName];
+    DownloadModel *downloadModel = [DownloadModel getDownloadModel];
+    [downloadModel createDir:coverFolder];
+    
+    UIImage *image = imageView.image;
+    if(imageView== nil || image ==nil){
         //
         return ;
     }
-    NSLog(@"create new image");
+    
+    NSLog(@"create new image tag %d",imageView.tag);
+    
+    NSString *coverPath = [coverFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.png",imageView.tag]];
+    NSData *data = UIImagePNGRepresentation(image);
+    [data writeToFile:coverPath atomically:YES];
+    
+    
     //imageView.frame = CGRectMake(0, 0, 300, 300);
     //[self.view addSubview:imageView];
 
