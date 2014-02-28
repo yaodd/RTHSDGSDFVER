@@ -102,6 +102,5 @@
         <image name="check_box_yes.png" width="22" height="24"/>
         <image name="logo.png" width="364" height="136"/>
         <image name="text_field.png" width="313" height="39"/>
-        <image name="text_field.png" width="313" height="39"/>
     </resources>
 </document>
