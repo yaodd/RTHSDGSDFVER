@@ -520,12 +520,13 @@
         [noticeController.view setHidden:NO];
         
         [noticeController.view setFrame:CGRectMake(1024, 0, noticeController.view.frame.size.width,noticeController.view.frame.size.height)];
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             noticeController.view.alpha = 1.0;
             noticeController.view.frame = CGRectMake(menuWidth, 0, noticeController.view.frame.size.width,noticeController.view.frame.size.height);
         } completion:^(BOOL finished) {
             [noticeController.view setUserInteractionEnabled:YES];
             [self.view bringSubviewToFront:noticeController.view];
+            [hostController showLeftController:NO];
         }];
 
         

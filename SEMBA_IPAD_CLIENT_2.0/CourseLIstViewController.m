@@ -74,19 +74,19 @@
     imageArray = [NSArray arrayWithObjects:@"lixinchun",@"lutaihong",@"maoyunshi", nil];
     dataArr = [[NSArray alloc]init];
     
-    [self fetchAndLoadData];
-    /*
+//    [self fetchAndLoadData];
+    overlayView = [[MRProgressOverlayView alloc] init];
+    overlayView.mode = MRProgressOverlayViewModeIndeterminate;
+    [self.view addSubview:overlayView];
     NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(fetchAndLoadData) object:nil];
-    [thread start];*/
+    [thread start];
 }
 
 
 
 -(void)fetchAndLoadData{
     
-    overlayView = [[MRProgressOverlayView alloc] init];
-    overlayView.mode = MRProgressOverlayViewModeIndeterminate;
-    [self.view addSubview:overlayView];
+    
     [overlayView show:YES];
 
     Dao *dao = [Dao sharedDao];
@@ -96,17 +96,26 @@
     NSLog(@"class_num %d uid %d",model.user.class_num,model.user.uid);
     if(rs == 1){
         
-        [self updateContent];
+//        [self updateContent];
+        [self performSelectorOnMainThread:@selector(updateContent) withObject:nil waitUntilDone:YES];
        // [self displayProductImage];
         
     }else if(rs == -2){//弹窗 选课
-        
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"出错啦！" message:@"数据下载出错，请重新尝试!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
     }else if(rs == 0){//弹窗网络差。
-        
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"出错啦！" message:@"数据下载出错，请重新尝试!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
     }else{
-        
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"出错啦！" message:@"数据下载出错，请重新尝试!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
     }
+    [self performSelectorOnMainThread:@selector(overlayDismiss) withObject:nil waitUntilDone:YES];
+}
+- (void)overlayDismiss
+{
     [overlayView dismiss:YES];
+
 }
 
 -(void)updateContent{
