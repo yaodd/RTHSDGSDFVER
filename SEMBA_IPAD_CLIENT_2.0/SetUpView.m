@@ -10,7 +10,7 @@
 #import "SetupViewController.h"
 #define SCREENWIDTH 1024
 #define SCREENHEIGHT 768
-#define SETUPWIDTH 405
+#define SETUPWIDTH 402
 #define SETUPHEIGHT 499
 @implementation SetUpView
 @synthesize isPushvar,isAutoDownLoad;

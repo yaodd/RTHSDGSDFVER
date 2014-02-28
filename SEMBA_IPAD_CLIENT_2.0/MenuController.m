@@ -309,7 +309,7 @@
         cell.topLine.backgroundColor = [UIColor whiteColor];
         cell.belowLine.backgroundColor = [UIColor whiteColor];
         
-        cell.icon.frame = CGRectMake(23, 5, 35, 31);
+        cell.icon.frame = CGRectMake(28, 10, 30, 26);
         cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 44);
         cell.title.font = [UIFont fontWithName:@"Heiti SC" size:18];
         cell.title.frame = CGRectMake(0, 0, menuWidth, 41);
@@ -329,7 +329,7 @@
         }
     }else if(indexPath.row == 1){
         
-        cell.icon.frame = CGRectMake(65, 5, 35, 31);
+        cell.icon.frame = CGRectMake(65, 10, 23, 21);
         cell.title.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
         cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 41.5);
         cell.title.frame = CGRectMake(110, 0, menuWidth - 120, 41);
@@ -349,7 +349,7 @@
         
     }else if(indexPath.row == 2){
         
-        cell.icon.frame = CGRectMake(65, 5, 35, 31);
+        cell.icon.frame = CGRectMake(65, 10, 21, 21);
         cell.title.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
         cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 41.5);
         cell.title.frame = CGRectMake(110, 0, menuWidth - 120, 41);
@@ -368,7 +368,7 @@
         
     }else if(indexPath.row == 3){
         
-        cell.icon.frame = CGRectMake(62, 5, 28, 27);
+        cell.icon.frame = CGRectMake(62, 10, 21, 21);
         cell.title.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
         cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 41.5);
         cell.title.frame = CGRectMake(110, 0, menuWidth - 120, 41);
@@ -388,7 +388,7 @@
         
     }else if(indexPath.row == 4){
         
-        cell.icon.frame = CGRectMake(62, 5, 28, 27);
+        cell.icon.frame = CGRectMake(62, 10, 21, 21);
         cell.title.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
         cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 41.5);
         cell.title.frame = CGRectMake(110, 0, menuWidth - 120, 41);
@@ -414,7 +414,7 @@
         cell.topLine.backgroundColor = [UIColor whiteColor];
         cell.belowLine.backgroundColor = [UIColor whiteColor];
         
-        cell.icon.frame = CGRectMake(23, 5, 35, 31);
+        cell.icon.frame = CGRectMake(30, 13, 26, 17);
         cell.backgroundImg.frame = CGRectMake(0, 0, menuWidth, 44);
         cell.title.font = [UIFont fontWithName:@"Heiti SC" size:18.0];
         cell.title.frame = CGRectMake(0, 0, menuWidth, 41);
