@@ -215,12 +215,14 @@
     MyCourse *myCourse = sysbsModel.myCourse;
     courseArray = [myCourse getMyCourse];
     NSLog(@"mycoursenum%d",[courseArray count]);
-    [self performSelectorOnMainThread:@selector(initCourse) withObject:nil waitUntilDone:YES];
     
+    [self performSelectorOnMainThread:@selector(initCourse) withObject:nil waitUntilDone:YES];
     for (int i = 0; i < [courseArray count]; i ++) {
         Course *course = [courseArray objectAtIndex:i];
         [dao requestForFileList:course.cid];
     }
+    [self performSelectorOnMainThread:@selector(downloadAll) withObject:nil waitUntilDone:YES];
+    
 //    [self performSelectorOnMainThread:@selector(downloadAll) withObject:nil waitUntilDone:YES];
     [self displayProductImage];
 }
@@ -290,7 +292,7 @@
     [courseImageView addSubview:courseButton];
     //[courseButton addGestureRecognizer:singleTapGesture];
     [self saveCatchToFile];
-    [self downloadAll];
+//    [self downloadAll];
     
     //取出最新的课程。
     SysbsModel *model = [SysbsModel getSysbsModel];
