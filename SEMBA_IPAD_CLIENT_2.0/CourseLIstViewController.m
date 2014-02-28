@@ -78,6 +78,7 @@
     overlayView = [[MRProgressOverlayView alloc] init];
     overlayView.mode = MRProgressOverlayViewModeIndeterminate;
     [self.view addSubview:overlayView];
+    [overlayView show:YES];
     NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(fetchAndLoadData) object:nil];
     [thread start];
 }
@@ -87,7 +88,6 @@
 -(void)fetchAndLoadData{
     
     
-    [overlayView show:YES];
 
     Dao *dao = [Dao sharedDao];
     SysbsModel *model = [SysbsModel getSysbsModel];

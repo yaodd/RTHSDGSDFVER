@@ -458,7 +458,7 @@
     if (!animated) {
         [UIView setAnimationsEnabled:NO];
     }
-    
+    self.leftViewController.view.userInteractionEnabled = NO;
     [UIView animateWithDuration:.3 animations:^{
         
         _root.view.frame = frame;
@@ -477,6 +477,8 @@
         _menuFlags.showingRightView = NO;
 
         [self showShadow:NO];
+        
+        self.leftViewController.view.userInteractionEnabled = YES;
         
     }];
     
@@ -531,6 +533,7 @@
         [UIView setAnimationsEnabled:_enabled];
     }
     
+    leftView.userInteractionEnabled = YES;
 }
 
 - (void)handleSwipeLeftGesture:(UISwipeGestureRecognizer *)gesture{

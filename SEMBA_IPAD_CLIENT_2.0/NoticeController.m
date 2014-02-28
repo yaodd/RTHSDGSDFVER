@@ -75,12 +75,14 @@
     [searchBar setPlaceholder:@""];
     searchBar.delegate = self;
     [self.view addSubview:searchBar];
+
     
     //[self setData];
     NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(setData) object:nil];
     //[self performSelector:@selector(setData) withObject:nil afterDelay:0  ];
     [thread start];
 }
+
 
 //Set the data of server to tableView
 
