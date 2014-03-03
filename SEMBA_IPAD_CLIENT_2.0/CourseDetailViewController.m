@@ -12,10 +12,11 @@
 #import "SingleChooseCourseDataObject.h"
 #import "MRProgressOverlayView.h"
 #import "WebImgResourceContainer.h"
+#import "ChoosePopView.h"
 
 @interface CourseDetailViewController (){
     BOOL haveSelected;
-    UIView *popUpView;
+    ChoosePopView *popUpView;
     SingleChooseCourseDataObject *dataobj;
     MRProgressOverlayView *overlayView;
     NSArray *imageArray;
@@ -300,11 +301,11 @@
 
 -(void)popUpAView:(int)type{
     if(popUpView != nil)return;
-    popUpView = [[UIView alloc] initWithFrame:CGRectMake(300, 200, 422, 270)];
+    popUpView = [[ChoosePopView alloc] initWithFrame:CGRectMake(300, 200, 402, 270)];
     [self.view addSubview:popUpView];
     UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"tanchuang.png"]];
-    image.frame = CGRectMake(0, 0, 422, 270);
-    [popUpView addSubview:image];
+    image.frame = CGRectMake(0, 0, 402, 270);
+    //[popUpView addSubview:image];
     
     switch (type) {
         case 1://确认选课
@@ -329,12 +330,16 @@
 }
 
 -(void)confirmXuanKe{
-    UILabel *popUpTitle = [[UILabel alloc]initWithFrame:CGRectMake(150, 10, 100, 40)];
+    UILabel *popUpTitle = [[UILabel alloc]initWithFrame:CGRectMake(150, 6, 100, 40)];
     popUpTitle.text  = @"确认选课";
+    popUpTitle.textColor = [UIColor whiteColor];
+    popUpTitle.backgroundColor = [UIColor clearColor];
     [popUpView addSubview:popUpTitle];
     
-    UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
+    UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 370, 100)];
     popUpContent.text = @"确认选取这门课程么？ 选课后将不能退课如需退课请联系教务老师。\n教务总监 周军霞老师：020-84112613；18666080259";
+    popUpContent.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
+    popUpContent.backgroundColor = [UIColor clearColor];
     [popUpView addSubview:popUpContent];
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(popUpView.frame.size.width/2 - 40, 160, 80, 40)];
     [button setTitle:@"我再看看" forState:UIControlStateNormal];
@@ -351,12 +356,16 @@
 }
 
 -(void)alreadyChoose{
-    UILabel *popUpTitle = [[UILabel alloc]initWithFrame:CGRectMake(150, 10, 100, 40)];
+    UILabel *popUpTitle = [[UILabel alloc]initWithFrame:CGRectMake(150, 6, 100, 40)];
     popUpTitle.text  = @"选课失败";
+    popUpTitle.textColor = [UIColor whiteColor];
+    popUpTitle.backgroundColor = [UIColor clearColor];
     [popUpView addSubview:popUpTitle];
     
-    UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
+    UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 370, 100)];
     popUpContent.text = @"您已经选了这门课了，不要重复选取谢谢！";
+    popUpContent.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
+    popUpContent.backgroundColor = [UIColor clearColor];
     [popUpView addSubview:popUpContent];
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(popUpView.frame.size.width/2 - 40, 160, 80, 40)];
     [button setTitle:@"我知道了" forState:UIControlStateNormal];
@@ -368,12 +377,16 @@
 }
 
 -(void)failBecauseOverNum{
-    UILabel *popUpTitle = [[UILabel alloc]initWithFrame:CGRectMake(150, 10, 100, 40)];
+    UILabel *popUpTitle = [[UILabel alloc]initWithFrame:CGRectMake(150, 6, 100, 40)];
     popUpTitle.text  = @"选课失败";
+    popUpTitle.textColor = [UIColor whiteColor];
+    popUpTitle.backgroundColor = [UIColor clearColor];
     [popUpView addSubview:popUpTitle];
     
-    UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
+    UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 370, 100)];
     popUpContent.text = @"很抱歉，限选人数已满。如需听课，请联系教务人员安排。\n教务总监 周军霞老师：020-84112613；18666080259";
+    popUpContent.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
+    popUpContent.backgroundColor = [UIColor clearColor];
     [popUpView addSubview:popUpContent];
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(popUpView.frame.size.width/2 - 40, 160, 80, 40)];
     [button setTitle:@"我知道了" forState:UIControlStateNormal];
@@ -385,12 +398,16 @@
 }
 
 -(void)successfulChoosePopUp{
-    UILabel *popUpTitle = [[UILabel alloc]initWithFrame:CGRectMake(150, 10, 100, 40)];
+    UILabel *popUpTitle = [[UILabel alloc]initWithFrame:CGRectMake(150, 6, 100, 40)];
     popUpTitle.text  = @"选课成功";
+    popUpTitle.textColor = [UIColor whiteColor];
+    popUpTitle.backgroundColor = [UIColor clearColor];
     [popUpView addSubview:popUpTitle];
     
-    UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
+    UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 370, 100)];
     popUpContent.text = @"选课成功！";
+    popUpContent.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
+    popUpContent.backgroundColor = [UIColor clearColor];
     [popUpView addSubview:popUpContent];
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(popUpView.frame.size.width/2 - 40, 160, 80, 40)];
     [button setTitle:@"我知道了" forState:UIControlStateNormal];
@@ -403,15 +420,19 @@
 
 
 -(void)tuikePopUp{
-    UILabel *popUpTitle = [[UILabel alloc]initWithFrame:CGRectMake(150, 10, 100, 40)];
+    UILabel *popUpTitle = [[UILabel alloc]initWithFrame:CGRectMake(150, 6, 100, 40)];
     popUpTitle.text  = @"想要退课?";
+    popUpTitle.textColor = [UIColor whiteColor];
+    popUpTitle.backgroundColor = [UIColor clearColor];
     [popUpView addSubview:popUpTitle];
     
-    UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 400, 100)];
+    UITextView *popUpContent = [[UITextView alloc]initWithFrame:CGRectMake(20, 60, 370, 100)];
     popUpContent.text = @"很抱歉，系统暂时不支持退课。如需退课请联系教务老师。教务总监 周军霞老师：020-84112613；18666080259";
+    popUpContent.font = [UIFont fontWithName:@"Heiti SC" size:15.0];
+    popUpContent.backgroundColor = [UIColor clearColor];
     [popUpView addSubview:popUpContent];
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(popUpView.frame.size.width/2 - 40, 160, 80, 40)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(popUpView.frame.size.width/2 - 40, 190, 80, 40)];
     [button setTitle:@"我知道了" forState:UIControlStateNormal];
     
     [button setBackgroundImage:[UIImage imageNamed:@"button_choose.png"] forState:UIControlStateNormal];
