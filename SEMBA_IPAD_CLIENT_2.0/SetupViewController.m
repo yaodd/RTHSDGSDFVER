@@ -216,6 +216,7 @@ NSString *arrowImageName = @"setting_right_arrow";
 }
 - (void) aboutUsAction:(UIButton *)sender{
     AboutUsViewController *aboutUsViewController = [[AboutUsViewController alloc]init];
+    aboutUsViewController.title = @"关于我们";
     [self.navigationController pushViewController:aboutUsViewController animated:YES];
 }
 - (void)didReceiveMemoryWarning
