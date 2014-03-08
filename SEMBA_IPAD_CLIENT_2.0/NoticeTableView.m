@@ -54,9 +54,9 @@
         [self setSeparatorColor:[UIColor clearColor]];
         
         emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, 800, 40)];
-        [emptyLabel setTextColor:[UIColor blackColor]];
+        [emptyLabel setTextColor:[UIColor grayColor]];
         [emptyLabel setText:@"暂时还没有通知噢，先去看看课件吧！"];
-        [emptyLabel setFont:[UIFont systemFontOfSize:34]];
+        [emptyLabel setFont:[UIFont systemFontOfSize:15]];
         [emptyLabel setHidden:YES];
         [self addSubview:emptyLabel];
     }

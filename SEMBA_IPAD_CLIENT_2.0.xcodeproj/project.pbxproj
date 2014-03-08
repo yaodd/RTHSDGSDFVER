@@ -92,6 +92,7 @@
 		591E5D5E183F7DA8000B9824 /* news center-mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 591E5D5C183F7DA8000B9824 /* news center-mail.png */; };
 		591E5D5F183F7DA8000B9824 /* news center-mail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 591E5D5D183F7DA8000B9824 /* news center-mail@2x.png */; };
 		5931752C181F8E4B000BBC4F /* DDMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5931752B181F8E4B000BBC4F /* DDMenuController.m */; };
+		5991A57218C801460033128A /* ChoosePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5991A57118C801460033128A /* ChoosePopView.m */; };
 		59A2612318C0B6D700199305 /* setting_nav_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 59A2612218C0B6D700199305 /* setting_nav_bar.png */; };
 		59D096D81836004D0097C6AC /* EvaluateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D096D71836004D0097C6AC /* EvaluateController.m */; };
 		59D096DB183600690097C6AC /* ScheduleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D096DA183600690097C6AC /* ScheduleController.m */; };
@@ -531,6 +532,8 @@
 		591E5D5D183F7DA8000B9824 /* news center-mail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "news center-mail@2x.png"; sourceTree = "<group>"; };
 		5931752A181F8E4B000BBC4F /* DDMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMenuController.h; sourceTree = "<group>"; };
 		5931752B181F8E4B000BBC4F /* DDMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMenuController.m; sourceTree = "<group>"; };
+		5991A57018C801460033128A /* ChoosePopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoosePopView.h; sourceTree = "<group>"; };
+		5991A57118C801460033128A /* ChoosePopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoosePopView.m; sourceTree = "<group>"; };
 		59A2612218C0B6D700199305 /* setting_nav_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_nav_bar.png; sourceTree = "<group>"; };
 		59D096D61836004D0097C6AC /* EvaluateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvaluateController.h; sourceTree = "<group>"; };
 		59D096D71836004D0097C6AC /* EvaluateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvaluateController.m; sourceTree = "<group>"; };
@@ -1053,6 +1056,8 @@
 				2BF802BE187255370085D148 /* CourseList.xib */,
 				2BBA3F6D1876DA5400AC25B3 /* SingleCourseCell.h */,
 				2BBA3F6E1876DA5400AC25B3 /* SingleCourseCell.m */,
+				5991A57018C801460033128A /* ChoosePopView.h */,
+				5991A57118C801460033128A /* ChoosePopView.m */,
 			);
 			name = ChooseCourse;
 			sourceTree = "<group>";
@@ -2281,6 +2286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B43281118925B310032F262 /* WebImgResourceContainer.h in Sources */,
+				5991A57218C801460033128A /* ChoosePopView.m in Sources */,
 				2B43281218925B310032F262 /* WebImgResourceContainer.m in Sources */,
 				2B7D6E3A18759A7900836899 /* ChooseCourseListResult.m in Sources */,
 				2B98B0FC1839DAD900EBA2E0 /* SetUpView.m in Sources */,

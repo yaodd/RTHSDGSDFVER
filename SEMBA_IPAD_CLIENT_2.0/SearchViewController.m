@@ -28,6 +28,14 @@ NSString *NOTEFolderName2 = @"NOTE";
 #define PROGRESS_TAG 111111
 #define MAX_DOWNLOAD_NUM 3
 
+#define VIEW_NUMBER_TOTAL   5
+#define BUTTON_WIDTH   226
+#define BUTTON_HEIGHT  180
+#define BUTTON_GAP     24
+
+
+NSString *COVERFolderName2 = @"COVER";
+
 
 @interface SearchViewController ()
 {
@@ -35,7 +43,12 @@ NSString *NOTEFolderName2 = @"NOTE";
     ASINetworkQueue *queue;
     NSMutableDictionary *firstImageDict;
     MRProgressOverlayView *overlayView;
+    
+    NSInteger *firstViewIndex;
+    NSInteger *lastViewIndex;
 }
+@property (nonatomic, strong) NSMutableArray *labelArray;
+@property (nonatomic, strong) NSMutableArray *buttonViewArray;
 
 @end
 
@@ -53,6 +66,7 @@ NSString *NOTEFolderName2 = @"NOTE";
 @synthesize downloadQueue;
 @synthesize progressArray;
 @synthesize buttonDisplayArray;
+@synthesize labelArray;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -115,6 +129,7 @@ NSString *NOTEFolderName2 = @"NOTE";
     
     viewY += (50 + 0);
     coursewareSV = [[UIScrollView alloc]initWithFrame:CGRectMake(leftX, viewY, 1024 - leftX, 280)];
+    [coursewareSV setDelegate:self];
     [self.view addSubview:coursewareSV];
     
     viewY += (280);
@@ -131,6 +146,7 @@ NSString *NOTEFolderName2 = @"NOTE";
     
     NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(initSrollViewDatas) object:nil];
     [thread start];
+//    [self initSrollViewDatas];
     
 	// Do any additional setup after loading the view.
 }
@@ -178,6 +194,8 @@ NSString *NOTEFolderName2 = @"NOTE";
     MyCourse *myCourse = sysbsModel.myCourse;
     courseOriginArray = myCourse.courseArr;
     courseDisplayArray = myCourse.courseArr;
+//    [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
+
     for (int i = 0; i < [courseOriginArray count]; i ++) {
         Course *course = [courseOriginArray objectAtIndex:i];
         NSString *courseFolderName = [NSString stringWithFormat:@"%d",course.cid];
@@ -185,6 +203,7 @@ NSString *NOTEFolderName2 = @"NOTE";
         NSString *PDFPath = [contents stringByAppendingPathComponent:PDFFolderName2];
         NSString *PDFCoursePath = [PDFPath stringByAppendingPathComponent:courseFolderName];
         [downloadModel createDir:PDFCoursePath];
+        
         for (int k = 0; k < [course.fileArr count]; k ++) {
             File *file = [course.fileArr objectAtIndex:k];
             CoursewareItem *item = [[CoursewareItem alloc]init];
@@ -196,10 +215,11 @@ NSString *NOTEFolderName2 = @"NOTE";
             if ([fileManager fileExistsAtPath:item.PDFPath]) {
                 
                 UIImage *fImage = [firstImageDict objectForKey:item.PDFPath];
-                if (fImage == nil) {
-                    fImage = [downloadModel getFirstPageFromPDF:item.PDFPath];
-                    [firstImageDict setObject:fImage forKey:item.PDFPath];
-                }
+//                if (fImage == nil) {
+//                    fImage = [downloadModel getFirstPageFromPDF:item.PDFPath];
+//                    [firstImageDict setObject:fImage forKey:item.PDFPath];
+//                }
+
                 [item setPDFFirstImage:fImage];
             }
             else
@@ -207,11 +227,55 @@ NSString *NOTEFolderName2 = @"NOTE";
             [coursewareOriginArray addObject:item];
             [coursewareDisplayArray addObject:item];
             
-//            [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
         }
-//        [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
     }
     [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
+
+    for (int i = 0 ; i < [coursewareOriginArray count]; i ++) {
+//        return;
+        CoursewareItem *item = [coursewareOriginArray objectAtIndex:i];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:item.PDFPath]) {
+            if (item.PDFFirstImage == nil) {
+                UIImage *fImage = [firstImageDict objectForKey:item.PDFPath];
+                if (fImage == nil) {
+                    fImage = [downloadModel getFirstPageFromPDF:item.PDFPath];
+                    [firstImageDict setObject:fImage forKey:item.PDFPath];
+                }
+                [item setPDFFirstImage:fImage];
+                
+                UIButton *button = (UIButton *)[coursewareSV viewWithTag:i + 1];
+                if ([button isKindOfClass:[UIButton class]]) {
+                    [self performSelectorOnMainThread:@selector(updateButtonImage:) withObject:button waitUntilDone:YES];
+                    //                [button setImage:item.PDFFirstImage forState:UIControlStateNormal];
+                    
+                }
+            }
+        }
+        
+    }
+ 
+    //    [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
+    
+}
+
+- (void)updateButtonImage:(UIButton *)button{
+//    [button removeFromSuperview];
+    NSInteger index = button.tag - 1;
+    CoursewareItem *item = [coursewareOriginArray objectAtIndex:index];
+    UIImage *PDFFristImage = item.PDFFirstImage;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:item.PDFPath]) {
+        
+        [button setImage:PDFFristImage forState:UIControlStateNormal];
+        [button setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
+        [button addTarget:self action:@selector(openCourseware:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else{
+        
+        [button setImage:nil forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(courseItemAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
     
 }
 
@@ -226,6 +290,7 @@ NSString *NOTEFolderName2 = @"NOTE";
     [courseNumLabel setText:[NSString stringWithFormat:@"共找到%d个课程",[courseDisplayArray count]]];
     [coursewareSV setContentSize:CGSizeMake([coursewareDisplayArray count] * 250, 280)];
     buttonArray = [NSMutableArray array];
+    
     for (int i = 0; i < [coursewareDisplayArray count]; i ++) {
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(250 * i + 24, 20, 226, 180)];
         [button setTag:i + 1];
@@ -247,7 +312,7 @@ NSString *NOTEFolderName2 = @"NOTE";
         //[label setText:name];
         [label setTextAlignment:NSTextAlignmentCenter];
         [label setBackgroundColor:[UIColor clearColor]];
-        [label setTag:i * 10 + 10];
+//        [label setTag:(i + 1) * 10000 + 10];
         
         NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:i],@"index", nil];
         [button setMyDict:dict];
@@ -269,22 +334,14 @@ NSString *NOTEFolderName2 = @"NOTE";
                 [progressView setHidden:NO];
             }
         }
-        if (PDFFirstImage != nil) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:item.PDFPath]) {
             
-            //            NSLog(@"PDFFirstImage %d",index);
             [button setImage:PDFFirstImage forState:UIControlStateNormal];
             [button setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
-            
-            
-            //            [button removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
-            
-            
-            
             [button addTarget:self action:@selector(openCourseware:) forControlEvents:UIControlEventTouchUpInside];
         }
         else{
-            
-            //            [button removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
             
             [button setImage:nil forState:UIControlStateNormal];
             [button addTarget:self action:@selector(courseItemAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -307,7 +364,17 @@ NSString *NOTEFolderName2 = @"NOTE";
     
     int courseNumber = [courseDisplayArray count];
     [self.courseSV setContentSize:CGSizeMake(courseNumber * 250,280)];
+    //从文件夹里面获取保存的封面图片
+    NSString *contents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *coverFolder = [contents stringByAppendingPathComponent:COVERFolderName2];
+    DownloadModel *downloadModel = [DownloadModel getDownloadModel];
+    [downloadModel createDir:coverFolder];
+    
     for (int i = 0;  i < courseNumber; i ++) {
+        NSString *coverPath = [coverFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.png",i + 1]];
+        NSData *data = [NSData dataWithContentsOfFile:coverPath];
+        UIImage *image = [UIImage imageWithData:data];
+
         Course *course = [courseDisplayArray objectAtIndex:i];
         
         NSString *teacherName;
@@ -316,7 +383,7 @@ NSString *NOTEFolderName2 = @"NOTE";
         } else{
             teacherName = @"";
         }
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",teacherName,@"teachName",@"2013/11/11",@"date", nil];
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",teacherName,@"teachName",course.startTime,@"date",image,@"courseImage", nil];
         CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(20 + i * 250,20, 235, 235) dictionary:dict];
         UITapGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
         NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:course.cid],@"tag", nil];
@@ -538,5 +605,10 @@ NSString *NOTEFolderName2 = @"NOTE";
     
 }
 
+#pragma UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    NSLog(@"%f",scrollView.contentOffset.x);
+}
 
 @end

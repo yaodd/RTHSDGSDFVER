@@ -254,14 +254,14 @@ NSString *COVERFolderName = @"COVER";
     //你真强。。。
     NSArray *array = [NSArray arrayWithObjects:@"lixinchun",@"lutaihong",@"maoyunshi", nil];
     UITapGestureRecognizer * singleTapGesture;
+    //从文件夹里面获取保存的封面图片
+    NSString *contents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *coverFolder = [contents stringByAppendingPathComponent:COVERFolderName];
+    DownloadModel *downloadModel = [DownloadModel getDownloadModel];
+    [downloadModel createDir:coverFolder];
 
     for (int i = 0;  i < courseNumber; i ++) {
-        //从文件夹里面获取保存的封面图片
-        NSString *contents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *coverFolder = [contents stringByAppendingPathComponent:COVERFolderName];
-        DownloadModel *downloadModel = [DownloadModel getDownloadModel];
-        [downloadModel createDir:coverFolder];
-        NSString *coverPath = [coverFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.png",i + 1]];
+                NSString *coverPath = [coverFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.png",i + 1]];
         NSData *data = [NSData dataWithContentsOfFile:coverPath];
         UIImage *image = [UIImage imageWithData:data];
         

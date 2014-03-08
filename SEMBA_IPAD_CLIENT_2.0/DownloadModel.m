@@ -206,8 +206,14 @@ NSString *NOTEFolderName = @"NOTE";
     }
     
     NSLog(@"pdf size %f %f",pageRect.size.width,pageRect.size.height);
+    //将图片缩小
+//    pageRect.size.width /= 4;
+//    pageRect.size.height /= 4;
+
     //开启图片绘制 上下文
+
     UIGraphicsBeginImageContext(pageRect.size);
+//    UIGraphicsBeginImageContextWithOptions(pageRect.size, YES, 0.25);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     

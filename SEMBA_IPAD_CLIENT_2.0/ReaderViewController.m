@@ -1856,6 +1856,7 @@
                 currentToolType = ACEDrawingToolTypePen;
                 drawNewView.drawTool = ACEDrawingToolTypePen;
                 drawNewView.lineAlpha = 1.0f;
+                drawNewView.lineColor = curPenColor;
                 curPenAlpha = 1.0f;
                 UISlider *penWidthSlider = (UISlider *)[penWidthView viewWithTag:PEN_WIDTH_SLIDER_TAG];
                 drawNewView.lineWidth = penWidthSlider.value;
@@ -1871,6 +1872,7 @@
                 drawNewView.drawTool = ACEDrawingToolTypePen;
                 drawNewView.lineAlpha = kMarkAlphaDefault;
                 curPenAlpha = kMarkAlphaDefault;
+                drawNewView.lineColor = [UIColor greenColor];
                 UISlider *markWidthSlider = (UISlider *)[markerWidthView viewWithTag:PEN_WIDTH_SLIDER_TAG];
                 drawNewView.lineWidth = markWidthSlider.value;
                 curPenWidth = markWidthSlider.value;
