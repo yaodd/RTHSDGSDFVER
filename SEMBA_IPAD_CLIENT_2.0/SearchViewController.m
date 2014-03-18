@@ -240,7 +240,9 @@ NSString *COVERFolderName2 = @"COVER";
                 UIImage *fImage = [firstImageDict objectForKey:item.PDFPath];
                 if (fImage == nil) {
                     fImage = [downloadModel getFirstPageFromPDF:item.PDFPath];
-                    [firstImageDict setObject:fImage forKey:item.PDFPath];
+                    if (fImage != nil) {
+                        [firstImageDict setObject:fImage forKey:item.PDFPath];
+                    }
                 }
                 [item setPDFFirstImage:fImage];
                 

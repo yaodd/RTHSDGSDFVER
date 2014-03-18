@@ -21,5 +21,5 @@
 @property (nonatomic,strong)UIImageView *arrow;
 
 -(void)setData:(NSMutableArray *)dataArray;
-
+- (void)deleteATeacherByIndex:(int)index;
 @end

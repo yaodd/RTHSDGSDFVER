@@ -33,6 +33,7 @@
     _guideScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 1024, 768)];
     [_guideScrollView setShowsHorizontalScrollIndicator:NO];
     [_guideScrollView setShowsVerticalScrollIndicator:NO];
+    [_guideScrollView setDelegate:self];
     [self.view addSubview:_guideScrollView];
     NSArray *imageNameArray = [NSArray arrayWithObjects:@"guide_01",@"guide_02",@"guide_03", nil];
     
@@ -60,6 +61,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma UIScrollViewDelegate mark
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView.contentOffset.x > 1024 * 2) {
+        LoginViewController *loginViewController = [[LoginViewController alloc]init];
+        [self presentViewController:loginViewController animated:YES completion:nil];
+    }
 }
 
 @end

@@ -107,6 +107,11 @@
         [_delegate selectSomeItem:indexPath.row];
     }
 }
+-(void)deleteATeacherByIndex:(int)index
+{
+    [_dataArray removeObjectAtIndex:index];
+    [_tableView reloadData];
+}
 
 
 /*

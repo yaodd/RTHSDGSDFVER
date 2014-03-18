@@ -17,6 +17,7 @@
     NSArray *numArr;
     NSArray *commentArr;
     int isEnableComment;        //0表示不可评教，1表示可评教
+    int chosenTeacher;
 }
 
 @end
@@ -50,6 +51,7 @@
     [super viewDidLoad];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bar_bg"] forBarMetrics:UIBarMetricsDefault];
     current_index = -1;
+    chosenTeacher = -1;
     self.navigationController.navigationBar.tintColor = [UIColor redColor];
     //_selectView = [[HeroSelectView alloc] initWithFrame:CGRectMake(411, 135, 196, 44)];
     //[_scrollView addSubview:_selectView];
@@ -118,7 +120,7 @@
     [_selectView.layer setBorderColor:[UIColor colorWithWhite:215.0/255 alpha:1.0].CGColor];
     [_selectView.layer setBorderWidth:1.0];
     //因为暂时没有评教，点击无反应
-    _selectView.userInteractionEnabled = NO;
+//    _selectView.userInteractionEnabled = NO;
     _selectView.delegate = self;
     
     [_scrollView addSubview:_selectView];
@@ -327,7 +329,7 @@
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         NSArray *data = model.EvaluationList;
         int l = [data count];
-                for ( int i = 0 ; i < l ; ++ i){
+        for ( int i = 0 ; i < l ; ++ i){
             EvaluationDataModel *onedata = (EvaluationDataModel *)[data objectAtIndex:i];
             NSString *oneString = [NSString stringWithFormat:@" %@ %@",onedata.courseName,onedata.teacherName];
             [arr  addObject:oneString];
@@ -359,6 +361,11 @@
 }
 
 -(void)uploadEvaluation{
+    if (chosenTeacher == -1) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"出错啦！" message:@"请选择需要评教的教师！" delegate:nil cancelButtonTitle:@"好" otherButtonTitles: nil];
+        [alertView show];
+        return;
+    }
     overlayView = [[MRProgressOverlayView alloc]init];
     overlayView.mode = MRProgressOverlayViewModeIndeterminate;
     [self.view addSubview:overlayView];
@@ -366,7 +373,7 @@
     Dao *dao =[Dao sharedDao ];
     SysbsModel *model = [SysbsModel getSysbsModel];
     NSArray *arr = model.EvaluationList;
-    EvaluationDataModel *onedata = [arr objectAtIndex:current_index];
+    EvaluationDataModel *onedata = [arr objectAtIndex:chosenTeacher];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"正在评教" message:@"正在发送网络请求请耐心等待，完成后将有提示。" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
     [alertView show];
     int rs = [dao requestForUpEvaluation:model.user.uid eid:onedata.eid
@@ -395,6 +402,8 @@
         [self setData];
 
         _suggestTextView.text = @"";
+        [_selectView deleteATeacherByIndex:chosenTeacher];
+        chosenTeacher = -1;
     }else if(rs == -1){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"评教失败" message:@"服务器故障" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
         [alertView show];
@@ -452,7 +461,8 @@
         NSString* showdate = [NSString stringWithFormat:@"%@到%@",startdate,enddate];
         _classDateLabel.text = showdate;
     }
-    current_index = index;
+    chosenTeacher = index;
+
 }
 
 
