@@ -195,62 +195,70 @@ NSString *COVERFolderName2 = @"COVER";
     courseOriginArray = myCourse.courseArr;
     courseDisplayArray = myCourse.courseArr;
 //    [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
-
+    
     for (int i = 0; i < [courseOriginArray count]; i ++) {
-        Course *course = [courseOriginArray objectAtIndex:i];
-        NSString *courseFolderName = [NSString stringWithFormat:@"%d",course.cid];
-        NSString *contents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *PDFPath = [contents stringByAppendingPathComponent:PDFFolderName2];
-        NSString *PDFCoursePath = [PDFPath stringByAppendingPathComponent:courseFolderName];
-        [downloadModel createDir:PDFCoursePath];
-        
-        for (int k = 0; k < [course.fileArr count]; k ++) {
-            File *file = [course.fileArr objectAtIndex:k];
-            CoursewareItem *item = [[CoursewareItem alloc]init];
-            item.cid = courseFolderName;
-            item.PDFName = file.fileName;
-            item.PDFURL = file.filePath;
-            item.PDFPath = [PDFCoursePath stringByAppendingPathComponent:item.PDFName];
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            if ([fileManager fileExistsAtPath:item.PDFPath]) {
-                
-                UIImage *fImage = [firstImageDict objectForKey:item.PDFPath];
-//                if (fImage == nil) {
-//                    fImage = [downloadModel getFirstPageFromPDF:item.PDFPath];
-//                    [firstImageDict setObject:fImage forKey:item.PDFPath];
-//                }
-
-                [item setPDFFirstImage:fImage];
-            }
-            else
-                [item setPDFFirstImage:nil];
-            [coursewareOriginArray addObject:item];
-            [coursewareDisplayArray addObject:item];
+        @autoreleasepool {
             
+            Course *course = [courseOriginArray objectAtIndex:i];
+            NSString *courseFolderName = [NSString stringWithFormat:@"%d",course.cid];
+            NSString *contents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *PDFPath = [contents stringByAppendingPathComponent:PDFFolderName2];
+            NSString *PDFCoursePath = [PDFPath stringByAppendingPathComponent:courseFolderName];
+            [downloadModel createDir:PDFCoursePath];
+            
+            for (int k = 0; k < [course.fileArr count]; k ++) {
+                @autoreleasepool {
+                    
+                    File *file = [course.fileArr objectAtIndex:k];
+                    CoursewareItem *item = [[CoursewareItem alloc]init];
+                    item.cid = courseFolderName;
+                    item.PDFName = file.fileName;
+                    item.PDFURL = file.filePath;
+                    item.PDFPath = [PDFCoursePath stringByAppendingPathComponent:item.PDFName];
+                    NSFileManager *fileManager = [NSFileManager defaultManager];
+                    if ([fileManager fileExistsAtPath:item.PDFPath]) {
+                        
+                        UIImage *fImage = [firstImageDict objectForKey:item.PDFPath];
+                        //                if (fImage == nil) {
+                        //                    fImage = [downloadModel getFirstPageFromPDF:item.PDFPath];
+                        //                    [firstImageDict setObject:fImage forKey:item.PDFPath];
+                        //                }
+                        
+                        [item setPDFFirstImage:fImage];
+                    }
+                    else
+                        [item setPDFFirstImage:nil];
+                    [coursewareOriginArray addObject:item];
+                    [coursewareDisplayArray addObject:item];
+                }
+            }
         }
     }
-    [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
 
+    [self performSelectorOnMainThread:@selector(setScrollViewDatas) withObject:nil waitUntilDone:YES];
+    
     for (int i = 0 ; i < [coursewareOriginArray count]; i ++) {
-//        return;
-        CoursewareItem *item = [coursewareOriginArray objectAtIndex:i];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if ([fileManager fileExistsAtPath:item.PDFPath]) {
-            if (item.PDFFirstImage == nil) {
-                UIImage *fImage = [firstImageDict objectForKey:item.PDFPath];
-                if (fImage == nil) {
-                    fImage = [downloadModel getFirstPageFromPDF:item.PDFPath];
-                    if (fImage != nil) {
-                        [firstImageDict setObject:fImage forKey:item.PDFPath];
+        @autoreleasepool {
+            
+            CoursewareItem *item = [coursewareOriginArray objectAtIndex:i];
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if ([fileManager fileExistsAtPath:item.PDFPath]) {
+                if (item.PDFFirstImage == nil) {
+                    UIImage *fImage = [firstImageDict objectForKey:item.PDFPath];
+                    if (fImage == nil) {
+                        fImage = [downloadModel getFirstPageFromPDF:item.PDFPath];
+                        if (fImage != nil) {
+                            [firstImageDict setObject:fImage forKey:item.PDFPath];
+                        }
                     }
-                }
-                [item setPDFFirstImage:fImage];
-                
-                UIButton *button = (UIButton *)[coursewareSV viewWithTag:i + 1];
-                if ([button isKindOfClass:[UIButton class]]) {
-                    [self performSelectorOnMainThread:@selector(updateButtonImage:) withObject:button waitUntilDone:YES];
-                    //                [button setImage:item.PDFFirstImage forState:UIControlStateNormal];
+                    [item setPDFFirstImage:fImage];
                     
+                    UIButton *button = (UIButton *)[coursewareSV viewWithTag:i + 1];
+                    if ([button isKindOfClass:[UIButton class]]) {
+                        [self performSelectorOnMainThread:@selector(updateButtonImage:) withObject:button waitUntilDone:YES];
+                        //                [button setImage:item.PDFFirstImage forState:UIControlStateNormal];
+                        
+                    }
                 }
             }
         }
@@ -294,74 +302,78 @@ NSString *COVERFolderName2 = @"COVER";
     buttonArray = [NSMutableArray array];
     
     for (int i = 0; i < [coursewareDisplayArray count]; i ++) {
-        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(250 * i + 24, 20, 226, 180)];
-        [button setTag:i + 1];
-        [self.buttonArray addObject:button];
+        @autoreleasepool {
         
-        //            UIProgressView *progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(13, 140, 200, 10)];
-        MRCircularProgressView *progressView = [[MRCircularProgressView alloc]initWithFrame:CGRectMake(63, 40, 100, 100)];
-        [progressView setHidden:YES];
-        [progressView setTag:PROGRESS_TAG];
-        //            [progressView setProgressViewStyle:UIProgressViewStyleBar];
-        [button addSubview:progressView];
-        [self.progressArray addObject:progressView];
-        
-        
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(250 * i + 24, 280 - 20 - 50, 226, 50)];
-        [label setHidden:YES];
-        [label setLineBreakMode:NSLineBreakByCharWrapping];
-        [label setNumberOfLines:0];
-        //[label setText:name];
-        [label setTextAlignment:NSTextAlignmentCenter];
-        [label setBackgroundColor:[UIColor clearColor]];
-//        [label setTag:(i + 1) * 10000 + 10];
-        
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:i],@"index", nil];
-        [button setMyDict:dict];
-        CoursewareItem *item = [self.coursewareDisplayArray objectAtIndex:i];
-        NSString *PDFName = item.PDFName;
-        UIImage *PDFFirstImage = item.PDFFirstImage;
-        //        NSString *PDFPath = item.PDFPath;
-        NSURL *PDFURL = [NSURL URLWithString:item.PDFURL];
-        for (ASIHTTPRequest *request in queue.operations) {
-            if ([request.url isEqual:PDFURL]) {
-                NSLog(@"request in");
-                [request setDownloadProgressDelegate:progressView];
+            UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(250 * i + 24, 20, 226, 180)];
+            [button setTag:i + 1];
+            [self.buttonArray addObject:button];
+            
+            //            UIProgressView *progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(13, 140, 200, 10)];
+            MRCircularProgressView *progressView = [[MRCircularProgressView alloc]initWithFrame:CGRectMake(63, 40, 100, 100)];
+            [progressView setHidden:YES];
+            [progressView setTag:PROGRESS_TAG];
+            //            [progressView setProgressViewStyle:UIProgressViewStyleBar];
+            [button addSubview:progressView];
+            [self.progressArray addObject:progressView];
+            
+            
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(250 * i + 24, 280 - 20 - 50, 226, 50)];
+            [label setHidden:YES];
+            [label setLineBreakMode:NSLineBreakByCharWrapping];
+            [label setNumberOfLines:0];
+            //[label setText:name];
+            [label setTextAlignment:NSTextAlignmentCenter];
+            [label setBackgroundColor:[UIColor clearColor]];
+            //        [label setTag:(i + 1) * 10000 + 10];
+            
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:i],@"index", nil];
+            [button setMyDict:dict];
+            CoursewareItem *item = [self.coursewareDisplayArray objectAtIndex:i];
+            NSString *PDFName = item.PDFName;
+            UIImage *PDFFirstImage = item.PDFFirstImage;
+            //        NSString *PDFPath = item.PDFPath;
+            NSURL *PDFURL = [NSURL URLWithString:item.PDFURL];
+            for (ASIHTTPRequest *request in queue.operations) {
                 
-                NSDictionary *requestDict = request.myDict;
-                NSString *filePath = [requestDict objectForKey:@"filePath"];
-                NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:i],@"index",filePath,@"filePath",item,@"item", nil];
-                [request setMyDict:dict];
-                [progressView setMyDict:dict];
-                [progressView setHidden:NO];
+                if ([request.url isEqual:PDFURL]) {
+                    NSLog(@"request in");
+                    [request setDownloadProgressDelegate:progressView];
+                    
+                    NSDictionary *requestDict = request.myDict;
+                    NSString *filePath = [requestDict objectForKey:@"filePath"];
+                    NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:i],@"index",filePath,@"filePath",item,@"item", nil];
+                    [request setMyDict:dict];
+                    [progressView setMyDict:dict];
+                    [progressView setHidden:NO];
+                }
             }
-        }
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if ([fileManager fileExistsAtPath:item.PDFPath]) {
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if ([fileManager fileExistsAtPath:item.PDFPath]) {
+                
+                [button setImage:PDFFirstImage forState:UIControlStateNormal];
+                [button setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
+                [button addTarget:self action:@selector(openCourseware:) forControlEvents:UIControlEventTouchUpInside];
+            }
+            else{
+                
+                [button setImage:nil forState:UIControlStateNormal];
+                [button addTarget:self action:@selector(courseItemAction:) forControlEvents:UIControlEventTouchUpInside];
+            }
+            UIImage *image = [UIImage imageNamed:@"pptsearch_ppt"];
+            [button setBackgroundImage:image forState:UIControlStateNormal];
             
-            [button setImage:PDFFirstImage forState:UIControlStateNormal];
-            [button setImageEdgeInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
-            [button addTarget:self action:@selector(openCourseware:) forControlEvents:UIControlEventTouchUpInside];
-        }
-        else{
             
-            [button setImage:nil forState:UIControlStateNormal];
-            [button addTarget:self action:@selector(courseItemAction:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [label setHidden:NO];
+            [label setText:PDFName];
+            
+            
+            
+            [coursewareSV addSubview:button];
+            [coursewareSV addSubview:label];
+            [courseSV setContentOffset:CGPointZero];
+            [coursewareSV setContentOffset:CGPointZero];
         }
-        UIImage *image = [UIImage imageNamed:@"pptsearch_ppt"];
-        [button setBackgroundImage:image forState:UIControlStateNormal];
-        
-        
-        
-        [label setHidden:NO];
-        [label setText:PDFName];
-
-        
-        
-        [coursewareSV addSubview:button];
-        [coursewareSV addSubview:label];
-        [courseSV setContentOffset:CGPointZero];
-        [coursewareSV setContentOffset:CGPointZero];
     }
     
     int courseNumber = [courseDisplayArray count];
@@ -373,26 +385,29 @@ NSString *COVERFolderName2 = @"COVER";
     [downloadModel createDir:coverFolder];
     
     for (int i = 0;  i < courseNumber; i ++) {
-        NSString *coverPath = [coverFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.png",i + 1]];
-        NSData *data = [NSData dataWithContentsOfFile:coverPath];
-        UIImage *image = [UIImage imageWithData:data];
+        @autoreleasepool {
+            NSString *coverPath = [coverFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.png",i + 1]];
+            NSData *data = [NSData dataWithContentsOfFile:coverPath];
+            UIImage *image = [UIImage imageWithData:data];
+            
+            Course *course = [courseDisplayArray objectAtIndex:i];
+            
+            NSString *teacherName;
+            if ([course.teacher count] > 0) {
+                teacherName = ((User *)[course.teacher objectAtIndex:0]).username;
+            } else{
+                teacherName = @"";
+            }
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",teacherName,@"teachName",course.startTime,@"date",image,@"courseImage", nil];
+            CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(20 + i * 250,20, 235, 235) dictionary:dict];
+            UITapGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
+            NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:course.cid],@"tag", nil];
+            [singleTapGesture setMyDict:myDict];
+            
+            [courseItem addGestureRecognizer:singleTapGesture];
+            [self.courseSV addSubview:courseItem];
 
-        Course *course = [courseDisplayArray objectAtIndex:i];
-        
-        NSString *teacherName;
-        if ([course.teacher count] > 0) {
-            teacherName = ((User *)[course.teacher objectAtIndex:0]).username;
-        } else{
-            teacherName = @"";
         }
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:course.courseName,@"courseName",teacherName,@"teachName",course.startTime,@"date",image,@"courseImage", nil];
-        CourseItem *courseItem = [[CourseItem alloc]initWithFrame:CGRectMake(20 + i * 250,20, 235, 235) dictionary:dict];
-        UITapGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jumpToCourseware:)];
-        NSDictionary *myDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:course.cid],@"tag", nil];
-        [singleTapGesture setMyDict:myDict];
-        
-        [courseItem addGestureRecognizer:singleTapGesture];
-        [self.courseSV addSubview:courseItem];
     }
 
     [overlayView dismiss:YES];

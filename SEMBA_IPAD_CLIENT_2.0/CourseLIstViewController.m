@@ -101,8 +101,9 @@
        // [self displayProductImage];
         
     }else if(rs == -2){//弹窗 选课
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"出错啦！" message:@"数据下载出错，请重新尝试!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"温馨提示！" message:@"当前没有选课信息，请联系管理员！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
+        
     }else if(rs == 0){//弹窗网络差。
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"出错啦！" message:@"数据下载出错，请重新尝试!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];

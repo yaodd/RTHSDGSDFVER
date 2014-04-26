@@ -683,6 +683,7 @@
     [self initToolView];
     
 }
+
 //点击
 //不知道iOS有没有togglebutton之类的这种东西呢
 //可以根据它的state直接设置对应image吧。
@@ -1105,6 +1106,24 @@
 	[UIApplication sharedApplication].idleTimerDisabled = NO;
 
 #endif // end of READER_DISABLE_IDLE Option
+
+    if (noteToolDrawerBar.isOpen == YES) {
+        [noteToolDrawerBar openOrCloseToolBar];
+    }//似乎没有用的样子。。
+    //停止编辑的时候stopdraw然后自动保存
+//    [self saveDraw];
+//    [self stopDraw];
+    int page = [document.pageNumber intValue];
+    NSNumber *key = [NSNumber numberWithInteger:page]; // # key
+    ReaderContentView *newContentView = [contentViews objectForKey:key];
+    [self addDrawView:newContentView];
+    //然后又加载到newcontentview上面去。。奇怪的操作。。
+    if (mainPagebar.hidden == YES || mainToolbar.hidden == YES) {
+        //为什么停止编辑的时候要展示工具栏。。这是在逗我？
+        [mainToolbar showToolbar];
+        [mainPagebar showPagebar];
+    }
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated

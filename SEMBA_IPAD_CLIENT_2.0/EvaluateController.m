@@ -392,7 +392,7 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"评教已经成功" message:@"评教已经成功返回可继续其他评教" delegate:self cancelButtonTitle:@"好" otherButtonTitles: nil];
         [alertView show];
                //评教完成一次后，还原评教之前的内容
-                for (int i = 0 ; i <[scoreCollect count];++i){
+        for (int i = 0 ; i <[scoreCollect count];++i){
             //ScorePoint *point = [_scoreArray objectAtIndex:i];
            // point.selectedLabel.text = @"10";
                     UIButton *btn = (UIButton *)[scoreCollect objectAtIndex:i];
